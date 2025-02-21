@@ -6,6 +6,11 @@ package admin;
 
 
 
+import dbConnection.DatabaseConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 import user.*;
 import main.Login;
 
@@ -17,6 +22,7 @@ public class Books extends javax.swing.JFrame {
      */
     public Books() {
         initComponents();
+        loadBooksData();
         
     }
 
@@ -41,7 +47,7 @@ public class Books extends javax.swing.JFrame {
         logoutBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        booksTBL = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
@@ -152,18 +158,18 @@ public class Books extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        booksTBL.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Book No.", "Title", "Author", "ISBN", "Genre", "Publisher", "Publication Year", "Quantity", "Location"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(booksTBL);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 372, 900, 360));
 
@@ -315,6 +321,34 @@ public class Books extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_addBTN4ActionPerformed
 
+    public void loadBooksData() {
+    String sql = "SELECT bookID, title, author, isbn, genre, publisher, publicationYear, quantityAvailable, location FROM book";
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        DefaultTableModel model = (DefaultTableModel) booksTBL.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        while (rs.next()) {
+            Object[] row = {
+                rs.getInt("bookID"),
+                rs.getString("title"),
+                rs.getString("author"),
+                rs.getString("isbn"),
+                rs.getString("genre"),
+                rs.getString("publisher"),
+                rs.getInt("publicationYear"),
+                rs.getInt("quantityAvailable"),
+                rs.getString("location")
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
     
     
@@ -366,6 +400,7 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JButton addBTN3;
     private javax.swing.JButton addBTN4;
     private javax.swing.JButton booksBTN;
+    private javax.swing.JTable booksTBL;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -380,7 +415,6 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField2;
