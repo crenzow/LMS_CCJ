@@ -201,7 +201,7 @@ public class Signup extends javax.swing.JFrame {
     if (conn != null) {
         try {
             // Insert query
-            String sql = "INSERT INTO customer (fullName, phoneNumber, email, username, password) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO user (fullName, phoneNumber, email, username, password) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             
             // Set values

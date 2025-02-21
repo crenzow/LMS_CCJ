@@ -189,7 +189,7 @@ public class Login extends javax.swing.JFrame {
         // SQL Query
         String query = "SELECT 'admin' AS role FROM Admin WHERE username = ? AND password = ? " +
                        "UNION " +
-                       "SELECT 'customer' AS role FROM Customer WHERE username = ? AND password = ?";
+                       "SELECT 'user' AS role FROM User WHERE username = ? AND password = ?";
         
         PreparedStatement pst = conn.prepareStatement(query);
         pst.setString(1, username);
