@@ -123,13 +123,13 @@ public class Library extends javax.swing.JFrame {
 
         booksTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title", "Author", "Genre", "ISBN", "Publication Year", "Available Copies"
+                "Book No.", "Title", "Author", "Genre", "ISBN", "Publication Year", "Available Copies"
             }
         ));
         jScrollPane1.setViewportView(booksTable);
@@ -231,7 +231,7 @@ public class Library extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBTNActionPerformed
 
     public void loadBooksData() {
-    String sql = "SELECT title, author, genre, isbn, publicationYear, quantityAvailable FROM book";
+    String sql = "SELECT bookID, title, author, genre, isbn, publicationYear, quantityAvailable FROM book";
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
@@ -241,6 +241,7 @@ public class Library extends javax.swing.JFrame {
 
         while (rs.next()) {
             Object[] row = {
+                rs.getInt("bookID"),
                 rs.getString("title"),
                 rs.getString("author"),
                 rs.getString("genre"),
@@ -257,39 +258,48 @@ public class Library extends javax.swing.JFrame {
 }
     
     public void searchBooks(String keyword) {
-    String sql = "SELECT title, author, genre, isbn, publicationYear, quantityAvailable " +
-                 "FROM book " +
-                 "WHERE title LIKE ? OR author LIKE ? OR genre LIKE ? OR publicationYear LIKE ?";
+        String sql = "SELECT bookID, title, author, genre, isbn, publicationYear, quantityAvailable " +
+                     "FROM book " +
+                     "WHERE bookID LIKE ? OR title LIKE ? OR author LIKE ? OR genre LIKE ? OR publicationYear LIKE ?";
 
-    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-        String searchPattern = "%" + keyword + "%"; // Allows partial matches
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+            String searchPattern = "%" + keyword + "%"; // Allows partial matches for text fields
 
-        ps.setString(1, searchPattern);
-        ps.setString(2, searchPattern);
-        ps.setString(3, searchPattern);
-        ps.setString(4, searchPattern);
+            // Check if the keyword is a number (for bookID)
+            try {
+                int bookIdSearch = Integer.parseInt(keyword); 
+                ps.setString(1, "%" + bookIdSearch + "%"); // Still uses LIKE for flexibility
+            } catch (NumberFormatException e) {
+                ps.setString(1, "%-1%"); // If not a number, set an unlikely match to avoid errors
+            }
 
-        ResultSet rs = ps.executeQuery();
-        DefaultTableModel model = (DefaultTableModel) booksTable.getModel();
-        model.setRowCount(0); // Clear existing data
+            ps.setString(2, searchPattern);
+            ps.setString(3, searchPattern);
+            ps.setString(4, searchPattern);
+            ps.setString(5, searchPattern);
 
-        while (rs.next()) {
-            Object[] row = {
-                rs.getString("title"),
-                rs.getString("author"),
-                rs.getString("genre"),
-                rs.getString("isbn"),
-                rs.getInt("publicationYear"),
-                rs.getInt("quantityAvailable")
-            };
-            model.addRow(row);
+            ResultSet rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) booksTable.getModel();
+            model.setRowCount(0); // Clear existing data
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("bookID"),
+                    rs.getString("title"),
+                    rs.getString("author"),
+                    rs.getString("genre"),
+                    rs.getString("isbn"),
+                    rs.getInt("publicationYear"),
+                    rs.getInt("quantityAvailable")
+                };
+                model.addRow(row);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-    } catch (SQLException e) {
-        e.printStackTrace();
     }
-}
-    
+
     
 
     
