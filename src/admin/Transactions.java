@@ -39,8 +39,41 @@ public class Transactions extends javax.swing.JFrame {
         settlementsBTN = new javax.swing.JButton();
         logoutBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jTextField3 = new javax.swing.JTextField();
+        jCalendarComboBox1 = new de.wannawork.jcalendar.JCalendarComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jTextField6 = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jCalendarComboBox2 = new de.wannawork.jcalendar.JCalendarComboBox();
+        jTextField8 = new javax.swing.JTextField();
+        jTextField9 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -128,20 +161,139 @@ public class Transactions extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTabbedPane1.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
+
+        jButton1.setBackground(new java.awt.Color(131, 197, 190));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton1.setText("Search");
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, 60));
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title", "Author", "ISBN", "Availability", "Location"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 258, 892, 470));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 880, 300));
+        jPanel3.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 240, 40));
+        jPanel3.add(jCalendarComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 240, 40));
+
+        jLabel1.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel1.setText("Due Date:");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 540, -1, 30));
+
+        jLabel2.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel2.setText("Borrower Id:");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 480, 130, 40));
+
+        jButton2.setBackground(new java.awt.Color(131, 197, 190));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton2.setText("Confirm");
+        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 610, 240, 60));
+
+        jLabel5.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel5.setText("ISBN:");
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 90, 40));
+        jPanel3.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 240, 40));
+
+        jTabbedPane1.addTab("Issue Book", jPanel3);
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel4.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
+
+        jButton3.setBackground(new java.awt.Color(131, 197, 190));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton3.setText("Search");
+        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, 60));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Title ", "Borrower", "ISBN", "Due Date", "Status"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 880, 300));
+        jPanel4.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 240, 40));
+
+        jLabel3.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel3.setText("ISBN:");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 90, 40));
+
+        jLabel4.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel4.setText("Borrower Id:");
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 480, 130, 40));
+        jPanel4.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 240, 40));
+
+        jButton4.setBackground(new java.awt.Color(131, 197, 190));
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton4.setText("Returned");
+        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 610, 230, 60));
+
+        jTabbedPane1.addTab("Return Book", jPanel4);
+
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel5.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
+
+        jButton5.setBackground(new java.awt.Color(131, 197, 190));
+        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton5.setText("Search");
+        jPanel5.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, 60));
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Title ", "Borrower", "ISBN", "Due Date", "Status"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable3);
+
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 880, 300));
+
+        jLabel6.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel6.setText("Borrower Id:");
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 480, 130, 40));
+
+        jLabel7.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel7.setText("New Due Date:");
+        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 540, 130, 40));
+        jPanel5.add(jCalendarComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 240, 40));
+        jPanel5.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 240, 40));
+        jPanel5.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 240, 40));
+
+        jLabel8.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel8.setText("ISBN:");
+        jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 90, 40));
+
+        jButton6.setBackground(new java.awt.Color(131, 197, 190));
+        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton6.setText("Renew");
+        jPanel5.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 610, 230, 60));
+
+        jTabbedPane1.addTab("Renew Book", jPanel5);
+
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 750));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -240,11 +392,44 @@ public class Transactions extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton booksBTN;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox1;
+    private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton reservationsBTN;
