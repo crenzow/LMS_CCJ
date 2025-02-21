@@ -24,7 +24,6 @@ public class Signup extends javax.swing.JFrame {
         stayeaseLBL = new javax.swing.JLabel();
         stayeaseLBL4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        backBTN = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         singupLBL = new javax.swing.JLabel();
         passwordLBL = new javax.swing.JLabel();
@@ -42,6 +41,7 @@ public class Signup extends javax.swing.JFrame {
         stayeaseLBL7 = new javax.swing.JLabel();
         stayeaseLBL1 = new javax.swing.JLabel();
         stayeaseLBL5 = new javax.swing.JLabel();
+        backBTN = new javax.swing.JLabel();
 
         stayeaseLBL3.setBackground(new java.awt.Color(245, 245, 220));
         stayeaseLBL3.setFont(new java.awt.Font("Serif", 3, 70)); // NOI18N
@@ -71,56 +71,48 @@ public class Signup extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 600));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        backBTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
-        backBTN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backBTNActionPerformed(evt);
-            }
-        });
-        jPanel1.add(backBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 60, 40));
-
         jPanel2.setMinimumSize(new java.awt.Dimension(310, 600));
         jPanel2.setPreferredSize(new java.awt.Dimension(310, 600));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        singupLBL.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        singupLBL.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
         singupLBL.setText("SIGN UP");
-        jPanel2.add(singupLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 100, -1));
+        jPanel2.add(singupLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 100, -1));
 
-        passwordLBL.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        passwordLBL.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         passwordLBL.setText("PASSWORD:");
-        jPanel2.add(passwordLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, -1, -1));
+        jPanel2.add(passwordLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
-        fnameLBL.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        fnameLBL.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         fnameLBL.setText("FULL NAME:");
-        jPanel2.add(fnameLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
+        jPanel2.add(fnameLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
-        emailLBL.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        emailLBL.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         emailLBL.setText("EMAIL:");
-        jPanel2.add(emailLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
+        jPanel2.add(emailLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
 
-        phonenumberLBL.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        phonenumberLBL.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         phonenumberLBL.setText("PHONE NUMBER:");
-        jPanel2.add(phonenumberLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, -1, -1));
-        jPanel2.add(emailTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 240, 30));
+        jPanel2.add(phonenumberLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
+        jPanel2.add(emailTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 240, 30));
 
         fnameTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fnameTXTActionPerformed(evt);
             }
         });
-        jPanel2.add(fnameTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 240, 30));
-        jPanel2.add(phonenumberTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 240, 30));
+        jPanel2.add(fnameTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 240, 30));
+        jPanel2.add(phonenumberTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 240, 30));
 
         passwordTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordTXTActionPerformed(evt);
             }
         });
-        jPanel2.add(passwordTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 240, 30));
+        jPanel2.add(passwordTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 240, 30));
 
         singupBTN.setBackground(new java.awt.Color(0, 109, 119));
-        singupBTN.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        singupBTN.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
         singupBTN.setForeground(new java.awt.Color(245, 245, 220));
         singupBTN.setText("SIGN UP");
         singupBTN.addActionListener(new java.awt.event.ActionListener() {
@@ -128,44 +120,52 @@ public class Signup extends javax.swing.JFrame {
                 singupBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(singupBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
+        jPanel2.add(singupBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 500, -1, -1));
 
-        usernameLBL.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        usernameLBL.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         usernameLBL.setText("USERNAME:");
-        jPanel2.add(usernameLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
+        jPanel2.add(usernameLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, -1, -1));
 
         usernameTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameTXTActionPerformed(evt);
             }
         });
-        jPanel2.add(usernameTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 240, 30));
+        jPanel2.add(usernameTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 240, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 0, 375, 600));
 
         stayeaseLBL6.setBackground(new java.awt.Color(245, 245, 220));
         stayeaseLBL6.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
         stayeaseLBL6.setForeground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL6.setText("TAY ");
-        jPanel1.add(stayeaseLBL6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 90, 40));
+        stayeaseLBL6.setText("AGE");
+        jPanel1.add(stayeaseLBL6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 90, 40));
 
         stayeaseLBL7.setBackground(new java.awt.Color(245, 245, 220));
         stayeaseLBL7.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
         stayeaseLBL7.setForeground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL7.setText("ASE ");
-        jPanel1.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 130, 60));
+        stayeaseLBL7.setText("UB");
+        jPanel1.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 60, 60));
 
         stayeaseLBL1.setBackground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL1.setFont(new java.awt.Font("Serif", 3, 70)); // NOI18N
+        stayeaseLBL1.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
         stayeaseLBL1.setForeground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL1.setText("E");
-        jPanel1.add(stayeaseLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 60, -1));
+        stayeaseLBL1.setText("H");
+        jPanel1.add(stayeaseLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 60, -1));
 
         stayeaseLBL5.setBackground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL5.setFont(new java.awt.Font("Serif", 3, 70)); // NOI18N
+        stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
         stayeaseLBL5.setForeground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL5.setText("S");
-        jPanel1.add(stayeaseLBL5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 40, -1));
+        stayeaseLBL5.setText("P");
+        jPanel1.add(stayeaseLBL5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 60, 70));
+
+        backBTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
+        backBTN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backBTNMouseClicked(evt);
+            }
+        });
+        jPanel1.add(backBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -181,12 +181,6 @@ public class Signup extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void backBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBTNActionPerformed
-        Login loginFrame = new Login();
-        this.setVisible(false);
-        loginFrame.setVisible(true);
-    }//GEN-LAST:event_backBTNActionPerformed
 
     private void passwordTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTXTActionPerformed
         // TODO add your handling code here:
@@ -246,6 +240,12 @@ public class Signup extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameTXTActionPerformed
 
+    private void backBTNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBTNMouseClicked
+        Login loginFrame = new Login();
+        this.setVisible(false);
+        loginFrame.setVisible(true);
+    }//GEN-LAST:event_backBTNMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -283,7 +283,7 @@ public class Signup extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton backBTN;
+    private javax.swing.JLabel backBTN;
     private javax.swing.JLabel emailLBL;
     private javax.swing.JTextField emailTXT;
     private javax.swing.JLabel fnameLBL;

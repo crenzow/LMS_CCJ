@@ -48,10 +48,10 @@ public class Login extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        stayeaseLBL3 = new javax.swing.JLabel();
-        stayeaseLBL2 = new javax.swing.JLabel();
-        stayeaseLBL = new javax.swing.JLabel();
-        stayeaseLBL4 = new javax.swing.JLabel();
+        stayeaseLBL6 = new javax.swing.JLabel();
+        stayeaseLBL7 = new javax.swing.JLabel();
+        stayeaseLBL1 = new javax.swing.JLabel();
+        stayeaseLBL5 = new javax.swing.JLabel();
 
         jLabel6.setText("jLabel6");
 
@@ -64,21 +64,23 @@ public class Login extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(235, 235, 235));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        loginLBL.setBackground(new java.awt.Color(0, 109, 119));
         loginLBL.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        loginLBL.setForeground(new java.awt.Color(10, 61, 98));
+        loginLBL.setForeground(new java.awt.Color(0, 109, 119));
         loginLBL.setText("LOGIN");
-        jPanel2.add(loginLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, -1, -1));
+        jPanel2.add(loginLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, -1));
 
+        usernameLBL.setBackground(new java.awt.Color(0, 109, 119));
         usernameLBL.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        usernameLBL.setForeground(new java.awt.Color(10, 61, 98));
+        usernameLBL.setForeground(new java.awt.Color(0, 109, 119));
         usernameLBL.setText("USERNAME");
-        jPanel2.add(usernameLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+        jPanel2.add(usernameLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
 
         passwordLBL.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        passwordLBL.setForeground(new java.awt.Color(10, 61, 98));
+        passwordLBL.setForeground(new java.awt.Color(0, 109, 119));
         passwordLBL.setText("PASSWORD");
-        jPanel2.add(passwordLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
-        jPanel2.add(usernameTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 270, 30));
+        jPanel2.add(passwordLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
+        jPanel2.add(usernameTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 270, 30));
 
         loginBTN.setBackground(new java.awt.Color(0, 109, 119));
         loginBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -90,28 +92,28 @@ public class Login extends javax.swing.JFrame {
                 loginBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(loginBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 410, 150, 40));
-        jPanel2.add(passwordTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, 270, 30));
+        jPanel2.add(loginBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 410, 150, 40));
+        jPanel2.add(passwordTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 270, 30));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-avatar.png"))); // NOI18N
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/email.png"))); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, 30));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/key.png"))); // NOI18N
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
 
         jCheckBox1.setBackground(new java.awt.Color(235, 235, 235));
         jCheckBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(10, 61, 98));
+        jCheckBox1.setForeground(new java.awt.Color(0, 109, 119));
         jCheckBox1.setText("Show Password");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 360, -1, -1));
+        jPanel2.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, -1, -1));
 
         jLabel2.setForeground(new java.awt.Color(10, 61, 98));
         jLabel2.setText("SIGN IN");
@@ -121,36 +123,36 @@ public class Login extends javax.swing.JFrame {
                 jLabel2MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 480, -1, 20));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, -1, 20));
 
         jLabel5.setText("Don't have a account?");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 480, -1, 20));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, -1, 20));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 570));
 
-        stayeaseLBL3.setBackground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL3.setFont(new java.awt.Font("Serif", 3, 70)); // NOI18N
-        stayeaseLBL3.setForeground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL3.setText("S");
-        jPanel1.add(stayeaseLBL3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 190, 40, -1));
+        stayeaseLBL6.setBackground(new java.awt.Color(245, 245, 220));
+        stayeaseLBL6.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL6.setForeground(new java.awt.Color(245, 245, 220));
+        stayeaseLBL6.setText("AGE");
+        jPanel1.add(stayeaseLBL6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 230, 90, 40));
 
-        stayeaseLBL2.setBackground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL2.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
-        stayeaseLBL2.setForeground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL2.setText("TAY ");
-        jPanel1.add(stayeaseLBL2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 90, 40));
+        stayeaseLBL7.setBackground(new java.awt.Color(245, 245, 220));
+        stayeaseLBL7.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL7.setForeground(new java.awt.Color(245, 245, 220));
+        stayeaseLBL7.setText("UB");
+        jPanel1.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 280, 60, 60));
 
-        stayeaseLBL.setBackground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL.setFont(new java.awt.Font("Serif", 3, 70)); // NOI18N
-        stayeaseLBL.setForeground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL.setText("E");
-        jPanel1.add(stayeaseLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 230, 60, -1));
+        stayeaseLBL1.setBackground(new java.awt.Color(245, 245, 220));
+        stayeaseLBL1.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL1.setForeground(new java.awt.Color(245, 245, 220));
+        stayeaseLBL1.setText("H");
+        jPanel1.add(stayeaseLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 260, 60, -1));
 
-        stayeaseLBL4.setBackground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL4.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
-        stayeaseLBL4.setForeground(new java.awt.Color(245, 245, 220));
-        stayeaseLBL4.setText("ASE ");
-        jPanel1.add(stayeaseLBL4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 260, 130, 60));
+        stayeaseLBL5.setBackground(new java.awt.Color(245, 245, 220));
+        stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL5.setForeground(new java.awt.Color(245, 245, 220));
+        stayeaseLBL5.setText("P");
+        jPanel1.add(stayeaseLBL5, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 60, 70));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 570));
 
@@ -280,10 +282,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel loginLBL;
     private javax.swing.JLabel passwordLBL;
     private javax.swing.JPasswordField passwordTXT;
-    private javax.swing.JLabel stayeaseLBL;
-    private javax.swing.JLabel stayeaseLBL2;
-    private javax.swing.JLabel stayeaseLBL3;
-    private javax.swing.JLabel stayeaseLBL4;
+    private javax.swing.JLabel stayeaseLBL1;
+    private javax.swing.JLabel stayeaseLBL5;
+    private javax.swing.JLabel stayeaseLBL6;
+    private javax.swing.JLabel stayeaseLBL7;
     private javax.swing.JLabel usernameLBL;
     private javax.swing.JTextField usernameTXT;
     // End of variables declaration//GEN-END:variables
