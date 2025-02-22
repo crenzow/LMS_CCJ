@@ -148,7 +148,12 @@ public class Library extends javax.swing.JFrame {
             }
         });
 
-        genreCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GENRE" }));
+        genreCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Genres", "Fiction", "Mystery", "Fantasy", "Science Fiction", "Romance", "Non-Fiction" }));
+        genreCBX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genreCBXActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -171,11 +176,11 @@ public class Library extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(205, Short.MAX_VALUE)
+                .addGap(83, 83, 83)
                 .addComponent(genreCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 15, Short.MAX_VALUE)
@@ -229,6 +234,11 @@ public class Library extends javax.swing.JFrame {
         String keyword = searchTXT.getText().trim();
         searchBooks(keyword);
     }//GEN-LAST:event_searchBTNActionPerformed
+
+    private void genreCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genreCBXActionPerformed
+        // TODO add your handling code here:
+        filterBooksByGenre();
+    }//GEN-LAST:event_genreCBXActionPerformed
 
     public void loadBooksData() {
     String sql = "SELECT bookID, title, author, genre, isbn, publicationYear, quantityAvailable FROM book";
@@ -299,6 +309,49 @@ public class Library extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    private void filterBooksByGenre() {
+    String selectedGenre = genreCBX.getSelectedItem().toString();
+    System.out.println("Selected Genre: " + selectedGenre); // Debugging log
+
+    String sql = "SELECT bookID, title, author, isbn, genre, publisher, publicationYear, quantityAvailable, location FROM book";
+
+    // Apply filtering only if a specific genre is selected
+    if (!selectedGenre.equals("All Genres")) {
+        sql += " WHERE genre = ?";
+    }
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+
+        if (!selectedGenre.equals("All Genres")) {
+            ps.setString(1, selectedGenre);
+        }
+
+        try (ResultSet rs = ps.executeQuery()) {
+            DefaultTableModel model = (DefaultTableModel) booksTable.getModel();
+            model.setRowCount(0); // Clear existing data
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("bookID"),
+                    rs.getString("title"),
+                    rs.getString("author"),
+                    rs.getString("genre"),
+                    rs.getString("isbn"),
+                    rs.getInt("publicationYear"),
+                    rs.getInt("quantityAvailable"),
+                    
+                };
+                model.addRow(row);
+            }
+
+            System.out.println("Rows added: " + model.getRowCount()); // Debugging log
+
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
     
 

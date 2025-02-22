@@ -70,7 +70,7 @@ public class Books extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         addBTN4 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        genreCBX = new javax.swing.JComboBox<>();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -256,8 +256,13 @@ public class Books extends javax.swing.JFrame {
         });
         jPanel1.add(addBTN4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 320, 120, 40));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GENRE" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 220, 40));
+        genreCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Genres", "Fiction", "Mystery", "Fantasy", "Science Fiction", "Romance", "Non-Fiction" }));
+        genreCBX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genreCBXActionPerformed(evt);
+            }
+        });
+        jPanel1.add(genreCBX, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 220, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -321,6 +326,11 @@ public class Books extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_addBTN4ActionPerformed
 
+    private void genreCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genreCBXActionPerformed
+        // TODO add your handling code here:
+        filterBooksByGenre();
+    }//GEN-LAST:event_genreCBXActionPerformed
+
     public void loadBooksData() {
     String sql = "SELECT bookID, title, author, isbn, genre, publisher, publicationYear, quantityAvailable, location FROM book";
 
@@ -349,6 +359,53 @@ public class Books extends javax.swing.JFrame {
         e.printStackTrace();
     }
 }
+    
+    private void filterBooksByGenre() {
+    String selectedGenre = genreCBX.getSelectedItem().toString();
+    System.out.println("Selected Genre: " + selectedGenre); // Debugging log
+
+    String sql = "SELECT bookID, title, author, isbn, genre, publisher, publicationYear, quantityAvailable, location FROM book";
+
+    // Apply filtering only if a specific genre is selected
+    if (!selectedGenre.equals("All Genres")) {
+        sql += " WHERE genre = ?";
+    }
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+
+        if (!selectedGenre.equals("All Genres")) {
+            ps.setString(1, selectedGenre);
+        }
+
+        try (ResultSet rs = ps.executeQuery()) {
+            DefaultTableModel model = (DefaultTableModel) booksTBL.getModel();
+            model.setRowCount(0); // Clear existing data
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("bookID"),
+                    rs.getString("title"),
+                    rs.getString("author"),
+                    rs.getString("isbn"),
+                    rs.getString("genre"),
+                    rs.getString("publisher"),
+                    rs.getInt("publicationYear"),
+                    rs.getInt("quantityAvailable"),
+                    rs.getString("location")
+                };
+                model.addRow(row);
+            }
+
+            System.out.println("Rows added: " + model.getRowCount()); // Debugging log
+
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+    
+   
 
     
     
@@ -401,8 +458,8 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JButton addBTN4;
     private javax.swing.JButton booksBTN;
     private javax.swing.JTable booksTBL;
+    private javax.swing.JComboBox<String> genreCBX;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

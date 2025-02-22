@@ -469,14 +469,23 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="genreCBX">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="1">
-                <StringItem index="0" value="GENRE"/>
+              <StringArray count="7">
+                <StringItem index="0" value="All Genres"/>
+                <StringItem index="1" value="Fiction"/>
+                <StringItem index="2" value="Mystery"/>
+                <StringItem index="3" value="Fantasy"/>
+                <StringItem index="4" value="Science Fiction"/>
+                <StringItem index="5" value="Romance"/>
+                <StringItem index="6" value="Non-Fiction"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="genreCBXActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
