@@ -170,7 +170,7 @@ public class Settlements extends javax.swing.JFrame {
     }//GEN-LAST:event_booksBTNActionPerformed
 
     private void transactionsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionsBTNActionPerformed
-        Transactions tranFrame = new Transactions();
+        Settlements tranFrame = new Settlements();
         this.setVisible(false);
         tranFrame.setVisible(true);
     }//GEN-LAST:event_transactionsBTNActionPerformed
