@@ -259,7 +259,7 @@ public class Reservations extends javax.swing.JFrame {
     }//GEN-LAST:event_booksBTNActionPerformed
 
     private void transactionsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionsBTNActionPerformed
-        Reservations tranFrame = new Reservations();
+        Transactions tranFrame = new Transactions();
         this.setVisible(false);
         tranFrame.setVisible(true);
     }//GEN-LAST:event_transactionsBTNActionPerformed
