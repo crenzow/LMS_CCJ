@@ -10,6 +10,7 @@ import dbConnection.DatabaseConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import user.*;
 import main.Login;
@@ -48,15 +49,15 @@ public class Books extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         booksTBL = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
+        searchTXT = new javax.swing.JTextField();
+        titleTXT = new javax.swing.JTextField();
+        authorTXT = new javax.swing.JTextField();
+        isbnTXT = new javax.swing.JTextField();
+        genreTXT = new javax.swing.JTextField();
+        publisherTXT = new javax.swing.JTextField();
+        pyearTXT = new javax.swing.JTextField();
+        quantityTXT = new javax.swing.JTextField();
+        locationTXT = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         addBTN1 = new javax.swing.JButton();
         addBTN2 = new javax.swing.JButton();
@@ -173,23 +174,28 @@ public class Books extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 372, 900, 360));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        searchTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                searchTXTActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 220, 40));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 210, 40));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 210, 40));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 210, 40));
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 210, 40));
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 110, 210, 40));
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 160, 210, 40));
-        jPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 210, 210, 40));
-        jPanel1.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, 210, 40));
+        jPanel1.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 220, 40));
+        jPanel1.add(titleTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 210, 40));
+        jPanel1.add(authorTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 210, 40));
+        jPanel1.add(isbnTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 210, 40));
+        jPanel1.add(genreTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 210, 40));
+        jPanel1.add(publisherTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 110, 210, 40));
+        jPanel1.add(pyearTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 160, 210, 40));
+        jPanel1.add(quantityTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 210, 210, 40));
+        jPanel1.add(locationTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, 210, 40));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("SEARCH");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, 90, 40));
 
         addBTN1.setText("Add");
@@ -306,16 +312,126 @@ public class Books extends javax.swing.JFrame {
         loginFrame.setVisible(true);
     }//GEN-LAST:event_logoutBTNActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void searchTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTXTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_searchTXTActionPerformed
 
     private void addBTN1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTN1ActionPerformed
-        // TODO add your handling code here:
+                                       
+    // Get values from the text fields
+    String title = titleTXT.getText().trim();  // Add title field
+    String author = authorTXT.getText().trim();
+    String isbn = isbnTXT.getText().trim();
+    String genre = genreTXT.getText().trim();
+    String publisher = publisherTXT.getText().trim();
+    String publicationYear = pyearTXT.getText().trim();
+    String location = locationTXT.getText().trim();
+    String quantity = quantityTXT.getText().trim();
+
+    // Validate that all fields have been filled
+    if (title.isEmpty() || author.isEmpty() || isbn.isEmpty() || genre.isEmpty() || 
+        publisher.isEmpty() || publicationYear.isEmpty() || location.isEmpty() || quantity.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please fill in all fields.");
+        return; // Exit if any field is empty
+    }
+
+    // SQL query to insert a new book into the database
+    String sql = "INSERT INTO book (title, author, isbn, genre, publisher, publicationYear, location, quantityAvailable) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+        // Set parameters for the PreparedStatement
+        ps.setString(1, title);  // Set the title
+        ps.setString(2, author);
+        ps.setString(3, isbn);
+        ps.setString(4, genre);
+        ps.setString(5, publisher);
+        ps.setInt(6, Integer.parseInt(publicationYear)); // Assuming publication year is an integer
+        ps.setString(7, location);
+        ps.setInt(8, Integer.parseInt(quantity)); // Assuming quantity is an integer
+
+        // Execute the query
+        int rowsAffected = ps.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Book added successfully!");
+
+            // Clear the text fields after successful insertion
+            titleTXT.setText("");
+            authorTXT.setText("");
+            isbnTXT.setText("");
+            genreTXT.setText("");
+            publisherTXT.setText("");
+            pyearTXT.setText("");
+            locationTXT.setText("");
+            quantityTXT.setText("");
+
+            // Refresh the table to reflect the new data
+            loadBooksData();  // Call the method that reloads the table data
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to add the book.");
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        e.printStackTrace();
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Please enter valid numeric values for Publication Year and Quantity.");
+    }
     }//GEN-LAST:event_addBTN1ActionPerformed
 
     private void addBTN2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTN2ActionPerformed
-        // TODO add your handling code here:
+                                       
+    // Get the bookID from the searchTXT field
+    String bookIDStr = searchTXT.getText().trim();
+    
+    // Validate that bookID is provided and is numeric
+    if (bookIDStr.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter a bookID in the search field.");
+        return;
+    }
+
+    int bookID;
+    try {
+        bookID = Integer.parseInt(bookIDStr); // Convert to integer
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Invalid bookID. Please enter a valid numeric bookID.");
+        return;
+    }
+
+    // Confirm deletion
+    int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the book with ID: " + bookID + "?",
+                                                     "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+    if (confirmation == JOptionPane.NO_OPTION) {
+        return; // Exit if the user cancels the deletion
+    }
+
+    // SQL query to delete the book from the database
+    String sql = "DELETE FROM book WHERE bookID = ?";
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+        // Set the bookID for the DELETE query
+        ps.setInt(1, bookID);
+
+        // Execute the delete query
+        int rowsAffected = ps.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Book deleted successfully!");
+
+            // Refresh the table to reflect the updated data
+            loadBooksData();
+            
+            // Clear searchTXT field after deletion
+            searchTXT.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "No book found with the given bookID.");
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_addBTN2ActionPerformed
 
     private void addBTN3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTN3ActionPerformed
@@ -323,13 +439,75 @@ public class Books extends javax.swing.JFrame {
     }//GEN-LAST:event_addBTN3ActionPerformed
 
     private void addBTN4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTN4ActionPerformed
-        // TODO add your handling code here:
+        searchTXT.setText("");
+        titleTXT.setText("");
+        authorTXT.setText("");
+        isbnTXT.setText("");
+        genreTXT.setText("");
+        publisherTXT.setText("");
+        pyearTXT.setText("");
+        locationTXT.setText("");
+        quantityTXT.setText("");
     }//GEN-LAST:event_addBTN4ActionPerformed
 
     private void genreCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genreCBXActionPerformed
         // TODO add your handling code here:
         filterBooksByGenre();
     }//GEN-LAST:event_genreCBXActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+                                    
+    // Get the search term from the search text field (bookID)
+    String searchTerm = searchTXT.getText().trim();
+
+    // Check if the input is empty or not a valid integer (bookID is typically an integer)
+    if (searchTerm.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter a valid book ID.");
+        return; // Do not continue if the search field is empty
+    }
+
+    try {
+        // Try to parse the search term into an integer (bookID)
+        int bookID = Integer.parseInt(searchTerm);
+
+        // SQL query to search by bookID
+        String sql = "SELECT bookID, title, author, isbn, genre, publisher, publicationYear, quantityAvailable, location " +
+                     "FROM book WHERE bookID = ?";
+
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+            ps.setInt(1, bookID); // Set the bookID as the parameter for the query
+
+            try (ResultSet rs = ps.executeQuery()) {
+                // If no results are found
+                if (!rs.isBeforeFirst()) {
+                    JOptionPane.showMessageDialog(null, "No book found with that ID.");
+                    return; // If no results, exit the method
+                }
+
+                // Process the first result (assuming the bookID is unique)
+                if (rs.next()) {
+                    // Populate the fields with the data from the database
+                    titleTXT.setText(rs.getString("title"));
+                    authorTXT.setText(rs.getString("author"));
+                    isbnTXT.setText(rs.getString("isbn"));
+                    genreTXT.setText(rs.getString("genre"));
+                    publisherTXT.setText(rs.getString("publisher"));
+                    pyearTXT.setText(rs.getString("publicationYear"));
+                    locationTXT.setText(rs.getString("location"));
+                    quantityTXT.setText(rs.getString("quantityAvailable"));
+                }
+
+                System.out.println("Book found and fields populated."); // Debugging log
+            }
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Please enter a valid numeric book ID.");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void loadBooksData() {
     String sql = "SELECT bookID, title, author, isbn, genre, publisher, publicationYear, quantityAvailable, location FROM book";
@@ -456,9 +634,12 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JButton addBTN2;
     private javax.swing.JButton addBTN3;
     private javax.swing.JButton addBTN4;
+    private javax.swing.JTextField authorTXT;
     private javax.swing.JButton booksBTN;
     private javax.swing.JTable booksTBL;
     private javax.swing.JComboBox<String> genreCBX;
+    private javax.swing.JTextField genreTXT;
+    private javax.swing.JTextField isbnTXT;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -472,20 +653,17 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField locationTXT;
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
+    private javax.swing.JTextField publisherTXT;
+    private javax.swing.JTextField pyearTXT;
+    private javax.swing.JTextField quantityTXT;
     private javax.swing.JButton reservationsBTN;
+    private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;
+    private javax.swing.JTextField titleTXT;
     private javax.swing.JButton transactionsBTN;
     private javax.swing.JButton userBTN;
     // End of variables declaration//GEN-END:variables
