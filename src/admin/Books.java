@@ -72,6 +72,10 @@ public class Books extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         addBTN4 = new javax.swing.JButton();
         genreCBX = new javax.swing.JComboBox<>();
+        stayeaseLBL5 = new javax.swing.JLabel();
+        stayeaseLBL6 = new javax.swing.JLabel();
+        stayeaseLBL1 = new javax.swing.JLabel();
+        stayeaseLBL7 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -179,7 +183,7 @@ public class Books extends javax.swing.JFrame {
                 searchTXTActionPerformed(evt);
             }
         });
-        jPanel1.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 220, 40));
+        jPanel1.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 220, 40));
         jPanel1.add(titleTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 210, 40));
         jPanel1.add(authorTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 210, 40));
         jPanel1.add(isbnTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 210, 40));
@@ -196,7 +200,7 @@ public class Books extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, 90, 40));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 90, 40));
 
         addBTN1.setText("Add");
         addBTN1.addActionListener(new java.awt.event.ActionListener() {
@@ -269,6 +273,30 @@ public class Books extends javax.swing.JFrame {
             }
         });
         jPanel1.add(genreCBX, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 220, 40));
+
+        stayeaseLBL5.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL5.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setText("P");
+        jPanel1.add(stayeaseLBL5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 70));
+
+        stayeaseLBL6.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL6.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setText("AGE");
+        jPanel1.add(stayeaseLBL6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 90, 40));
+
+        stayeaseLBL1.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL1.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setText("H");
+        jPanel1.add(stayeaseLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 60, -1));
+
+        stayeaseLBL7.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL7.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setText("UB");
+        jPanel1.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 60, 60));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -663,6 +691,10 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JButton reservationsBTN;
     private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;
+    private javax.swing.JLabel stayeaseLBL1;
+    private javax.swing.JLabel stayeaseLBL5;
+    private javax.swing.JLabel stayeaseLBL6;
+    private javax.swing.JLabel stayeaseLBL7;
     private javax.swing.JTextField titleTXT;
     private javax.swing.JButton transactionsBTN;
     private javax.swing.JButton userBTN;

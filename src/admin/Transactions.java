@@ -58,6 +58,10 @@ public class Transactions extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
+        stayeaseLBL11 = new javax.swing.JLabel();
+        stayeaseLBL12 = new javax.swing.JLabel();
+        stayeaseLBL3 = new javax.swing.JLabel();
+        stayeaseLBL13 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
@@ -68,6 +72,10 @@ public class Transactions extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        stayeaseLBL8 = new javax.swing.JLabel();
+        stayeaseLBL9 = new javax.swing.JLabel();
+        stayeaseLBL2 = new javax.swing.JLabel();
+        stayeaseLBL10 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jTextField6 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
@@ -80,6 +88,10 @@ public class Transactions extends javax.swing.JFrame {
         jTextField9 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
+        stayeaseLBL5 = new javax.swing.JLabel();
+        stayeaseLBL6 = new javax.swing.JLabel();
+        stayeaseLBL1 = new javax.swing.JLabel();
+        stayeaseLBL7 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -212,6 +224,30 @@ public class Transactions extends javax.swing.JFrame {
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 90, 40));
         jPanel3.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 240, 40));
 
+        stayeaseLBL11.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL11.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL11.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL11.setText("P");
+        jPanel3.add(stayeaseLBL11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 70));
+
+        stayeaseLBL12.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL12.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL12.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL12.setText("AGE");
+        jPanel3.add(stayeaseLBL12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, 40));
+
+        stayeaseLBL3.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL3.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL3.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL3.setText("H");
+        jPanel3.add(stayeaseLBL3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 60, -1));
+
+        stayeaseLBL13.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL13.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL13.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL13.setText("UB");
+        jPanel3.add(stayeaseLBL13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 60, 60));
+
         jTabbedPane1.addTab("Issue Book", jPanel3);
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -251,6 +287,30 @@ public class Transactions extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton4.setText("Returned");
         jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 610, 230, 60));
+
+        stayeaseLBL8.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL8.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL8.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL8.setText("P");
+        jPanel4.add(stayeaseLBL8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 70));
+
+        stayeaseLBL9.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL9.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL9.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL9.setText("AGE");
+        jPanel4.add(stayeaseLBL9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, 40));
+
+        stayeaseLBL2.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL2.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL2.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL2.setText("H");
+        jPanel4.add(stayeaseLBL2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 60, -1));
+
+        stayeaseLBL10.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL10.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL10.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL10.setText("UB");
+        jPanel4.add(stayeaseLBL10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 60, 60));
 
         jTabbedPane1.addTab("Return Book", jPanel4);
 
@@ -296,6 +356,30 @@ public class Transactions extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton6.setText("Renew");
         jPanel5.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 610, 230, 60));
+
+        stayeaseLBL5.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL5.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setText("P");
+        jPanel5.add(stayeaseLBL5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 70));
+
+        stayeaseLBL6.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL6.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setText("AGE");
+        jPanel5.add(stayeaseLBL6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, 40));
+
+        stayeaseLBL1.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL1.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setText("H");
+        jPanel5.add(stayeaseLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 60, -1));
+
+        stayeaseLBL7.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL7.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setText("UB");
+        jPanel5.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 60, 60));
 
         jTabbedPane1.addTab("Renew Book", jPanel5);
 
@@ -466,6 +550,18 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton reservationsBTN;
     private javax.swing.JButton settlementsBTN;
+    private javax.swing.JLabel stayeaseLBL1;
+    private javax.swing.JLabel stayeaseLBL10;
+    private javax.swing.JLabel stayeaseLBL11;
+    private javax.swing.JLabel stayeaseLBL12;
+    private javax.swing.JLabel stayeaseLBL13;
+    private javax.swing.JLabel stayeaseLBL2;
+    private javax.swing.JLabel stayeaseLBL3;
+    private javax.swing.JLabel stayeaseLBL5;
+    private javax.swing.JLabel stayeaseLBL6;
+    private javax.swing.JLabel stayeaseLBL7;
+    private javax.swing.JLabel stayeaseLBL8;
+    private javax.swing.JLabel stayeaseLBL9;
     private javax.swing.JButton transactionsBTN;
     private javax.swing.JButton userBTN;
     // End of variables declaration//GEN-END:variables

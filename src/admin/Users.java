@@ -62,6 +62,10 @@ public class Users extends javax.swing.JFrame {
         searchBTN = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        stayeaseLBL5 = new javax.swing.JLabel();
+        stayeaseLBL6 = new javax.swing.JLabel();
+        stayeaseLBL1 = new javax.swing.JLabel();
+        stayeaseLBL7 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -209,6 +213,30 @@ public class Users extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton4.setText("Edit Borrower");
         jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 620, -1, 60));
+
+        stayeaseLBL5.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL5.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setText("P");
+        jPanel3.add(stayeaseLBL5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 70));
+
+        stayeaseLBL6.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL6.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setText("AGE");
+        jPanel3.add(stayeaseLBL6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, 40));
+
+        stayeaseLBL1.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL1.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setText("H");
+        jPanel3.add(stayeaseLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 60, -1));
+
+        stayeaseLBL7.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL7.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setText("UB");
+        jPanel3.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 60, 60));
 
         jTabbedPane1.addTab("User Information", jPanel3);
 
@@ -419,6 +447,10 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JButton searchBTN;
     private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;
+    private javax.swing.JLabel stayeaseLBL1;
+    private javax.swing.JLabel stayeaseLBL5;
+    private javax.swing.JLabel stayeaseLBL6;
+    private javax.swing.JLabel stayeaseLBL7;
     private javax.swing.JButton transactionsBTN;
     private javax.swing.JButton userBTN;
     // End of variables declaration//GEN-END:variables

@@ -6,6 +6,12 @@ package admin;
 
 
 
+import dbConnection.DatabaseConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import user.*;
 import main.Login;
 
@@ -17,7 +23,7 @@ public class Settlements extends javax.swing.JFrame {
      */
     public Settlements() {
         initComponents();
-        
+        loadFinesData();
     }
 
     /**
@@ -32,17 +38,22 @@ public class Settlements extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         reservationsBTN = new javax.swing.JButton();
-        logoLBL = new javax.swing.JLabel();
         booksBTN = new javax.swing.JButton();
         transactionsBTN = new javax.swing.JButton();
         userBTN = new javax.swing.JButton();
         settlementsBTN = new javax.swing.JButton();
         logoutBTN = new javax.swing.JButton();
+        logoLBL1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        searchTXT = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        stayeaseLBL5 = new javax.swing.JLabel();
+        stayeaseLBL6 = new javax.swing.JLabel();
+        stayeaseLBL1 = new javax.swing.JLabel();
+        stayeaseLBL7 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -72,9 +83,6 @@ public class Settlements extends javax.swing.JFrame {
             }
         });
         jPanel2.add(reservationsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 170, 40));
-
-        logoLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200blackLOGO.png"))); // NOI18N
-        jPanel2.add(logoLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
 
         booksBTN.setBackground(new java.awt.Color(131, 197, 190));
         booksBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -126,6 +134,9 @@ public class Settlements extends javax.swing.JFrame {
         });
         jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 170, 40));
 
+        logoLBL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200blackLOGO.png"))); // NOI18N
+        jPanel2.add(logoLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -138,18 +149,53 @@ public class Settlements extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Fine ID", "User ID", "Name", "Amount Due", "Status"
+                "Fine ID", "Amount Due", "Status", "User ID", "Transaction ID"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 880, 300));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 350, 60));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 880, 530));
+        jPanel1.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 350, 60));
 
         jButton3.setBackground(new java.awt.Color(131, 197, 190));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton3.setText("Search");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, -1, 60));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, -1, 60));
+
+        jLabel1.setBackground(new java.awt.Color(0, 109, 119));
+        jLabel1.setFont(new java.awt.Font("Serif", 3, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 109, 119));
+        jLabel1.setText("SETTLEMENT ");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, -1, -1));
+
+        stayeaseLBL5.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL5.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setText("P");
+        jPanel1.add(stayeaseLBL5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 60, 70));
+
+        stayeaseLBL6.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL6.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setText("AGE");
+        jPanel1.add(stayeaseLBL6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 90, 40));
+
+        stayeaseLBL1.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL1.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setText("H");
+        jPanel1.add(stayeaseLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 60, -1));
+
+        stayeaseLBL7.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL7.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setText("UB");
+        jPanel1.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 60, 60));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -192,6 +238,78 @@ public class Settlements extends javax.swing.JFrame {
         loginFrame.setVisible(true);
     }//GEN-LAST:event_logoutBTNActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    // Get the value entered in the searchTXT text field
+    String searchValue = searchTXT.getText().trim();
+
+    // Check if the search value is not empty
+    if (!searchValue.isEmpty()) {
+        try {
+            // SQL query to search for a fine based on fineID (assuming fineID is the search criterion)
+            String sql = "SELECT fineID, amount, status, userID, transactionID FROM fine WHERE fineID = ?";
+
+            // Prepare and execute the query
+            try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+                ps.setInt(1, Integer.parseInt(searchValue));  // Search by fineID, assuming it's an integer
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get table model
+                    model.setRowCount(0); // Clear existing data
+
+                    // Check if a record was found
+                    if (rs.next()) {
+                        // Add the retrieved data to the table model
+                        Object[] row = {
+                            rs.getInt("fineID"),
+                            rs.getDouble("amount"),
+                            rs.getString("status"),
+                            rs.getInt("userID"),
+                            rs.getInt("transactionID")
+                        };
+                        model.addRow(row);
+                    } else {
+                        // No records found, inform the user
+                        JOptionPane.showMessageDialog(null, "No fine found with that ID.");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error searching for fine: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid number for fine ID.");
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please enter a fine ID to search.");
+    }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    public void loadFinesData() {
+    // SQL query to fetch data from the fines table
+    String sql = "SELECT fineID, amount, status, userID, transactionID FROM fine";  // Assuming 'fines' table
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Change to your fines table name
+        model.setRowCount(0); // Clear existing data
+
+        // Loop through the result set and populate the table model
+        while (rs.next()) {
+            Object[] row = {
+                rs.getInt("fineID"),
+                rs.getDouble("amount"),  // Assuming it's a double type field
+                rs.getString("status"),
+                rs.getInt("userID"),
+                rs.getInt("transactionID")
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
     
     
@@ -264,16 +382,21 @@ public class Settlements extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton booksBTN;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel logoLBL;
+    private javax.swing.JLabel logoLBL1;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton reservationsBTN;
+    private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;
+    private javax.swing.JLabel stayeaseLBL1;
+    private javax.swing.JLabel stayeaseLBL5;
+    private javax.swing.JLabel stayeaseLBL6;
+    private javax.swing.JLabel stayeaseLBL7;
     private javax.swing.JButton transactionsBTN;
     private javax.swing.JButton userBTN;
     // End of variables declaration//GEN-END:variables

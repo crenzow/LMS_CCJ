@@ -6,6 +6,13 @@ package admin;
 
 
 
+
+import dbConnection.DatabaseConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import user.*;
 import main.Login;
 
@@ -17,7 +24,7 @@ public class Reservations extends javax.swing.JFrame {
      */
     public Reservations() {
         initComponents();
-        
+        loadReservationsData();
     }
 
     /**
@@ -39,7 +46,7 @@ public class Reservations extends javax.swing.JFrame {
         settlementsBTN = new javax.swing.JButton();
         logoutBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        searchTXT = new javax.swing.JTextField();
         Reserve = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -51,10 +58,14 @@ public class Reservations extends javax.swing.JFrame {
         jCalendarComboBox1 = new de.wannawork.jcalendar.JCalendarComboBox();
         jLabel5 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
+        searchBTN = new javax.swing.JButton();
         Reserve1 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        stayeaseLBL5 = new javax.swing.JLabel();
+        stayeaseLBL6 = new javax.swing.JLabel();
+        stayeaseLBL1 = new javax.swing.JLabel();
+        stayeaseLBL7 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -141,7 +152,7 @@ public class Reservations extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 350, 60));
+        jPanel1.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 350, 60));
 
         Reserve.setBackground(new java.awt.Color(131, 197, 190));
         Reserve.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -156,7 +167,7 @@ public class Reservations extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Reservation ID", "Book Title", "Borrower", "Date", "Status"
+                "Reservation ID", "Reservation Date", "Status", "User ID", "Book ID"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -185,10 +196,15 @@ public class Reservations extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Cancelled", " " }));
         jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 220, 210, 40));
 
-        jButton3.setBackground(new java.awt.Color(131, 197, 190));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton3.setText("Search");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, -1, 60));
+        searchBTN.setBackground(new java.awt.Color(131, 197, 190));
+        searchBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        searchBTN.setText("Search");
+        searchBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBTNActionPerformed(evt);
+            }
+        });
+        jPanel1.add(searchBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, -1, 60));
 
         Reserve1.setBackground(new java.awt.Color(131, 197, 190));
         Reserve1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -201,6 +217,30 @@ public class Reservations extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         jLabel6.setText("Date:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 60, 40));
+
+        stayeaseLBL5.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL5.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setText("P");
+        jPanel1.add(stayeaseLBL5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 60, 70));
+
+        stayeaseLBL6.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL6.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setText("AGE");
+        jPanel1.add(stayeaseLBL6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 90, 40));
+
+        stayeaseLBL1.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL1.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setText("H");
+        jPanel1.add(stayeaseLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 60, -1));
+
+        stayeaseLBL7.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL7.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setText("UB");
+        jPanel1.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 60, 60));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -244,6 +284,77 @@ public class Reservations extends javax.swing.JFrame {
         loginFrame.setVisible(true);
     }//GEN-LAST:event_logoutBTNActionPerformed
 
+    private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
+    // Get the value entered in the searchTXT text field
+    String searchValue = searchTXT.getText().trim();
+
+    // Check if the search value is not empty
+    if (!searchValue.isEmpty()) {
+        try {
+            // SQL query to search for a fine based on fineID (assuming fineID is the search criterion)
+            String sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation WHERE reservationID = ?";
+
+            // Prepare and execute the query
+            try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+                ps.setInt(1, Integer.parseInt(searchValue));  // Search by fineID, assuming it's an integer
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get table model
+                    model.setRowCount(0); // Clear existing data
+
+                    // Check if a record was found
+                    if (rs.next()) {
+                        // Add the retrieved data to the table model
+                        Object[] row = {
+                            rs.getInt("reservationID"),
+                            rs.getDate("reservationDate"),  // Assuming it's a DATE type field
+                            rs.getString("status"),
+                            rs.getInt("userID"),
+                            rs.getInt("bookID")
+                        };
+                        model.addRow(row);
+                    } else {
+                        // No records found, inform the user
+                        JOptionPane.showMessageDialog(null, "No fine found with that ID.");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error searching for fine: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid number for fine ID.");
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please enter a fine ID to search.");
+    }
+
+    }//GEN-LAST:event_searchBTNActionPerformed
+
+    public void loadReservationsData() {
+    String sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation";  // Assuming 'reservations' table
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Change to your table name
+        model.setRowCount(0); // Clear existing data
+
+        while (rs.next()) {
+            Object[] row = {
+                rs.getInt("reservationID"),
+                rs.getDate("reservationDate"),  // Assuming it's a DATE type field
+                rs.getString("status"),
+                rs.getInt("userID"),
+                rs.getInt("bookID")
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
     
     
@@ -317,7 +428,6 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JButton Reserve;
     private javax.swing.JButton Reserve1;
     private javax.swing.JButton booksBTN;
-    private javax.swing.JButton jButton3;
     private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -331,13 +441,18 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton reservationsBTN;
+    private javax.swing.JButton searchBTN;
+    private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;
+    private javax.swing.JLabel stayeaseLBL1;
+    private javax.swing.JLabel stayeaseLBL5;
+    private javax.swing.JLabel stayeaseLBL6;
+    private javax.swing.JLabel stayeaseLBL7;
     private javax.swing.JButton transactionsBTN;
     private javax.swing.JButton userBTN;
     // End of variables declaration//GEN-END:variables
