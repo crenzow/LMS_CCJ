@@ -242,7 +242,7 @@ public class Users extends javax.swing.JFrame {
     }//GEN-LAST:event_booksBTNActionPerformed
 
     private void transactionsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionsBTNActionPerformed
-        Users tranFrame = new Users();
+        Transactions tranFrame = new Transactions();
         this.setVisible(false);
         tranFrame.setVisible(true);
     }//GEN-LAST:event_transactionsBTNActionPerformed
