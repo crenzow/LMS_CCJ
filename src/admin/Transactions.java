@@ -6,6 +6,11 @@ package admin;
 
 
 
+import dbConnection.DatabaseConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 import user.*;
 import main.Login;
 
@@ -17,6 +22,7 @@ public class Transactions extends javax.swing.JFrame {
      */
     public Transactions() {
         initComponents();
+        issueBook();
         
     }
 
@@ -173,13 +179,13 @@ public class Transactions extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Title", "Author", "ISBN", "Availability", "Location"
+                "Title", "ISBN", "Availability", "Location"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -337,6 +343,32 @@ public class Transactions extends javax.swing.JFrame {
         loginFrame.setVisible(true);
     }//GEN-LAST:event_logoutBTNActionPerformed
 
+      public void issueBook() {
+    String sql = "SELECT bookID, title, author, genre, isbn, publicationYear, quantityAvailable, location FROM book";
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        while (rs.next()) {
+            Object[] row = {
+                
+                rs.getString("title"),
+                rs.getString("isbn"),
+                rs.getInt("quantityAvailable"),
+                rs.getString("location"),
+                    
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+    
 
     
     

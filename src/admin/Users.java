@@ -6,6 +6,11 @@ package admin;
 
 
 
+import dbConnection.DatabaseConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 import user.*;
 import main.Login;
 
@@ -17,6 +22,7 @@ public class Users extends javax.swing.JFrame {
      */
     public Users() {
         initComponents();
+        userInfo();
         
     }
 
@@ -41,7 +47,7 @@ public class Users extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        searchTXT = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -53,7 +59,7 @@ public class Users extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        searchBTN = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -145,7 +151,7 @@ public class Users extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
+        jPanel3.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
 
         jButton1.setBackground(new java.awt.Color(131, 197, 190));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -187,10 +193,15 @@ public class Users extends javax.swing.JFrame {
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 540, 130, 40));
         jPanel3.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 540, 260, 40));
 
-        jButton2.setBackground(new java.awt.Color(131, 197, 190));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton2.setText("Search");
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, 60));
+        searchBTN.setBackground(new java.awt.Color(131, 197, 190));
+        searchBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        searchBTN.setText("Search");
+        searchBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBTNActionPerformed(evt);
+            }
+        });
+        jPanel3.add(searchBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, 60));
 
         jButton3.setBackground(new java.awt.Color(131, 197, 190));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -276,6 +287,65 @@ public class Users extends javax.swing.JFrame {
         loginFrame.setVisible(true);
     }//GEN-LAST:event_logoutBTNActionPerformed
 
+    private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
+        // TODO add your handling code here:
+        String keyword = searchTXT.getText().trim();
+        searchBooks(keyword);
+    }//GEN-LAST:event_searchBTNActionPerformed
+
+    public void userInfo() {
+    String sql = "SELECT userID, fullName, email, phoneNumber FROM user";
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        while (rs.next()) {
+            Object[] row = {
+                rs.getInt("userID"),
+                rs.getString("fullName"),
+                rs.getString("email"),
+                rs.getString("phoneNumber")
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+    
+    public void searchBooks(String keyword) {
+        String sql = "SELECT userID, fullName, email, phoneNumber FROM user WHERE userID LIKE ? OR fullName LIKE ?";
+
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+            String searchPattern = "%" + keyword + "%"; // Allows partial matches
+
+            // Set parameters correctly
+            ps.setString(1, searchPattern); 
+            ps.setString(2, searchPattern); 
+
+            ResultSet rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // Clear existing data
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("userID"),
+                    rs.getString("fullName"),
+                    rs.getString("email"),        // ✅ Now included
+                    rs.getString("phoneNumber"),  // ✅ Now included
+                };
+                model.addRow(row);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     
     
@@ -348,7 +418,6 @@ public class Users extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton booksBTN;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel2;
@@ -365,7 +434,6 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -373,6 +441,8 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton reservationsBTN;
+    private javax.swing.JButton searchBTN;
+    private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;
     private javax.swing.JButton transactionsBTN;
     private javax.swing.JButton userBTN;
