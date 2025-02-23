@@ -98,7 +98,7 @@ public class Fines extends javax.swing.JFrame {
                 logoutBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 170, 40));
+        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 170, 40));
 
         libraryBTN.setBackground(new java.awt.Color(131, 197, 190));
         libraryBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N

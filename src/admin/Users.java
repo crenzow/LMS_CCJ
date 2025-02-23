@@ -296,7 +296,7 @@ public class Users extends javax.swing.JFrame {
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
         // TODO add your handling code here:
         String keyword = searchTXT.getText().trim();
-        searchBooks(keyword);
+        searchUsers(keyword);
     }//GEN-LAST:event_searchBTNActionPerformed
 
     public void userInfo() {
@@ -323,34 +323,43 @@ public class Users extends javax.swing.JFrame {
     }
 }
     
-    public void searchBooks(String keyword) {
-        String sql = "SELECT userID, fullName, email, phoneNumber FROM user WHERE userID LIKE ? OR fullName LIKE ?";
+    public void searchUsers(String keyword) {
+    String sql;
+    boolean n = keyword.matches("\\d+"); // Check if keyword is a number
 
-        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-            String searchPattern = "%" + keyword + "%"; // Allows partial matches
-
-            // Set parameters correctly
-            ps.setString(1, searchPattern); 
-            ps.setString(2, searchPattern); 
-
-            ResultSet rs = ps.executeQuery();
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0); // Clear existing data
-
-            while (rs.next()) {
-                Object[] row = {
-                    rs.getInt("userID"),
-                    rs.getString("fullName"),
-                    rs.getString("email"),        // ✅ Now included
-                    rs.getString("phoneNumber"),  // ✅ Now included
-                };
-                model.addRow(row);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    if (n) {
+        sql = "SELECT userID, fullName, email, phoneNumber FROM user WHERE userID = ?";
+    } else {
+        sql = "SELECT userID, fullName, email, phoneNumber FROM user WHERE fullName LIKE ?";
     }
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+        if (n) {
+            ps.setInt(1, Integer.parseInt(keyword)); 
+        } else {
+            ps.setString(1, "%" + keyword + "%"); 
+        }
+
+        ResultSet rs = ps.executeQuery();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        while (rs.next()) {
+            Object[] row = {
+                rs.getInt("userID"),
+                rs.getString("fullName"),
+                rs.getString("email"),
+                rs.getString("phoneNumber"),
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+
 
 
     

@@ -176,7 +176,7 @@ public class Reservations extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Reservation ID", "Reservation Date", "Status", "User ID", "Book ID"
+                "Reservation ID", "Book Title", "Name", "Reservation Date", "Status"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -224,9 +224,19 @@ public class Reservations extends javax.swing.JFrame {
         Reserve1.setBackground(new java.awt.Color(131, 197, 190));
         Reserve1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Reserve1.setText("Reserve");
+        Reserve1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Reserve1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(Reserve1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 150, 60));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Status", "Pending", "Approved", "Cancelled" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 170, 60));
 
         jLabel6.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
@@ -307,7 +317,11 @@ public class Reservations extends javax.swing.JFrame {
     if (!searchValue.isEmpty()) {
         try {
             // SQL query to search for a reservation based on reservationID
-            String sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation WHERE reservationID = ?";
+            String sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
+             "FROM Reservation r " +
+             "JOIN Book b ON r.bookID = b.bookID " +
+             "JOIN User u ON r.userID = u.userID " + 
+             "WHERE reservationID = ?";
 
             // Prepare and execute the query
             try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -322,11 +336,11 @@ public class Reservations extends javax.swing.JFrame {
                         // Add the retrieved data to the table model
                         Object[] row = {
                             rs.getInt("reservationID"),
+                            rs.getString("title"),
+                            rs.getString("fullName"),
                             rs.getDate("reservationDate"),  // Assuming it's a DATE type field
-                            rs.getString("status"),
-                            rs.getInt("userID"),
-                            rs.getInt("bookID")
-                        };
+                            rs.getString("status")
+            };
                         model.addRow(row);
                     } else {
                         // No records found, inform the user
@@ -343,7 +357,10 @@ public class Reservations extends javax.swing.JFrame {
     } else {
         // If the search field is empty, show all reservations from the table
         try {
-            String sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation";
+            String sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
+             "FROM Reservation r " +
+             "JOIN Book b ON r.bookID = b.bookID " +
+             "JOIN User u ON r.userID = u.userID"; 
 
             // Prepare and execute the query
             try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
@@ -356,11 +373,11 @@ public class Reservations extends javax.swing.JFrame {
                 while (rs.next()) {
                     Object[] row = {
                         rs.getInt("reservationID"),
-                        rs.getDate("reservationDate"),
-                        rs.getString("status"),
-                        rs.getInt("userID"),
-                        rs.getInt("bookID")
-                    };
+                        rs.getString("title"),
+                        rs.getString("fullName"),
+                        rs.getDate("reservationDate"),  // Assuming it's a DATE type field
+                        rs.getString("status")
+            };
                     model.addRow(row); // Add each row to the table
                 }
 
@@ -384,8 +401,19 @@ public class Reservations extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ReserveActionPerformed
 
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void Reserve1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reserve1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Reserve1ActionPerformed
+
     public void loadReservationsData() {
-    String sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation";  // Assuming 'reservations' table
+    String sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
+             "FROM Reservation r " +
+             "JOIN Book b ON r.bookID = b.bookID " +
+             "JOIN User u ON r.userID = u.userID"; 
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
@@ -396,10 +424,10 @@ public class Reservations extends javax.swing.JFrame {
         while (rs.next()) {
             Object[] row = {
                 rs.getInt("reservationID"),
+                rs.getString("title"),
+                rs.getString("fullName"),
                 rs.getDate("reservationDate"),  // Assuming it's a DATE type field
-                rs.getString("status"),
-                rs.getInt("userID"),
-                rs.getInt("bookID")
+                rs.getString("status")
             };
             model.addRow(row);
         }
@@ -420,10 +448,17 @@ public class Reservations extends javax.swing.JFrame {
 
             // If "All Status" is selected, fetch all records without filtering by status
             if (selectedStatus.equals("All Status")) {
-                sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation";
+                sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
+             "FROM Reservation r " +
+             "JOIN Book b ON r.bookID = b.bookID " +
+             "JOIN User u ON r.userID = u.userID";
             } else {
                 // Otherwise, filter by the selected status
-                sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation WHERE status = ?";
+                sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
+             "FROM Reservation r " +
+             "JOIN Book b ON r.bookID = b.bookID " +
+             "JOIN User u ON r.userID = u.userID " + 
+             "WHERE status = ?";
             }
 
             // Prepare and execute the query
@@ -441,11 +476,11 @@ public class Reservations extends javax.swing.JFrame {
                     while (rs.next()) {
                         Object[] row = {
                             rs.getInt("reservationID"),
-                            rs.getDate("reservationDate"),
-                            rs.getString("status"),
-                            rs.getInt("userID"),
-                            rs.getInt("bookID")
-                        };
+                            rs.getString("title"),
+                            rs.getString("fullName"),
+                            rs.getDate("reservationDate"),  // Assuming it's a DATE type field
+                            rs.getString("status")
+            };
                         model.addRow(row); // Add each row to the table
                     }
 

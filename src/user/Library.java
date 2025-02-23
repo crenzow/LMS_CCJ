@@ -46,6 +46,11 @@ public class Library extends javax.swing.JFrame {
         searchTXT = new javax.swing.JTextField();
         searchBTN = new javax.swing.JButton();
         genreCBX = new javax.swing.JComboBox<>();
+        stayeaseLBL7 = new javax.swing.JLabel();
+        stayeaseLBL1 = new javax.swing.JLabel();
+        stayeaseLBL5 = new javax.swing.JLabel();
+        stayeaseLBL6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -107,7 +112,7 @@ public class Library extends javax.swing.JFrame {
                 logoutBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 170, 40));
+        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 170, 40));
 
         libraryBTN.setBackground(new java.awt.Color(131, 197, 190));
         libraryBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -120,6 +125,8 @@ public class Library extends javax.swing.JFrame {
         jPanel2.add(libraryBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 170, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         booksTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -134,61 +141,62 @@ public class Library extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(booksTable);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 900, 493));
+
         searchTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchTXTActionPerformed(evt);
             }
         });
+        jPanel1.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 350, 60));
 
-        searchBTN.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        searchBTN.setBackground(new java.awt.Color(131, 197, 190));
+        searchBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         searchBTN.setText("SEARCH");
         searchBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchBTNActionPerformed(evt);
             }
         });
+        jPanel1.add(searchBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, 110, 60));
 
+        genreCBX.setBackground(new java.awt.Color(131, 197, 190));
+        genreCBX.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         genreCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Genres", "Fiction", "Mystery", "Fantasy", "Science Fiction", "Romance", "Non-Fiction" }));
         genreCBX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 genreCBXActionPerformed(evt);
             }
         });
+        jPanel1.add(genreCBX, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 220, 60));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(genreCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(196, 216, Short.MAX_VALUE)
-                    .addComponent(searchTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(searchBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 194, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(genreCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 15, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(searchTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(searchBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 695, Short.MAX_VALUE)))
-        );
+        stayeaseLBL7.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL7.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL7.setText("UB");
+        jPanel1.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 60, 60));
+
+        stayeaseLBL1.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL1.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL1.setText("H");
+        jPanel1.add(stayeaseLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 60, -1));
+
+        stayeaseLBL5.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL5.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL5.setText("P");
+        jPanel1.add(stayeaseLBL5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 70));
+
+        stayeaseLBL6.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL6.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL6.setText("AGE");
+        jPanel1.add(stayeaseLBL6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 90, 40));
+
+        jLabel5.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
+        jLabel5.setText("Filter:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 60, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -268,47 +276,48 @@ public class Library extends javax.swing.JFrame {
 }
     
     public void searchBooks(String keyword) {
-        String sql = "SELECT bookID, title, author, genre, isbn, publicationYear, quantityAvailable " +
-                     "FROM book " +
-                     "WHERE bookID LIKE ? OR title LIKE ? OR author LIKE ? OR genre LIKE ? OR publicationYear LIKE ?";
+    String sql = "SELECT bookID, title, author, genre, isbn, publicationYear, quantityAvailable FROM book WHERE ";
 
-        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-            String searchPattern = "%" + keyword + "%"; // Allows partial matches for text fields
+    boolean n = keyword.matches("\\d+"); 
+    if (n) {
+        sql += "bookID = ? OR publicationYear = ?";
+    } else {
+        sql += "title LIKE ? OR author LIKE ? OR genre LIKE ?";
+    }
 
-            // Check if the keyword is a number (for bookID)
-            try {
-                int bookIdSearch = Integer.parseInt(keyword); 
-                ps.setString(1, "%" + bookIdSearch + "%"); // Still uses LIKE for flexibility
-            } catch (NumberFormatException e) {
-                ps.setString(1, "%-1%"); // If not a number, set an unlikely match to avoid errors
-            }
-
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+        if (n) {
+            ps.setInt(1, Integer.parseInt(keyword)); 
+            ps.setInt(2, Integer.parseInt(keyword)); 
+        } else {
+            String searchPattern = "%" + keyword + "%";
+            ps.setString(1, searchPattern);
             ps.setString(2, searchPattern);
             ps.setString(3, searchPattern);
-            ps.setString(4, searchPattern);
-            ps.setString(5, searchPattern);
-
-            ResultSet rs = ps.executeQuery();
-            DefaultTableModel model = (DefaultTableModel) booksTable.getModel();
-            model.setRowCount(0); // Clear existing data
-
-            while (rs.next()) {
-                Object[] row = {
-                    rs.getInt("bookID"),
-                    rs.getString("title"),
-                    rs.getString("author"),
-                    rs.getString("genre"),
-                    rs.getString("isbn"),
-                    rs.getInt("publicationYear"),
-                    rs.getInt("quantityAvailable")
-                };
-                model.addRow(row);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
+        ResultSet rs = ps.executeQuery();
+        DefaultTableModel model = (DefaultTableModel) booksTable.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        while (rs.next()) {
+            Object[] row = {
+                rs.getInt("bookID"),
+                rs.getString("title"),
+                rs.getString("author"),
+                rs.getString("genre"),
+                rs.getString("isbn"),
+                rs.getInt("publicationYear"),
+                rs.getInt("quantityAvailable")
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
+
     
     private void filterBooksByGenre() {
     String selectedGenre = genreCBX.getSelectedItem().toString();
@@ -412,6 +421,7 @@ public class Library extends javax.swing.JFrame {
     private javax.swing.JButton borrowingsBTN;
     private javax.swing.JButton finesBTN;
     private javax.swing.JComboBox<String> genreCBX;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
@@ -422,5 +432,9 @@ public class Library extends javax.swing.JFrame {
     private javax.swing.JButton reservationBTN;
     private javax.swing.JButton searchBTN;
     private javax.swing.JTextField searchTXT;
+    private javax.swing.JLabel stayeaseLBL1;
+    private javax.swing.JLabel stayeaseLBL5;
+    private javax.swing.JLabel stayeaseLBL6;
+    private javax.swing.JLabel stayeaseLBL7;
     // End of variables declaration//GEN-END:variables
 }

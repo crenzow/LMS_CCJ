@@ -6,6 +6,13 @@ package user;
 
 
 
+import dbConnection.DatabaseConnection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import main.Login;
 
 
@@ -16,6 +23,7 @@ public class Reservations extends javax.swing.JFrame {
      */
     public Reservations() {
         initComponents();
+        loadReservations();
         
     }
 
@@ -37,6 +45,11 @@ public class Reservations extends javax.swing.JFrame {
         logoutBTN = new javax.swing.JButton();
         libraryBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        reservationTBL = new javax.swing.JTable();
+        statusCBX = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -97,7 +110,7 @@ public class Reservations extends javax.swing.JFrame {
                 logoutBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 170, 40));
+        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 170, 40));
 
         libraryBTN.setBackground(new java.awt.Color(131, 197, 190));
         libraryBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -111,16 +124,42 @@ public class Reservations extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 940, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 750, Short.MAX_VALUE)
-        );
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        reservationTBL.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Book Title", "Reservation Date", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(reservationTBL);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 821, 520));
+
+        statusCBX.setBackground(new java.awt.Color(131, 197, 190));
+        statusCBX.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        statusCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Status", "Pending", "Approved", "Cancelled", " " }));
+        statusCBX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusCBXActionPerformed(evt);
+            }
+        });
+        jPanel1.add(statusCBX, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 110, 110, 60));
+
+        jLabel5.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
+        jLabel5.setText("Filter:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 120, 60, 40));
+
+        jLabel1.setBackground(new java.awt.Color(0, 109, 119));
+        jLabel1.setFont(new java.awt.Font("Serif", 3, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 109, 119));
+        jLabel1.setText("MY RESERVATIONS");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -157,6 +196,77 @@ public class Reservations extends javax.swing.JFrame {
         libFrame.setVisible(true);
     }//GEN-LAST:event_libraryBTNActionPerformed
 
+    private void statusCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusCBXActionPerformed
+        // TODO add your handling code here:
+        filterReservationByStatus();
+    }//GEN-LAST:event_statusCBXActionPerformed
+
+    private void loadReservations() {  
+    String sql = "SELECT b.title, r.reservationDate, r.status " +
+             "FROM Reservation r " +
+             "JOIN Book b ON r.bookID = b.bookID";
+
+
+    DefaultTableModel model = (DefaultTableModel) reservationTBL.getModel();
+    model.setRowCount(0); // Clear previous data
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+     //   ps.setInt(1, userID); // Set the user ID dynamically
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                String title = rs.getString("title");
+                Date reservationDate = rs.getDate("reservationDate");
+                String status = rs.getString("status");
+
+                model.addRow(new Object[]{title,reservationDate, status});
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error loading borrowing history!", "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
+    private void filterReservationByStatus() {
+    String selectedStatus = statusCBX.getSelectedItem().toString();
+    System.out.println("Selected Status: " + selectedStatus); // Debugging log
+
+    String sql = "SELECT b.title, r.reservationDate, r.status " +
+             "FROM Reservation r " +
+             "JOIN Book b ON r.bookID = b.bookID";
+
+    // Apply filtering only if a specific genre is selected
+    if (!selectedStatus.equals("All Status")) {
+        sql += " WHERE status = ?";
+    }
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+
+        if (!selectedStatus.equals("All Status")) {
+            ps.setString(1, selectedStatus);
+        }
+
+        try (ResultSet rs = ps.executeQuery()) {
+            DefaultTableModel model = (DefaultTableModel) reservationTBL.getModel();
+            model.setRowCount(0); // Clear existing data
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getString("title"),
+                    rs.getDate("reservationDate"),
+                    rs.getString("status"),
+                };
+                model.addRow(row);
+            }
+
+            System.out.println("Rows added: " + model.getRowCount()); // Debugging log
+
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
     
     
@@ -205,12 +315,17 @@ public class Reservations extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton borrowingsBTN;
     private javax.swing.JButton finesBTN;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton libraryBTN;
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton reservationBTN;
+    private javax.swing.JTable reservationTBL;
+    private javax.swing.JComboBox<String> statusCBX;
     // End of variables declaration//GEN-END:variables
 }

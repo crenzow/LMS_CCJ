@@ -4,6 +4,13 @@
  */
 package user;
 
+import dbConnection.DatabaseConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 import main.Login;
@@ -16,8 +23,10 @@ public class Borrowings extends javax.swing.JFrame {
      */
     public Borrowings() {
         initComponents();
+        loadBorrowingHistory();
         
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,6 +46,11 @@ public class Borrowings extends javax.swing.JFrame {
         logoutBTN = new javax.swing.JButton();
         libraryBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        borrowingsTBL = new javax.swing.JTable();
+        statusCBX = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -98,7 +112,7 @@ public class Borrowings extends javax.swing.JFrame {
                 logoutBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 170, 40));
+        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 170, 40));
 
         libraryBTN.setBackground(new java.awt.Color(131, 197, 190));
         libraryBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -112,16 +126,42 @@ public class Borrowings extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 940, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 750, Short.MAX_VALUE)
-        );
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        borrowingsTBL.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Book Title", "Borrow Date", "Due Date", "Return Date", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(borrowingsTBL);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 821, 524));
+
+        statusCBX.setBackground(new java.awt.Color(131, 197, 190));
+        statusCBX.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        statusCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Status", "Borrowed", "Returned", "Renewed", "Overdue", " " }));
+        statusCBX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusCBXActionPerformed(evt);
+            }
+        });
+        jPanel1.add(statusCBX, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 130, 120, 60));
+
+        jLabel5.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
+        jLabel5.setText("Filter:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 140, 60, 40));
+
+        jLabel1.setBackground(new java.awt.Color(0, 109, 119));
+        jLabel1.setFont(new java.awt.Font("Serif", 3, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 109, 119));
+        jLabel1.setText("MY BORROWING HISTORY");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -157,6 +197,89 @@ public class Borrowings extends javax.swing.JFrame {
         this.setVisible(false);
         libFrame.setVisible(true);
     }//GEN-LAST:event_libraryBTNActionPerformed
+
+    private void statusCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusCBXActionPerformed
+        // TODO add your handling code here:
+        filterBorrowingsByStatus();
+    }//GEN-LAST:event_statusCBXActionPerformed
+
+    
+    private void loadBorrowingHistory() {
+  /*  String sql = "SELECT b.title, t.borrowDate, t.dueDate, t.returnDate, t.status " +
+                 "FROM Transaction t " +
+                 "JOIN Book b ON t.bookID = b.bookID " +
+                 "WHERE t.userID = ?"; // Assuming you have a logged-in user     */
+    
+    
+    String sql = "SELECT b.title, t.borrowDate, t.dueDate, t.returnDate, t.status " +
+             "FROM Transaction t " +
+             "JOIN Book b ON t.bookID = b.bookID";
+
+
+    DefaultTableModel model = (DefaultTableModel) borrowingsTBL.getModel();
+    model.setRowCount(0); // Clear previous data
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+     //   ps.setInt(1, userID); // Set the user ID dynamically
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                String title = rs.getString("title");
+                Date borrowDate = rs.getDate("borrowDate");
+                Date dueDate = rs.getDate("dueDate");
+                Date returnDate = rs.getDate("returnDate");
+                String status = rs.getString("status");
+
+                model.addRow(new Object[]{title, borrowDate, dueDate, returnDate, status});
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error loading borrowing history!", "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
+    private void filterBorrowingsByStatus() {
+    String selectedStatus = statusCBX.getSelectedItem().toString();
+    System.out.println("Selected Status: " + selectedStatus); // Debugging log
+
+    String sql = "SELECT b.title, t.borrowDate, t.dueDate, t.returnDate, t.status " +
+             "FROM Transaction t " +
+             "JOIN Book b ON t.bookID = b.bookID";
+
+    // Apply filtering only if a specific genre is selected
+    if (!selectedStatus.equals("All Status")) {
+        sql += " WHERE status = ?";
+    }
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+
+        if (!selectedStatus.equals("All Status")) {
+            ps.setString(1, selectedStatus);
+        }
+
+        try (ResultSet rs = ps.executeQuery()) {
+            DefaultTableModel model = (DefaultTableModel) borrowingsTBL.getModel();
+            model.setRowCount(0); // Clear existing data
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getString("title"),
+                    rs.getDate("borrowDate"),
+                    rs.getDate("dueDate"),
+                    rs.getDate("returnDate"),
+                    rs.getString("status"),
+                };
+                model.addRow(row);
+            }
+
+            System.out.println("Rows added: " + model.getRowCount()); // Debugging log
+
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
 
     
@@ -205,13 +328,18 @@ public class Borrowings extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton borrowingsBTN;
+    private javax.swing.JTable borrowingsTBL;
     private javax.swing.JButton finesBTN;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton libraryBTN;
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton reservationBTN;
+    private javax.swing.JComboBox<String> statusCBX;
     // End of variables declaration//GEN-END:variables
 }

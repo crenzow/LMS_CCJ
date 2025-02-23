@@ -149,7 +149,7 @@ public class Settlements extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Fine ID", "Amount Due", "Status", "User ID", "Transaction ID"
+                "Fine ID", "User ID", "Name", "Amount Due", "Status"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -246,7 +246,11 @@ public class Settlements extends javax.swing.JFrame {
     if (!searchValue.isEmpty()) {
         try {
             // SQL query to search for a fine based on fineID (assuming fineID is the search criterion)
-            String sql = "SELECT fineID, amount, status, userID, transactionID FROM fine WHERE fineID = ?";
+            String sql = "SELECT f.fineID, u.userID, u.fullName, f.amount, f.status " +
+             "FROM Fine f " +
+             "JOIN User u ON f.userID = u.userID " +
+             "WHERE fineID = ?"
+                    ;
 
             // Prepare and execute the query
             try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -260,12 +264,12 @@ public class Settlements extends javax.swing.JFrame {
                     if (rs.next()) {
                         // Add the retrieved data to the table model
                         Object[] row = {
-                            rs.getInt("fineID"),
-                            rs.getDouble("amount"),
-                            rs.getString("status"),
-                            rs.getInt("userID"),
-                            rs.getInt("transactionID")
-                        };
+                        rs.getInt("fineID"),
+                        rs.getInt("userID"),  // Assuming it's a double type field
+                        rs.getString("fullName"),
+                        rs.getDouble("amount"),
+                        rs.getString("status")
+            };
                         model.addRow(row);
                     } else {
                         // No records found, inform the user
@@ -286,7 +290,9 @@ public class Settlements extends javax.swing.JFrame {
 
     public void loadFinesData() {
     // SQL query to fetch data from the fines table
-    String sql = "SELECT fineID, amount, status, userID, transactionID FROM fine";  // Assuming 'fines' table
+    String sql = "SELECT f.fineID, u.userID, u.fullName, f.amount, f.status " +
+             "FROM Fine f " +
+             "JOIN User u ON f.userID = u.userID";
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
@@ -298,10 +304,10 @@ public class Settlements extends javax.swing.JFrame {
         while (rs.next()) {
             Object[] row = {
                 rs.getInt("fineID"),
-                rs.getDouble("amount"),  // Assuming it's a double type field
-                rs.getString("status"),
-                rs.getInt("userID"),
-                rs.getInt("transactionID")
+                rs.getInt("userID"),  // Assuming it's a double type field
+                rs.getString("fullName"),
+                rs.getDouble("amount"),
+                rs.getString("status")
             };
             model.addRow(row);
         }
