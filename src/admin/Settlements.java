@@ -10,6 +10,8 @@ import dbConnection.DatabaseConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import user.*;
@@ -54,6 +56,15 @@ public class Settlements extends javax.swing.JFrame {
         stayeaseLBL6 = new javax.swing.JLabel();
         stayeaseLBL1 = new javax.swing.JLabel();
         stayeaseLBL7 = new javax.swing.JLabel();
+        amountPaidTXT = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        fineIDTXT = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        dateTXT = new de.wannawork.jcalendar.JCalendarComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        addPaymentBTN = new javax.swing.JButton();
+        methodTXT = new javax.swing.JComboBox<>();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -154,7 +165,7 @@ public class Settlements extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 880, 530));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 880, 310));
         jPanel1.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 350, 60));
 
         jButton3.setBackground(new java.awt.Color(131, 197, 190));
@@ -196,6 +207,44 @@ public class Settlements extends javax.swing.JFrame {
         stayeaseLBL7.setForeground(new java.awt.Color(0, 109, 119));
         stayeaseLBL7.setText("UB");
         jPanel1.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 60, 60));
+        jPanel1.add(amountPaidTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 610, 240, 40));
+
+        jLabel3.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel3.setText("Amount Paid:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 610, 130, 40));
+        jPanel1.add(fineIDTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 550, 240, 40));
+
+        jLabel4.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel4.setText("Fine ID:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 130, 40));
+        jPanel1.add(dateTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 670, 240, 40));
+
+        jLabel5.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel5.setText("Payment Date:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 670, -1, 30));
+
+        jLabel6.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel6.setText("Payment Method:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 550, 150, 40));
+
+        addPaymentBTN.setBackground(new java.awt.Color(131, 197, 190));
+        addPaymentBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        addPaymentBTN.setText("ADD PAYMENT");
+        addPaymentBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPaymentBTNActionPerformed(evt);
+            }
+        });
+        jPanel1.add(addPaymentBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 640, -1, 60));
+
+        methodTXT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "Online" }));
+        methodTXT.setSelectedIndex(-1);
+        methodTXT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                methodTXTActionPerformed(evt);
+            }
+        });
+        jPanel1.add(methodTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 550, 240, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -239,54 +288,68 @@ public class Settlements extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBTNActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    // Get the value entered in the searchTXT text field
-    String searchValue = searchTXT.getText().trim();
+        // Get the value entered in the searchTXT text field
+        String searchValue = searchTXT.getText().trim();
 
-    // Check if the search value is not empty
-    if (!searchValue.isEmpty()) {
-        try {
-            // SQL query to search for a fine based on fineID (assuming fineID is the search criterion)
-            String sql = "SELECT f.fineID, u.userID, u.fullName, f.amount, f.status " +
-             "FROM Fine f " +
-             "JOIN User u ON f.userID = u.userID " +
-             "WHERE fineID = ?"
-                    ;
+        // Check if the search value is not empty
+        if (!searchValue.isEmpty()) {
+            try {
+                // SQL query to search for a fine based on fineID (assuming fineID is the search criterion)
+                String sql = "SELECT f.fineID, u.userID, u.fullName, f.amount, f.status " +
+                "FROM Fine f " +
+                "JOIN User u ON f.userID = u.userID " +
+                "WHERE fineID = ?"
+                ;
 
-            // Prepare and execute the query
-            try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-                ps.setInt(1, Integer.parseInt(searchValue));  // Search by fineID, assuming it's an integer
+                // Prepare and execute the query
+                try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+                    ps.setInt(1, Integer.parseInt(searchValue));  // Search by fineID, assuming it's an integer
 
-                try (ResultSet rs = ps.executeQuery()) {
-                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get table model
-                    model.setRowCount(0); // Clear existing data
+                    try (ResultSet rs = ps.executeQuery()) {
+                        DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get table model
+                        model.setRowCount(0); // Clear existing data
 
-                    // Check if a record was found
-                    if (rs.next()) {
-                        // Add the retrieved data to the table model
-                        Object[] row = {
-                        rs.getInt("fineID"),
-                        rs.getInt("userID"),  // Assuming it's a double type field
-                        rs.getString("fullName"),
-                        rs.getDouble("amount"),
-                        rs.getString("status")
-            };
-                        model.addRow(row);
-                    } else {
-                        // No records found, inform the user
-                        JOptionPane.showMessageDialog(null, "No fine found with that ID.");
+                        // Check if a record was found
+
+                        if (rs.next()) {
+
+                            double amount = rs.getDouble("amount");
+                            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "PH"));
+                            String formattedAmount = currencyFormat.format(amount);
+
+                            // Add the retrieved data to the table model
+                            Object[] row = {
+                                rs.getInt("fineID"),
+                                rs.getInt("userID"),  // Assuming it's a double type field
+                                rs.getString("fullName"),
+                                formattedAmount,
+                                rs.getString("status")
+                            };
+                            model.addRow(row);
+                        } else {
+                            // No records found, inform the user
+                            JOptionPane.showMessageDialog(null, "No fine found with that ID.");
+                        }
                     }
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error searching for fine: " + e.getMessage());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid number for fine ID.");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error searching for fine: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid number for fine ID.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter a fine ID to search.");
         }
-    } else {
-        JOptionPane.showMessageDialog(null, "Please enter a fine ID to search.");
-    }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void addPaymentBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPaymentBTNActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addPaymentBTNActionPerformed
+
+    private void methodTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_methodTXTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_methodTXTActionPerformed
 
     public void loadFinesData() {
     // SQL query to fetch data from the fines table
@@ -302,11 +365,16 @@ public class Settlements extends javax.swing.JFrame {
 
         // Loop through the result set and populate the table model
         while (rs.next()) {
+            
+            double amount = rs.getDouble("amount");
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "PH"));
+            String formattedAmount = currencyFormat.format(amount);
+            
             Object[] row = {
                 rs.getInt("fineID"),
                 rs.getInt("userID"),  // Assuming it's a double type field
                 rs.getString("fullName"),
-                rs.getDouble("amount"),
+                formattedAmount,
                 rs.getString("status")
             };
             model.addRow(row);
@@ -386,9 +454,17 @@ public class Settlements extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addPaymentBTN;
+    private javax.swing.JTextField amountPaidTXT;
     private javax.swing.JButton booksBTN;
+    private de.wannawork.jcalendar.JCalendarComboBox dateTXT;
+    private javax.swing.JTextField fineIDTXT;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
@@ -396,6 +472,7 @@ public class Settlements extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel logoLBL1;
     private javax.swing.JButton logoutBTN;
+    private javax.swing.JComboBox<String> methodTXT;
     private javax.swing.JButton reservationsBTN;
     private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;

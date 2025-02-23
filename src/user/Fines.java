@@ -6,17 +6,32 @@ package user;
 
 
 
+import dbConnection.DatabaseConnection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import main.Login;
 
 
 public class Fines extends javax.swing.JFrame {
+    private int userID;
 
     /**
      * Creates new form Admin
      */
-    public Fines() {
+    public Fines(int userID) {
+        this.userID = userID;
         initComponents();
+        loadFines();
+        loadPayments();
         
+    }
+    
+    public Fines() {
+        this(0);
     }
 
     /**
@@ -37,6 +52,24 @@ public class Fines extends javax.swing.JFrame {
         logoutBTN = new javax.swing.JButton();
         libraryBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        fineIDTXT = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        amountPaidTXT = new javax.swing.JTextField();
+        dateTXT = new de.wannawork.jcalendar.JCalendarComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        payBTN = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        statusCBX = new javax.swing.JComboBox<>();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -51,6 +84,11 @@ public class Fines extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("USER");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(0, 109, 119));
@@ -112,16 +150,171 @@ public class Fines extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 940, Short.MAX_VALUE)
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Fine ID", "Amount Due", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel1.setBackground(new java.awt.Color(0, 109, 119));
+        jLabel1.setFont(new java.awt.Font("Serif", 3, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 109, 119));
+        jLabel1.setText("MY  FINES");
+
+        jLabel4.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel4.setText("Fine ID:");
+
+        jLabel3.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel3.setText("Amount Paid:");
+
+        jLabel5.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel5.setText("Payment Date:");
+
+        payBTN.setBackground(new java.awt.Color(131, 197, 190));
+        payBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        payBTN.setText("PAY");
+        payBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payBTNActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
+        jLabel6.setText("Filter:");
+
+        statusCBX.setBackground(new java.awt.Color(131, 197, 190));
+        statusCBX.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        statusCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unpaid", "Paid", "Waived", "All" }));
+        statusCBX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusCBXActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(statusCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(dateTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(amountPaidTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(payBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(fineIDTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 750, Short.MAX_VALUE)
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(statusCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fineIDTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(amountPaidTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dateTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(28, 28, 28)
+                        .addComponent(payBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
+
+        jTabbedPane1.addTab("FINES", jPanel3);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Payment ID", "Amount Paid", "Payment Date", "Payment Method"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        jLabel2.setBackground(new java.awt.Color(0, 109, 119));
+        jLabel2.setFont(new java.awt.Font("Serif", 3, 48)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 109, 119));
+        jLabel2.setText("MY  PAYMENT HISTORY");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(137, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(190, 190, 190))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(129, 129, 129))))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLabel2)
+                .addGap(77, 77, 77)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(92, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("PAYMENTS", jPanel4);
+
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 750));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -134,13 +327,13 @@ public class Fines extends javax.swing.JFrame {
     }//GEN-LAST:event_finesBTNActionPerformed
 
     private void borrowingsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowingsBTNActionPerformed
-        Borrowings borrFrame = new Borrowings();
+        Borrowings borrFrame = new Borrowings(userID);
         this.setVisible(false);
         borrFrame.setVisible(true);
     }//GEN-LAST:event_borrowingsBTNActionPerformed
 
     private void reservationBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationBTNActionPerformed
-        Reservations resFrame = new Reservations();
+        Reservations resFrame = new Reservations(userID);
         this.setVisible(false);
         resFrame.setVisible(true);
     }//GEN-LAST:event_reservationBTNActionPerformed
@@ -153,10 +346,114 @@ public class Fines extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBTNActionPerformed
 
     private void libraryBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_libraryBTNActionPerformed
-        Library libFrame = new Library();
+        Library libFrame = new Library(userID);
         this.setVisible(false);
         libFrame.setVisible(true);
     }//GEN-LAST:event_libraryBTNActionPerformed
+
+    private void payBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payBTNActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_payBTNActionPerformed
+
+    private void statusCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusCBXActionPerformed
+        // TODO add your handling code here:
+        filterByStatus();
+    }//GEN-LAST:event_statusCBXActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        filterByStatus();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void loadFines() {
+
+    String sql = "select fineID, amount, status from fine where userID = ?";
+
+
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    model.setRowCount(0); // Clear previous data
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+        ps.setInt(1, userID);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                String title = rs.getString("fineID");
+                Double amount = rs.getDouble("amount");
+                String status = rs.getString("status");
+
+                model.addRow(new Object[]{title, amount, status});
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error loading borrowing history!", "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
+    private void filterByStatus() {
+    String selectedStatus = statusCBX.getSelectedItem().toString();
+    System.out.println("Selected Status: " + selectedStatus); // Debugging log
+
+    String sql = "select fineID, amount, status from fine where userID = ?";
+
+    // Apply filtering only if a specific genre is selected
+    if (!selectedStatus.equals("All")) {
+        sql += " and status = ?";
+    }
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+        ps.setInt(1, userID);
+        if (!selectedStatus.equals("All")) {
+            ps.setString(2, selectedStatus);
+        }
+
+        try (ResultSet rs = ps.executeQuery()) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // Clear existing data
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getString("fineID"),
+                    rs.getDouble("amount"),
+                    rs.getString("status"),
+                };
+                model.addRow(row);
+            }
+
+            System.out.println("Rows added: " + model.getRowCount()); // Debugging log
+
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+    
+    private void loadPayments() {
+
+    String sql = "select paymentID, amountPaid, paymentDate, paymentMethod from payment where userID = ?";
+
+
+    DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+    model.setRowCount(0); // Clear previous data
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+        ps.setInt(1, userID); // Set the user ID dynamically
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                String paymentID = rs.getString("paymentID");
+                Double amount = rs.getDouble("amountPaid");
+                Date paymentDate = rs.getDate("paymentDate");
+                String paymentMethod = rs.getString("paymentMethod");
+
+                model.addRow(new Object[]{paymentID, amount,paymentDate, paymentMethod});
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error loading borrowing history!", "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
 
 
     
@@ -204,14 +501,32 @@ public class Fines extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField amountPaidTXT;
     private javax.swing.JButton borrowingsBTN;
+    private de.wannawork.jcalendar.JCalendarComboBox dateTXT;
+    private javax.swing.JTextField fineIDTXT;
     private javax.swing.JButton finesBTN;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JButton libraryBTN;
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
+    private javax.swing.JButton payBTN;
     private javax.swing.JButton reservationBTN;
+    private javax.swing.JComboBox<String> statusCBX;
     // End of variables declaration//GEN-END:variables
 }

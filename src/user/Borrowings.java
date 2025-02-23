@@ -17,14 +17,20 @@ import main.Login;
 
 
 public class Borrowings extends javax.swing.JFrame {
+    private int userID;
 
     /**
      * Creates new form Admin
      */
-    public Borrowings() {
+    public Borrowings(int userID) {
+        this.userID = userID;
         initComponents();
         loadBorrowingHistory();
         
+    }
+    
+    public Borrowings(){
+        this(0);
     }
     
 
@@ -170,7 +176,7 @@ public class Borrowings extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void finesBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finesBTNActionPerformed
-        Fines finesFrame = new Fines();
+        Fines finesFrame = new Fines(userID);
         this.setVisible(false);
         finesFrame.setVisible(true);
     }//GEN-LAST:event_finesBTNActionPerformed
@@ -180,7 +186,7 @@ public class Borrowings extends javax.swing.JFrame {
     }//GEN-LAST:event_borrowingsBTNActionPerformed
 
     private void reservationBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationBTNActionPerformed
-        Reservations resFrame = new Reservations();
+        Reservations resFrame = new Reservations(userID);
         this.setVisible(false);
         resFrame.setVisible(true);
     }//GEN-LAST:event_reservationBTNActionPerformed
@@ -193,7 +199,7 @@ public class Borrowings extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBTNActionPerformed
 
     private void libraryBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_libraryBTNActionPerformed
-        Library libFrame = new Library();
+        Library libFrame = new Library(userID);
         this.setVisible(false);
         libFrame.setVisible(true);
     }//GEN-LAST:event_libraryBTNActionPerformed
@@ -205,22 +211,20 @@ public class Borrowings extends javax.swing.JFrame {
 
     
     private void loadBorrowingHistory() {
-  /*  String sql = "SELECT b.title, t.borrowDate, t.dueDate, t.returnDate, t.status " +
+    String sql = "SELECT b.title, t.borrowDate, t.dueDate, t.returnDate, t.status " +
                  "FROM Transaction t " +
                  "JOIN Book b ON t.bookID = b.bookID " +
-                 "WHERE t.userID = ?"; // Assuming you have a logged-in user     */
+                 "WHERE t.userID = ?"; // Assuming you have a logged-in user     
     
     
-    String sql = "SELECT b.title, t.borrowDate, t.dueDate, t.returnDate, t.status " +
-             "FROM Transaction t " +
-             "JOIN Book b ON t.bookID = b.bookID";
+
 
 
     DefaultTableModel model = (DefaultTableModel) borrowingsTBL.getModel();
     model.setRowCount(0); // Clear previous data
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-     //   ps.setInt(1, userID); // Set the user ID dynamically
+        ps.setInt(1, userID); // Set the user ID dynamically
 
         try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -244,18 +248,20 @@ public class Borrowings extends javax.swing.JFrame {
     System.out.println("Selected Status: " + selectedStatus); // Debugging log
 
     String sql = "SELECT b.title, t.borrowDate, t.dueDate, t.returnDate, t.status " +
-             "FROM Transaction t " +
-             "JOIN Book b ON t.bookID = b.bookID";
+                 "FROM Transaction t " +
+                 "JOIN Book b ON t.bookID = b.bookID " +
+                 "WHERE t.userID = ?";
 
     // Apply filtering only if a specific genre is selected
     if (!selectedStatus.equals("All Status")) {
-        sql += " WHERE status = ?";
+        sql += " AND t.status = ?"; // Fix: use AND instead of WHERE
     }
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+         ps.setInt(1, userID);
 
         if (!selectedStatus.equals("All Status")) {
-            ps.setString(1, selectedStatus);
+            ps.setString(2, selectedStatus);
         }
 
         try (ResultSet rs = ps.executeQuery()) {

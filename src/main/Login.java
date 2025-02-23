@@ -183,43 +183,41 @@ public class Login extends javax.swing.JFrame {
     }
 
     try {
-        // Get the database connection from the DatabaseConnection class
         Connection conn = DatabaseConnection.getInstance().getConnection();
 
-        // SQL Query
-        String query = "SELECT 'admin' AS role FROM Admin WHERE username = ? AND password = ? " +
-                       "UNION " +
-                       "SELECT 'user' AS role FROM User WHERE username = ? AND password = ?";
-        
-        PreparedStatement pst = conn.prepareStatement(query);
-        pst.setString(1, username);
-        pst.setString(2, password);
-        pst.setString(3, username);
-        pst.setString(4, password);
-        
-        // Execute Query
-        ResultSet rs = pst.executeQuery();
+        // Check if the user is an admin
+        String adminQuery = "SELECT 'admin' AS role FROM Admin WHERE username = ? AND password = ?";
+        PreparedStatement adminPst = conn.prepareStatement(adminQuery);
+        adminPst.setString(1, username);
+        adminPst.setString(2, password);
+        ResultSet adminRs = adminPst.executeQuery();
 
-        // Process Result
-        if (rs.next()) {
-            String role = rs.getString("role");
+        if (adminRs.next()) {
+            new Books().setVisible(true); // Open Admin Dashboard
+            this.dispose(); // Close Login Window
+            return; // Exit the function early
+        }
 
-            if (role.equals("admin")) {
-               // JOptionPane.showMessageDialog(this, "Welcome Admin!");
-                new Books().setVisible(true); // Open Admin Dashboard
-            } else {
-               // JOptionPane.showMessageDialog(this, "Welcome Customer!");
-                new Library().setVisible(true); // Open User Dashboard
-            }
+        // If not an admin, check if the user is a normal user
+        String userQuery = "SELECT userID, 'user' AS role FROM User WHERE username = ? AND password = ?";
+        PreparedStatement userPst = conn.prepareStatement(userQuery);
+        userPst.setString(1, username);
+        userPst.setString(2, password);
+        ResultSet userRs = userPst.executeQuery();
 
+        if (userRs.next()) {
+            int userID = userRs.getInt("userID"); // Get userID
+            new Library(userID).setVisible(true); // Open User Dashboard
             this.dispose(); // Close Login Window
         } else {
             JOptionPane.showMessageDialog(this, "Invalid username or password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
 
-        // Close Connection
-        rs.close();
-        pst.close();
+        // Close all resources
+        adminRs.close();
+        adminPst.close();
+        userRs.close();
+        userPst.close();
 
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

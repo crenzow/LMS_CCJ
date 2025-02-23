@@ -17,15 +17,22 @@ import main.Login;
 
 
 public class Reservations extends javax.swing.JFrame {
+    private int userID;
 
     /**
      * Creates new form Admin
      */
-    public Reservations() {
+    public Reservations(int userID) {
+        this.userID = userID;
         initComponents();
         loadReservations();
         
     }
+    
+    public Reservations(){
+        this(0);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -168,13 +175,13 @@ public class Reservations extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void finesBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finesBTNActionPerformed
-        Fines finesFrame = new Fines();
+        Fines finesFrame = new Fines(userID);
         this.setVisible(false);
         finesFrame.setVisible(true);
     }//GEN-LAST:event_finesBTNActionPerformed
 
     private void borrowingsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowingsBTNActionPerformed
-        Borrowings borrFrame = new Borrowings();
+        Borrowings borrFrame = new Borrowings(userID);
         this.setVisible(false);
         borrFrame.setVisible(true);
     }//GEN-LAST:event_borrowingsBTNActionPerformed
@@ -191,7 +198,7 @@ public class Reservations extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBTNActionPerformed
 
     private void libraryBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_libraryBTNActionPerformed
-        Library libFrame = new Library();
+        Library libFrame = new Library(userID);
         this.setVisible(false);
         libFrame.setVisible(true);
     }//GEN-LAST:event_libraryBTNActionPerformed
@@ -204,14 +211,16 @@ public class Reservations extends javax.swing.JFrame {
     private void loadReservations() {  
     String sql = "SELECT b.title, r.reservationDate, r.status " +
              "FROM Reservation r " +
-             "JOIN Book b ON r.bookID = b.bookID";
+             "JOIN Book b ON r.bookID = b.bookID " +
+             "JOIN User u ON r.userID = u.userID " +
+             "WHERE r.userID = ?";
 
 
     DefaultTableModel model = (DefaultTableModel) reservationTBL.getModel();
     model.setRowCount(0); // Clear previous data
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-     //   ps.setInt(1, userID); // Set the user ID dynamically
+        ps.setInt(1, userID); // Set the user ID dynamically
 
         try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -234,17 +243,19 @@ public class Reservations extends javax.swing.JFrame {
 
     String sql = "SELECT b.title, r.reservationDate, r.status " +
              "FROM Reservation r " +
-             "JOIN Book b ON r.bookID = b.bookID";
+             "JOIN Book b ON r.bookID = b.bookID " +
+             "JOIN User u ON r.userID = u.userID " +
+             "WHERE r.userID = ?";
 
     // Apply filtering only if a specific genre is selected
     if (!selectedStatus.equals("All Status")) {
-        sql += " WHERE status = ?";
+        sql += " AND r.status = ?";
     }
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-
+        ps.setInt(1, userID);
         if (!selectedStatus.equals("All Status")) {
-            ps.setString(1, selectedStatus);
+            ps.setString(2, selectedStatus);
         }
 
         try (ResultSet rs = ps.executeQuery()) {

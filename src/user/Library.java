@@ -13,14 +13,20 @@ import main.Login;
 
 
 public class Library extends javax.swing.JFrame {
+    private int userID;
 
     /**
      * Creates new form Admin
      */
-    public Library() {
+    public Library(int userID) {
+        this.userID = userID;
         initComponents();
         loadBooksData();
         
+    }
+    
+    public Library() {
+        this(0);
     }
 
     /**
@@ -205,19 +211,19 @@ public class Library extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void finesBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finesBTNActionPerformed
-        Fines finesFrame = new Fines();
+        Fines finesFrame = new Fines(userID);
         this.setVisible(false);
         finesFrame.setVisible(true);
     }//GEN-LAST:event_finesBTNActionPerformed
 
     private void borrowingsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowingsBTNActionPerformed
-        Borrowings borrFrame = new Borrowings();
+        Borrowings borrFrame = new Borrowings(userID);
         this.setVisible(false);
         borrFrame.setVisible(true);
     }//GEN-LAST:event_borrowingsBTNActionPerformed
 
     private void reservationBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationBTNActionPerformed
-        Reservations resFrame = new Reservations();
+        Reservations resFrame = new Reservations(userID);
         this.setVisible(false);
         resFrame.setVisible(true);
     }//GEN-LAST:event_reservationBTNActionPerformed
