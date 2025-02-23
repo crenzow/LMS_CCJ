@@ -61,7 +61,7 @@ public class Fines extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         amountPaidTXT = new javax.swing.JTextField();
-        dateTXT = new de.wannawork.jcalendar.JCalendarComboBox();
+        dateCalendarCBX = new de.wannawork.jcalendar.JCalendarComboBox();
         jLabel5 = new javax.swing.JLabel();
         payBTN = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -222,7 +222,7 @@ public class Fines extends javax.swing.JFrame {
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dateTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dateCalendarCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(amountPaidTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -256,7 +256,7 @@ public class Fines extends javax.swing.JFrame {
                             .addComponent(amountPaidTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dateTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateCalendarCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -353,6 +353,7 @@ public class Fines extends javax.swing.JFrame {
 
     private void payBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payBTNActionPerformed
         // TODO add your handling code here:
+        payFine();
     }//GEN-LAST:event_payBTNActionPerformed
 
     private void statusCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusCBXActionPerformed
@@ -454,6 +455,75 @@ public class Fines extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Error loading borrowing history!", "Database Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+    
+    private void payFine() {
+    try {
+        // Retrieve inputs from UI components
+        int fineID = Integer.parseInt(fineIDTXT.getText().trim());
+        double amountPaid = Double.parseDouble(amountPaidTXT.getText().trim());
+        java.util.Date selectedDate = (java.util.Date) dateCalendarCBX.getDate();
+        java.sql.Date paymentDate = new java.sql.Date(selectedDate.getTime());
+
+        // Stored userID from your Java file
+        int userID = this.userID; // Assuming you have stored it in this Java file
+
+        // Step 1: Check if fineID exists and verify the exact amount
+        String checkFineSQL = "SELECT amount, status FROM Fine WHERE fineID = ?";
+        
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(checkFineSQL)) {
+            ps.setInt(1, fineID);
+            ResultSet rs = ps.executeQuery();
+
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(this, "Fine ID not found!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            double fineAmount = rs.getDouble("amount");
+            String fineStatus = rs.getString("status");
+
+            if (!fineStatus.equals("Unpaid")) {
+                JOptionPane.showMessageDialog(this, "This fine is already paid or waived.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (fineAmount != amountPaid) {
+                JOptionPane.showMessageDialog(this, "Payment must be the exact fine amount!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        // Step 2: Insert the payment into the Payment table
+        String insertPaymentSQL = "INSERT INTO Payment (amountPaid, paymentDate, paymentMethod, userID, fineID) VALUES (?, ?, 'Online', ?, ?)";
+
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(insertPaymentSQL)) {
+            ps.setDouble(1, amountPaid);
+            ps.setDate(2, paymentDate);
+            ps.setInt(3, userID);
+            ps.setInt(4, fineID);
+            ps.executeUpdate();
+        }
+
+        // Step 3: Update Fine status to "Paid"
+        String updateFineSQL = "UPDATE Fine SET status = 'Paid' WHERE fineID = ?";
+
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(updateFineSQL)) {
+            ps.setInt(1, fineID);
+            ps.executeUpdate();
+        }
+
+        JOptionPane.showMessageDialog(this, "Payment successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        loadFines();
+        loadPayments();
+        filterByStatus();
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid input! Please enter valid numbers.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Database error occurred!", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
 
 
     
@@ -503,7 +573,7 @@ public class Fines extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField amountPaidTXT;
     private javax.swing.JButton borrowingsBTN;
-    private de.wannawork.jcalendar.JCalendarComboBox dateTXT;
+    private de.wannawork.jcalendar.JCalendarComboBox dateCalendarCBX;
     private javax.swing.JTextField fineIDTXT;
     private javax.swing.JButton finesBTN;
     private javax.swing.JLabel jLabel1;
