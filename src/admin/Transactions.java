@@ -10,6 +10,7 @@ import dbConnection.DatabaseConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import user.*;
 import main.Login;
@@ -47,8 +48,8 @@ public class Transactions extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        searchTXT = new javax.swing.JTextField();
+        searchBTN = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTextField3 = new javax.swing.JTextField();
@@ -182,12 +183,17 @@ public class Transactions extends javax.swing.JFrame {
         jTabbedPane1.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
+        jPanel3.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
 
-        jButton1.setBackground(new java.awt.Color(131, 197, 190));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setText("Search");
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, 60));
+        searchBTN.setBackground(new java.awt.Color(131, 197, 190));
+        searchBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        searchBTN.setText("Search");
+        searchBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBTNActionPerformed(evt);
+            }
+        });
+        jPanel3.add(searchBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, 60));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -427,6 +433,51 @@ public class Transactions extends javax.swing.JFrame {
         loginFrame.setVisible(true);
     }//GEN-LAST:event_logoutBTNActionPerformed
 
+    private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
+    // Get the value entered in the searchTXT text field
+    String searchValue = searchTXT.getText().trim();
+
+    // Check if the search value is not empty
+    if (!searchValue.isEmpty()) {
+        try {
+            // SQL query to search for books by title using LIKE for partial matches
+            String sql = "SELECT bookID, title, author, genre, isbn, publicationYear, quantityAvailable, location FROM book WHERE title LIKE ?";
+
+            // Prepare and execute the query
+            try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+                ps.setString(1, "%" + searchValue + "%");  // Use '%' for partial matching in the LIKE query
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get the table model
+                    model.setRowCount(0); // Clear existing data
+
+                    // Check if any records are found
+                    while (rs.next()) {
+                        Object[] row = {
+                            rs.getString("title"),
+                            rs.getString("isbn"),
+                            rs.getInt("quantityAvailable"),
+                            rs.getString("location"),
+                        };
+                        model.addRow(row); // Add each row to the table
+                    }
+
+                    // If no records found, inform the user
+                    if (model.getRowCount() == 0) {
+                        JOptionPane.showMessageDialog(null, "No books found with the title: " + searchValue);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error searching for books: " + e.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please enter a title to search.");
+    }
+
+    }//GEN-LAST:event_searchBTNActionPerformed
+
       public void issueBook() {
     String sql = "SELECT bookID, title, author, genre, isbn, publicationYear, quantityAvailable, location FROM book";
 
@@ -508,7 +559,6 @@ public class Transactions extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton booksBTN;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -537,7 +587,6 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -549,6 +598,8 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton reservationsBTN;
+    private javax.swing.JButton searchBTN;
+    private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;
     private javax.swing.JLabel stayeaseLBL1;
     private javax.swing.JLabel stayeaseLBL10;

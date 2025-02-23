@@ -59,9 +59,9 @@ public class Books extends javax.swing.JFrame {
         quantityTXT = new javax.swing.JTextField();
         locationTXT = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        addBTN1 = new javax.swing.JButton();
-        addBTN2 = new javax.swing.JButton();
-        addBTN3 = new javax.swing.JButton();
+        addBTN = new javax.swing.JButton();
+        deleteBTN = new javax.swing.JButton();
+        updateBTN = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -70,7 +70,7 @@ public class Books extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        addBTN4 = new javax.swing.JButton();
+        clearBTN = new javax.swing.JButton();
         genreCBX = new javax.swing.JComboBox<>();
         stayeaseLBL5 = new javax.swing.JLabel();
         stayeaseLBL6 = new javax.swing.JLabel();
@@ -202,29 +202,29 @@ public class Books extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 90, 40));
 
-        addBTN1.setText("Add");
-        addBTN1.addActionListener(new java.awt.event.ActionListener() {
+        addBTN.setText("Add");
+        addBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBTN1ActionPerformed(evt);
+                addBTNActionPerformed(evt);
             }
         });
-        jPanel1.add(addBTN1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 120, 40));
+        jPanel1.add(addBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 120, 40));
 
-        addBTN2.setText("Delete");
-        addBTN2.addActionListener(new java.awt.event.ActionListener() {
+        deleteBTN.setText("Delete");
+        deleteBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBTN2ActionPerformed(evt);
+                deleteBTNActionPerformed(evt);
             }
         });
-        jPanel1.add(addBTN2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 320, 120, 40));
+        jPanel1.add(deleteBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 320, 120, 40));
 
-        addBTN3.setText("Update");
-        addBTN3.addActionListener(new java.awt.event.ActionListener() {
+        updateBTN.setText("Update");
+        updateBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBTN3ActionPerformed(evt);
+                updateBTNActionPerformed(evt);
             }
         });
-        jPanel1.add(addBTN3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 120, 40));
+        jPanel1.add(updateBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 120, 40));
 
         jLabel1.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         jLabel1.setText(" Location:");
@@ -258,13 +258,13 @@ public class Books extends javax.swing.JFrame {
         jLabel8.setText("Quantity Available:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 210, 180, 40));
 
-        addBTN4.setText("Clear");
-        addBTN4.addActionListener(new java.awt.event.ActionListener() {
+        clearBTN.setText("Clear");
+        clearBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBTN4ActionPerformed(evt);
+                clearBTNActionPerformed(evt);
             }
         });
-        jPanel1.add(addBTN4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 320, 120, 40));
+        jPanel1.add(clearBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 320, 120, 40));
 
         genreCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Genres", "Fiction", "Mystery", "Fantasy", "Science Fiction", "Romance", "Non-Fiction" }));
         genreCBX.addActionListener(new java.awt.event.ActionListener() {
@@ -344,7 +344,7 @@ public class Books extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchTXTActionPerformed
 
-    private void addBTN1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTN1ActionPerformed
+    private void addBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTNActionPerformed
                                        
     // Get values from the text fields
     String title = titleTXT.getText().trim();  // Add title field
@@ -406,9 +406,9 @@ public class Books extends javax.swing.JFrame {
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(null, "Please enter valid numeric values for Publication Year and Quantity.");
     }
-    }//GEN-LAST:event_addBTN1ActionPerformed
+    }//GEN-LAST:event_addBTNActionPerformed
 
-    private void addBTN2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTN2ActionPerformed
+    private void deleteBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBTNActionPerformed
                                        
     // Get the bookID from the searchTXT field
     String bookIDStr = searchTXT.getText().trim();
@@ -460,13 +460,141 @@ public class Books extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         e.printStackTrace();
     }
-    }//GEN-LAST:event_addBTN2ActionPerformed
+    }//GEN-LAST:event_deleteBTNActionPerformed
 
-    private void addBTN3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTN3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addBTN3ActionPerformed
+    private void updateBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBTNActionPerformed
+    // Get the bookID from the searchTXT field
+    String bookIDStr = searchTXT.getText().trim();
+    
+    // Validate that bookID is provided and is numeric
+    if (bookIDStr.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter a bookID in the search field.");
+        return;
+    }
 
-    private void addBTN4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTN4ActionPerformed
+    int bookID;
+    try {
+        bookID = Integer.parseInt(bookIDStr); // Convert to integer
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Invalid bookID. Please enter a valid numeric bookID.");
+        return;
+    }
+
+    // SQL query to fetch the current book details from the database using bookID
+    String selectSql = "SELECT title, author, isbn, genre, publisher, publicationYear, location, quantityAvailable FROM book WHERE bookID = ?";
+
+    try (PreparedStatement psSelect = DatabaseConnection.getInstance().getConnection().prepareStatement(selectSql)) {
+        // Set the bookID for the SELECT query
+        psSelect.setInt(1, bookID);
+
+        ResultSet rs = psSelect.executeQuery();
+
+        if (rs.next()) {
+            // Pre-fill the fields with current data
+            titleTXT.setText(rs.getString("title"));
+            authorTXT.setText(rs.getString("author"));
+            isbnTXT.setText(rs.getString("isbn"));
+            genreTXT.setText(rs.getString("genre"));
+            publisherTXT.setText(rs.getString("publisher"));
+            pyearTXT.setText(rs.getString("publicationYear"));
+            locationTXT.setText(rs.getString("location"));
+            quantityTXT.setText(rs.getString("quantityAvailable"));
+        } else {
+            JOptionPane.showMessageDialog(null, "No book found with the given bookID.");
+            return;  // Exit if no matching bookID is found
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error fetching book details: " + e.getMessage());
+        e.printStackTrace();
+        return;  // Exit in case of an error
+    }
+
+    // Confirm update
+    int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to update the book details?", 
+                                                     "Confirm Update", JOptionPane.YES_NO_OPTION);
+    if (confirmation == JOptionPane.NO_OPTION) {
+        return; // Exit if the user cancels the update
+    }
+
+    // Now, get the updated values from the fields
+    String title = titleTXT.getText().trim();
+    String author = authorTXT.getText().trim();
+    String isbn = isbnTXT.getText().trim();
+    String genre = genreTXT.getText().trim();
+    String publisher = publisherTXT.getText().trim();
+    String publicationYear = pyearTXT.getText().trim();
+    String location = locationTXT.getText().trim();
+    String quantity = quantityTXT.getText().trim();
+
+    // Validate that all fields have been filled
+    if (title.isEmpty() || author.isEmpty() || isbn.isEmpty() || genre.isEmpty() || 
+        publisher.isEmpty() || publicationYear.isEmpty() || location.isEmpty() || quantity.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please fill in all fields.");
+        return; // Exit if any field is empty
+    }
+
+    // Validate numeric fields (publication year and quantity)
+    try {
+        Integer.parseInt(publicationYear);  // Ensure the publication year is an integer
+        Integer.parseInt(quantity);  // Ensure the quantity is an integer
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Please enter valid numeric values for Publication Year and Quantity.");
+        return;  // Exit if the numeric fields are not valid
+    }
+
+    // SQL query to update the book details in the database
+    String updateSql = "UPDATE book SET title = ?, author = ?, isbn = ?, genre = ?, publisher = ?, publicationYear = ?, location = ?, quantityAvailable = ? WHERE bookID = ?";
+
+    try (PreparedStatement psUpdate = DatabaseConnection.getInstance().getConnection().prepareStatement(updateSql)) {
+        // Set the updated values for the UPDATE query
+        psUpdate.setString(1, title);
+        psUpdate.setString(2, author);
+        psUpdate.setString(3, isbn);
+        psUpdate.setString(4, genre);
+        psUpdate.setString(5, publisher);
+        psUpdate.setInt(6, Integer.parseInt(publicationYear));
+        psUpdate.setString(7, location);
+        psUpdate.setInt(8, Integer.parseInt(quantity));
+        psUpdate.setInt(9, bookID);  // Set bookID to ensure the correct book is updated
+
+        // Debug: Print the query and values
+        System.out.println("Executing update query: " + updateSql);
+        System.out.println("With values: " + title + ", " + author + ", " + isbn + ", " + genre + ", " + publisher + ", " + publicationYear + ", " + location + ", " + quantity + ", " + bookID);
+
+        // Execute the update query
+        int rowsAffected = psUpdate.executeUpdate();
+        
+        // Debug: Check how many rows were affected
+        System.out.println("Rows affected: " + rowsAffected);
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Book updated successfully!");
+
+            // Refresh the table to reflect the updated data
+            loadBooksData();
+
+            // Clear the searchTXT and fields after update
+            searchTXT.setText("");
+            titleTXT.setText("");
+            authorTXT.setText("");
+            isbnTXT.setText("");
+            genreTXT.setText("");
+            publisherTXT.setText("");
+            pyearTXT.setText("");
+            locationTXT.setText("");
+            quantityTXT.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to update the book.");
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error updating book details: " + e.getMessage());
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_updateBTNActionPerformed
+
+    private void clearBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBTNActionPerformed
         searchTXT.setText("");
         titleTXT.setText("");
         authorTXT.setText("");
@@ -476,7 +604,7 @@ public class Books extends javax.swing.JFrame {
         pyearTXT.setText("");
         locationTXT.setText("");
         quantityTXT.setText("");
-    }//GEN-LAST:event_addBTN4ActionPerformed
+    }//GEN-LAST:event_clearBTNActionPerformed
 
     private void genreCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genreCBXActionPerformed
         // TODO add your handling code here:
@@ -658,13 +786,12 @@ public class Books extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addBTN1;
-    private javax.swing.JButton addBTN2;
-    private javax.swing.JButton addBTN3;
-    private javax.swing.JButton addBTN4;
+    private javax.swing.JButton addBTN;
     private javax.swing.JTextField authorTXT;
     private javax.swing.JButton booksBTN;
     private javax.swing.JTable booksTBL;
+    private javax.swing.JButton clearBTN;
+    private javax.swing.JButton deleteBTN;
     private javax.swing.JComboBox<String> genreCBX;
     private javax.swing.JTextField genreTXT;
     private javax.swing.JTextField isbnTXT;
@@ -697,6 +824,7 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JLabel stayeaseLBL7;
     private javax.swing.JTextField titleTXT;
     private javax.swing.JButton transactionsBTN;
+    private javax.swing.JButton updateBTN;
     private javax.swing.JButton userBTN;
     // End of variables declaration//GEN-END:variables
 }

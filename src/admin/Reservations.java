@@ -8,6 +8,8 @@ package admin;
 
 
 import dbConnection.DatabaseConnection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,6 +27,8 @@ public class Reservations extends javax.swing.JFrame {
     public Reservations() {
         initComponents();
         loadReservationsData();
+        filterByStatus();
+        initComboBoxListener();
     }
 
     /**
@@ -157,6 +161,11 @@ public class Reservations extends javax.swing.JFrame {
         Reserve.setBackground(new java.awt.Color(131, 197, 190));
         Reserve.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Reserve.setText("Cancel");
+        Reserve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReserveActionPerformed(evt);
+            }
+        });
         jPanel1.add(Reserve, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 320, 150, 60));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -177,6 +186,12 @@ public class Reservations extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         jLabel2.setText("Title:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 70, 40));
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 210, 40));
         jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 210, 40));
 
@@ -211,7 +226,7 @@ public class Reservations extends javax.swing.JFrame {
         Reserve1.setText("Reserve");
         jPanel1.add(Reserve1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 150, 60));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Cancelled" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Status", "Pending", "Approved", "Cancelled" }));
         jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 170, 60));
 
         jLabel6.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
@@ -291,12 +306,12 @@ public class Reservations extends javax.swing.JFrame {
     // Check if the search value is not empty
     if (!searchValue.isEmpty()) {
         try {
-            // SQL query to search for a fine based on fineID (assuming fineID is the search criterion)
+            // SQL query to search for a reservation based on reservationID
             String sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation WHERE reservationID = ?";
 
             // Prepare and execute the query
             try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-                ps.setInt(1, Integer.parseInt(searchValue));  // Search by fineID, assuming it's an integer
+                ps.setInt(1, Integer.parseInt(searchValue));  // Search by reservationID, assuming it's an integer
 
                 try (ResultSet rs = ps.executeQuery()) {
                     DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get table model
@@ -315,21 +330,59 @@ public class Reservations extends javax.swing.JFrame {
                         model.addRow(row);
                     } else {
                         // No records found, inform the user
-                        JOptionPane.showMessageDialog(null, "No fine found with that ID.");
+                        JOptionPane.showMessageDialog(null, "No reservation found with that ID.");
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error searching for fine: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error searching for reservation: " + e.getMessage());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid number for fine ID.");
+            JOptionPane.showMessageDialog(null, "Please enter a valid number for reservation ID.");
         }
     } else {
-        JOptionPane.showMessageDialog(null, "Please enter a fine ID to search.");
-    }
+        // If the search field is empty, show all reservations from the table
+        try {
+            String sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation";
 
+            // Prepare and execute the query
+            try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
+
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get table model
+                model.setRowCount(0); // Clear existing data
+
+                // Iterate over the results and add them to the table model
+                while (rs.next()) {
+                    Object[] row = {
+                        rs.getInt("reservationID"),
+                        rs.getDate("reservationDate"),
+                        rs.getString("status"),
+                        rs.getInt("userID"),
+                        rs.getInt("bookID")
+                    };
+                    model.addRow(row); // Add each row to the table
+                }
+
+                // If no records found, inform the user
+                if (model.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "No reservations found.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error fetching reservations: " + e.getMessage());
+        }
+    }
     }//GEN-LAST:event_searchBTNActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void ReserveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReserveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ReserveActionPerformed
 
     public void loadReservationsData() {
     String sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation";  // Assuming 'reservations' table
@@ -356,7 +409,73 @@ public class Reservations extends javax.swing.JFrame {
     }
 }
 
-    
+    private void filterByStatus() {
+    // Get the selected value from the jComboBox2 (All Status, Pending, Cancelled, Approved)
+    String selectedStatus = (String) jComboBox2.getSelectedItem();
+
+    // Check if a valid selection is made
+    if (selectedStatus != null && !selectedStatus.isEmpty()) {
+        try {
+            String sql;
+
+            // If "All Status" is selected, fetch all records without filtering by status
+            if (selectedStatus.equals("All Status")) {
+                sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation";
+            } else {
+                // Otherwise, filter by the selected status
+                sql = "SELECT reservationID, reservationDate, status, userID, bookID FROM reservation WHERE status = ?";
+            }
+
+            // Prepare and execute the query
+            try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+                // Set the status if it's not "All Status"
+                if (!selectedStatus.equals("All Status")) {
+                    ps.setString(1, selectedStatus);  // Set the selected status value in the query
+                }
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get table model
+                    model.setRowCount(0); // Clear existing data
+
+                    // Iterate over the results and add them to the table model
+                    while (rs.next()) {
+                        Object[] row = {
+                            rs.getInt("reservationID"),
+                            rs.getDate("reservationDate"),
+                            rs.getString("status"),
+                            rs.getInt("userID"),
+                            rs.getInt("bookID")
+                        };
+                        model.addRow(row); // Add each row to the table
+                    }
+
+                    // If no records found, inform the user
+                    if (model.getRowCount() == 0) {
+                        JOptionPane.showMessageDialog(null, "No reservations found with the status: " + selectedStatus);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error fetching filtered reservations: " + e.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a status to filter.");
+    }
+}
+
+
+    private void initComboBoxListener() {
+        // Adding an ActionListener to the jComboBox2 to filter by status whenever the selection changes
+        jComboBox2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Call the filter method when the combobox selection changes
+                filterByStatus();
+            }
+        });
+    }
+
     
     /**
      * @param args the command line arguments
