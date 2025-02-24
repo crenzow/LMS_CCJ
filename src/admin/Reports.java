@@ -370,18 +370,18 @@ public class Reports extends javax.swing.JFrame {
             false                         // Disable URLs
     );
 
- /*   // Customize the chart appearance
+    // Customize the chart appearance
     PiePlot plot = (PiePlot) chart.getPlot();
-    plot.setLabelFont(new Font("SansSerif", Font.BOLD, 12));
+  /*  plot.setLabelFont(new Font("SansSerif", Font.BOLD, 12));
     plot.setLabelBackgroundPaint(Color.WHITE);
     plot.setLabelOutlinePaint(Color.BLACK);
     plot.setLabelShadowPaint(null);
-    plot.setSimpleLabels(true); // Simplified labels    
+    plot.setSimpleLabels(true); // Simplified labels      */
 
     // Assign colors based on reservation status
     plot.setSectionPaint("Pending", Color.ORANGE);
     plot.setSectionPaint("Approved", Color.GREEN);
-    plot.setSectionPaint("Cancelled", Color.RED);  */
+    plot.setSectionPaint("Cancelled", Color.RED);  
 
     // Create a ChartPanel to display the chart
     ChartPanel chartPanel = new ChartPanel(chart);
