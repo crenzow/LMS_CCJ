@@ -46,6 +46,7 @@ public class Books extends javax.swing.JFrame {
         userBTN = new javax.swing.JButton();
         settlementsBTN = new javax.swing.JButton();
         logoutBTN = new javax.swing.JButton();
+        reportsBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         booksTBL = new javax.swing.JTable();
@@ -157,7 +158,17 @@ public class Books extends javax.swing.JFrame {
                 logoutBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 170, 40));
+        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 670, 170, 40));
+
+        reportsBTN.setBackground(new java.awt.Color(131, 197, 190));
+        reportsBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        reportsBTN.setText("REPORTS");
+        reportsBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportsBTNActionPerformed(evt);
+            }
+        });
+        jPanel2.add(reportsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 170, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
@@ -348,13 +359,6 @@ public class Books extends javax.swing.JFrame {
         this.setVisible(false);
         setFrame.setVisible(true);
     }//GEN-LAST:event_settlementsBTNActionPerformed
-
-    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
-        // TODO add your handling code here:
-        Login loginFrame = new Login();
-        this.setVisible(false);
-        loginFrame.setVisible(true);
-    }//GEN-LAST:event_logoutBTNActionPerformed
 
     private void searchTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTXTActionPerformed
         // TODO add your handling code here:
@@ -697,6 +701,20 @@ public class Books extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_booksTBLMouseClicked
 
+    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
+        // TODO add your handling code here:
+        Login loginFrame = new Login();
+        this.setVisible(false);
+        loginFrame.setVisible(true);
+    }//GEN-LAST:event_logoutBTNActionPerformed
+
+    private void reportsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsBTNActionPerformed
+        // TODO add your handling code here:
+        Reports reportFrame = new Reports();
+        this.setVisible(false);
+        reportFrame.setVisible(true);
+    }//GEN-LAST:event_reportsBTNActionPerformed
+
     public void loadBooksData() {
     String sql = "SELECT bookID, title, author, isbn, genre, publisher, publicationYear, quantityAvailable, location FROM book";
 
@@ -847,6 +865,7 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JTextField publisherTXT;
     private javax.swing.JTextField pyearTXT;
     private javax.swing.JTextField quantityTXT;
+    private javax.swing.JButton reportsBTN;
     private javax.swing.JButton reservationsBTN;
     private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;

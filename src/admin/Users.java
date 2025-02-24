@@ -47,6 +47,7 @@ public class Users extends javax.swing.JFrame {
         userBTN = new javax.swing.JButton();
         settlementsBTN = new javax.swing.JButton();
         logoutBTN = new javax.swing.JButton();
+        reportsBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
@@ -157,7 +158,17 @@ public class Users extends javax.swing.JFrame {
                 logoutBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 170, 40));
+        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 670, 170, 40));
+
+        reportsBTN.setBackground(new java.awt.Color(131, 197, 190));
+        reportsBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        reportsBTN.setText("REPORTS");
+        reportsBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportsBTNActionPerformed(evt);
+            }
+        });
+        jPanel2.add(reportsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 170, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
@@ -357,13 +368,6 @@ public class Users extends javax.swing.JFrame {
         setFrame.setVisible(true);
     }//GEN-LAST:event_settlementsBTNActionPerformed
 
-    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
-        // TODO add your handling code here:
-        Login loginFrame = new Login();
-        this.setVisible(false);
-        loginFrame.setVisible(true);
-    }//GEN-LAST:event_logoutBTNActionPerformed
-
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
                                          
     String userID = searchTXT.getText().trim(); // Get User ID from search field
@@ -497,6 +501,20 @@ public class Users extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
     }
     }//GEN-LAST:event_deleteBTNActionPerformed
+
+    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
+        // TODO add your handling code here:
+        Login loginFrame = new Login();
+        this.setVisible(false);
+        loginFrame.setVisible(true);
+    }//GEN-LAST:event_logoutBTNActionPerformed
+
+    private void reportsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsBTNActionPerformed
+        // TODO add your handling code here:
+        Reports reportFrame = new Reports();
+        this.setVisible(false);
+        reportFrame.setVisible(true);
+    }//GEN-LAST:event_reportsBTNActionPerformed
     private void refreshUserTable() {
     String sql = "SELECT * FROM user";
 
@@ -593,7 +611,7 @@ public class Users extends javax.swing.JFrame {
     private void loadUserBorrowingHistory() {
     String sql = "SELECT u.fullName, b.title, t.borrowDate, t.dueDate, t.returnDate, t.status " +
                  "FROM Transaction t " +
-                 "JOIN Book b ON t.bookID = b.bookID join user u on t.userID = u.userID";
+                 "JOIN Book b ON t.bookID = b.bookID join user u on t.userID = u.userID order by borrowDate DESC";
     
     DefaultTableModel model = (DefaultTableModel) borrowingsTBL.getModel();
     model.setRowCount(0); // Clear previous data
@@ -713,6 +731,7 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JTextField nameTXT;
+    private javax.swing.JButton reportsBTN;
     private javax.swing.JButton reservationsBTN;
     private javax.swing.JButton searchBTN;
     private javax.swing.JTextField searchTXT;

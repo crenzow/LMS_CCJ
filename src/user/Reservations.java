@@ -237,6 +237,7 @@ public class Reservations extends javax.swing.JFrame {
     }
 }
     
+    
     private void filterReservationByStatus() {
     String selectedStatus = statusCBX.getSelectedItem().toString();
     System.out.println("Selected Status: " + selectedStatus); // Debugging log

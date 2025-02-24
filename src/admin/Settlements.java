@@ -44,8 +44,9 @@ public class Settlements extends javax.swing.JFrame {
         transactionsBTN = new javax.swing.JButton();
         userBTN = new javax.swing.JButton();
         settlementsBTN = new javax.swing.JButton();
-        logoutBTN = new javax.swing.JButton();
         logoLBL1 = new javax.swing.JLabel();
+        logoutBTN = new javax.swing.JButton();
+        reportsBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -135,6 +136,9 @@ public class Settlements extends javax.swing.JFrame {
         });
         jPanel2.add(settlementsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 170, 40));
 
+        logoLBL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200blackLOGO.png"))); // NOI18N
+        jPanel2.add(logoLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
+
         logoutBTN.setBackground(new java.awt.Color(131, 197, 190));
         logoutBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         logoutBTN.setText("LOGOUT");
@@ -143,10 +147,17 @@ public class Settlements extends javax.swing.JFrame {
                 logoutBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 170, 40));
+        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 670, 170, 40));
 
-        logoLBL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200blackLOGO.png"))); // NOI18N
-        jPanel2.add(logoLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
+        reportsBTN.setBackground(new java.awt.Color(131, 197, 190));
+        reportsBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        reportsBTN.setText("REPORTS");
+        reportsBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportsBTNActionPerformed(evt);
+            }
+        });
+        jPanel2.add(reportsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 170, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
@@ -163,6 +174,11 @@ public class Settlements extends javax.swing.JFrame {
                 "Fine ID", "User ID", "Name", "Amount Due", "Status"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settlementsTBLclicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 880, 310));
@@ -238,7 +254,6 @@ public class Settlements extends javax.swing.JFrame {
         jPanel1.add(addPaymentBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 640, -1, 60));
 
         methodCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "Online" }));
-        methodCBX.setSelectedIndex(-1);
         methodCBX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 methodCBXActionPerformed(evt);
@@ -279,13 +294,6 @@ public class Settlements extends javax.swing.JFrame {
     private void settlementsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settlementsBTNActionPerformed
   
     }//GEN-LAST:event_settlementsBTNActionPerformed
-
-    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
-        // TODO add your handling code here:
-        Login loginFrame = new Login();
-        this.setVisible(false);
-        loginFrame.setVisible(true);
-    }//GEN-LAST:event_logoutBTNActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // Get the value entered in the searchTXT text field
@@ -352,6 +360,30 @@ public class Settlements extends javax.swing.JFrame {
     private void methodCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_methodCBXActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_methodCBXActionPerformed
+
+    private void settlementsTBLclicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settlementsTBLclicked
+        // TODO add your handling code here:
+         int selectedRow = jTable1.getSelectedRow();
+         if (selectedRow != -1) {
+        // Set text fields
+        fineIDTXT.setText(jTable1.getValueAt(selectedRow, 0).toString());  
+         
+    }
+    }//GEN-LAST:event_settlementsTBLclicked
+
+    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
+        // TODO add your handling code here:
+        Login loginFrame = new Login();
+        this.setVisible(false);
+        loginFrame.setVisible(true);
+    }//GEN-LAST:event_logoutBTNActionPerformed
+
+    private void reportsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsBTNActionPerformed
+        // TODO add your handling code here:
+        Reports reportFrame = new Reports();
+        this.setVisible(false);
+        reportFrame.setVisible(true);
+    }//GEN-LAST:event_reportsBTNActionPerformed
 
     
     public void loadFinesData() {
@@ -544,6 +576,7 @@ public class Settlements extends javax.swing.JFrame {
     private javax.swing.JLabel logoLBL1;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JComboBox<String> methodCBX;
+    private javax.swing.JButton reportsBTN;
     private javax.swing.JButton reservationsBTN;
     private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;

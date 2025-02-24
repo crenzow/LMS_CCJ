@@ -51,6 +51,7 @@ public class Transactions extends javax.swing.JFrame {
         userBTN = new javax.swing.JButton();
         settlementsBTN = new javax.swing.JButton();
         logoutBTN = new javax.swing.JButton();
+        reportsBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
@@ -70,7 +71,7 @@ public class Transactions extends javax.swing.JFrame {
         stayeaseLBL3 = new javax.swing.JLabel();
         stayeaseLBL13 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        returnSTXT = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -86,13 +87,13 @@ public class Transactions extends javax.swing.JFrame {
         btitletxt = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jTextField6 = new javax.swing.JTextField();
+        renewSTXT = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jCalendarComboBox2 = new de.wannawork.jcalendar.JCalendarComboBox();
+        calCBX = new de.wannawork.jcalendar.JCalendarComboBox();
         borrowerID3 = new javax.swing.JTextField();
         isbntxt = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -182,7 +183,17 @@ public class Transactions extends javax.swing.JFrame {
                 logoutBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 170, 40));
+        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 670, 170, 40));
+
+        reportsBTN.setBackground(new java.awt.Color(131, 197, 190));
+        reportsBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        reportsBTN.setText("REPORTS");
+        reportsBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportsBTNActionPerformed(evt);
+            }
+        });
+        jPanel2.add(reportsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 170, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
@@ -275,11 +286,16 @@ public class Transactions extends javax.swing.JFrame {
         jTabbedPane1.addTab("Issue Book", jPanel3);
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel4.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
+        jPanel4.add(returnSTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
 
         jButton3.setBackground(new java.awt.Color(131, 197, 190));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton3.setText("Search");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, 60));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -354,22 +370,27 @@ public class Transactions extends javax.swing.JFrame {
         jTabbedPane1.addTab("Return Book", jPanel4);
 
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel5.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
+        jPanel5.add(renewSTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
 
         jButton5.setBackground(new java.awt.Color(131, 197, 190));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton5.setText("Search");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jPanel5.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, 60));
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title ", "Borrower", "ISBN", "Due Date", "Status"
+                "Title ", "Borrower ID", "Borrower", "ISBN", "Due Date", "Status"
             }
         ));
         jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -388,7 +409,7 @@ public class Transactions extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         jLabel7.setText("New Due Date:");
         jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 540, 130, 40));
-        jPanel5.add(jCalendarComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 240, 40));
+        jPanel5.add(calCBX, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 240, 40));
         jPanel5.add(borrowerID3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 240, 40));
         jPanel5.add(isbntxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 240, 40));
 
@@ -469,13 +490,6 @@ public class Transactions extends javax.swing.JFrame {
         setFrame.setVisible(true);
     }//GEN-LAST:event_settlementsBTNActionPerformed
 
-    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
-        // TODO add your handling code here:
-        Login loginFrame = new Login();
-        this.setVisible(false);
-        loginFrame.setVisible(true);
-    }//GEN-LAST:event_logoutBTNActionPerformed
-
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
     // Get the value entered in the searchTXT text field
     String searchValue = searchTXT.getText().trim();
@@ -536,41 +550,44 @@ public class Transactions extends javax.swing.JFrame {
         return;
     }
 
-    try {
-        Connection con = DatabaseConnection.getInstance().getConnection();
+    String getBookIDQuery = "SELECT bookID FROM book WHERE ISBN = ?";
+    String insertQuery = "INSERT INTO transaction (borrowDate, dueDate, status, userID, bookID) VALUES (?, ?, ?, ?, ?)";
 
+    try (
+        // Access the connection and prepare the statement for the first query
+        PreparedStatement bookStmt = DatabaseConnection.getInstance().getConnection().prepareStatement(getBookIDQuery)
+    ) {
         // Get bookID based on ISBN
-        String getBookIDQuery = "SELECT bookID FROM book WHERE ISBN = ?";
-        PreparedStatement bookStmt = con.prepareStatement(getBookIDQuery);
         bookStmt.setString(1, isbn);
-        ResultSet rs = bookStmt.executeQuery();
+        try (ResultSet rs = bookStmt.executeQuery()) {
+            if (rs.next()) {
+                int bookID = rs.getInt("bookID");
 
-        if (rs.next()) {
-            int bookID = rs.getInt("bookID");
+                // Insert into transaction table
+                try (
+                    // Access the connection and prepare the statement for the insert query
+                    PreparedStatement pst = DatabaseConnection.getInstance().getConnection().prepareStatement(insertQuery)
+                ) {
+                    pst.setDate(1, java.sql.Date.valueOf(borrowDate)); // borrowDate as java.sql.Date
+                    pst.setDate(2, sqlDueDate); // dueDate from JCalendar
+                    pst.setString(3, status);
+                    pst.setInt(4, Integer.parseInt(userID));
+                    pst.setInt(5, bookID);
 
-            // Insert into transaction table
-            String insertQuery = "INSERT INTO transaction (borrowDate, dueDate, status, userID, bookID) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement pst = con.prepareStatement(insertQuery);
-            pst.setDate(1, java.sql.Date.valueOf(borrowDate)); // borrowDate as java.sql.Date
-            pst.setDate(2, sqlDueDate); // dueDate from JCalendar
-            pst.setString(3, status);
-            pst.setInt(4, Integer.parseInt(userID));
-            pst.setInt(5, bookID);
+                    int result = pst.executeUpdate();
 
-            int result = pst.executeUpdate();
-
-            if (result > 0) {
-                JOptionPane.showMessageDialog(this, "Book Borrowed Successfully!");
-                borrowerIdTXT.setText("");
-                isbnTXT.setText("");
+                    if (result > 0) {
+                        JOptionPane.showMessageDialog(this, "Book Borrowed Successfully!");
+                        borrowerIdTXT.setText("");
+                        isbnTXT.setText("");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Borrowing Failed.");
+                    }
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Borrowing Failed.");
+                JOptionPane.showMessageDialog(this, "Book ISBN not found.");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Book ISBN not found.");
         }
-
-        con.close();
 
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
@@ -590,7 +607,8 @@ public class Transactions extends javax.swing.JFrame {
          if (selectedRow != -1) {
         // Set text fields
         isbnTXT2.setText(jTable2.getValueAt(selectedRow, 3).toString());  
-        btitletxt.setText(jTable2.getValueAt(selectedRow, 0).toString());  
+        btitletxt.setText(jTable2.getValueAt(selectedRow, 0).toString()); 
+        borrowerIdTXT2.setText(jTable2.getValueAt(selectedRow, 1).toString());
     }
     }//GEN-LAST:event_jTable2MouseClicked
 
@@ -633,14 +651,182 @@ public class Transactions extends javax.swing.JFrame {
         int selectedRow = jTable3.getSelectedRow();
          if (selectedRow != -1) {
         // Set text fields
+        borrowerID3.setText(jTable3.getValueAt(selectedRow, 1).toString());  
         isbntxt.setText(jTable3.getValueAt(selectedRow, 3).toString());  
-        btitletxt.setText(jTable3.getValueAt(selectedRow, 0).toString());  
+       
     }
     }//GEN-LAST:event_jTable3MouseClicked
 
     private void renewBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renewBTNActionPerformed
         // TODO add your handling code here:
+        String userID = borrowerID3.getText().trim();
+    String isbn = isbntxt.getText().trim();
+    LocalDate borrowDate = LocalDate.now();
+    String status = "Borrowed";
+
+    // Get due date from JCalendar and convert it
+    java.util.Date utilDate = calCBX.getDate();
+    java.sql.Date sqlDueDate = new java.sql.Date(utilDate.getTime());
+
+    if (userID.isEmpty() || isbn.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill all fields.");
+        return;
+    }
+
+    String getBookIDQuery = "SELECT bookID FROM book WHERE ISBN = ?";
+    String insertQuery = "INSERT INTO transaction (borrowDate, dueDate, status, userID, bookID) VALUES (?, ?, ?, ?, ?)";
+
+    try (
+        // Access the connection and prepare the statement for the first query
+        PreparedStatement bookStmt = DatabaseConnection.getInstance().getConnection().prepareStatement(getBookIDQuery)
+    ) {
+        // Get bookID based on ISBN
+        bookStmt.setString(1, isbn);
+        try (ResultSet rs = bookStmt.executeQuery()) {
+            if (rs.next()) {
+                int bookID = rs.getInt("bookID");
+
+                // Insert into transaction table
+                try (
+                    // Access the connection and prepare the statement for the insert query
+                    PreparedStatement pst = DatabaseConnection.getInstance().getConnection().prepareStatement(insertQuery)
+                ) {
+                    pst.setDate(1, java.sql.Date.valueOf(borrowDate)); // borrowDate as java.sql.Date
+                    pst.setDate(2, sqlDueDate); // dueDate from JCalendar
+                    pst.setString(3, status);
+                    pst.setInt(4, Integer.parseInt(userID));
+                    pst.setInt(5, bookID);
+
+                    int result = pst.executeUpdate();
+
+                    if (result > 0) {
+                        JOptionPane.showMessageDialog(this, "Book Borrowed Successfully!");
+                        returnedBook();
+                        borrowerIdTXT.setText("");
+                        isbnTXT.setText("");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Borrowing Failed.");
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Book ISBN not found.");
+            }
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+    }
     }//GEN-LAST:event_renewBTNActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        String searchValue = returnSTXT.getText().trim();
+
+    // Check if the search value is not empty
+    if (!searchValue.isEmpty()) {
+        try {
+            // SQL query to search for books by title using LIKE for partial matches
+        String sql = "SELECT u.userID, b.title, u.fullName, b.isbn, t.dueDate, t.status " +
+                 "FROM transaction t " +
+                 "JOIN book b ON t.bookID = b.bookID " +
+                 "JOIN user u ON t.userID = u.userID " +
+                 "WHERE t.status = 'Borrowed' and title LIKE ?";
+            // Prepare and execute the query
+            try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+                ps.setString(1, "%" + searchValue + "%");  // Use '%' for partial matching in the LIKE query
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    DefaultTableModel model = (DefaultTableModel) jTable2.getModel(); // Get the table model
+                    model.setRowCount(0); // Clear existing data
+
+                    // Check if any records are found
+                    while (rs.next()) {
+                        Object[] row = {
+                            rs.getString("title"),
+                            rs.getInt("userID"), 
+                            rs.getString("fullName"),
+                            rs.getString("isbn"),
+                            rs.getDate("dueDate"),
+                            rs.getString("status")
+                        };
+                        model.addRow(row); // Add each row to the table
+                    }
+
+                    // If no records found, inform the user
+                    if (model.getRowCount() == 0) {
+                        JOptionPane.showMessageDialog(null, "No books found with the title: " + searchValue);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error searching for books: " + e.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please enter a title to search.");
+    }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        
+         String searchValue = renewSTXT.getText().trim();
+
+    // Check if the search value is not empty
+    if (!searchValue.isEmpty()) {
+        try {
+            // SQL query to search for books by title using LIKE for partial matches
+        String sql = "select b.title, u.userID, u.fullName, b.isbn, t.dueDate, t.status from transaction t join book b on t.bookID = b.bookID join user u on t.userID = u.userID where status = 'Returned' and title like ?";
+            // Prepare and execute the query
+            try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+                ps.setString(1, "%" + searchValue + "%");  // Use '%' for partial matching in the LIKE query
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    DefaultTableModel model = (DefaultTableModel) jTable3.getModel(); // Get the table model
+                    model.setRowCount(0); // Clear existing data
+
+                    // Check if any records are found
+                    while (rs.next()) {
+                        Object[] row = {
+                            rs.getString("title"),
+                            rs.getInt("userID"),
+                            rs.getString("fullName"),
+                            rs.getString("isbn"),
+                            rs.getDate("dueDate"),
+                            rs.getString("status")
+                        };
+                        model.addRow(row); // Add each row to the table
+                    }
+
+                    // If no records found, inform the user
+                    if (model.getRowCount() == 0) {
+                        JOptionPane.showMessageDialog(null, "No books found with the title: " + searchValue);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error searching for books: " + e.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please enter a title to search.");
+    }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
+        // TODO add your handling code here:
+        Login loginFrame = new Login();
+        this.setVisible(false);
+        loginFrame.setVisible(true);
+    }//GEN-LAST:event_logoutBTNActionPerformed
+
+    private void reportsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsBTNActionPerformed
+        // TODO add your handling code here:
+        Reports reportFrame = new Reports();
+        this.setVisible(false);
+        reportFrame.setVisible(true);
+    }//GEN-LAST:event_reportsBTNActionPerformed
     
     private void clearFields() {
     borrowerIdTXT2.setText("");
@@ -704,7 +890,7 @@ public class Transactions extends javax.swing.JFrame {
     }
 }
     public void returnedBook() {
-    String sql = "select b.title, u.fullName, b.isbn, t.dueDate, t.status from transaction t join book b on t.bookID = b.bookID join user u on t.userID = u.userID where status = 'Returned'";
+    String sql = "select b.title, u.userID, u.fullName, b.isbn, t.dueDate, t.status from transaction t join book b on t.bookID = b.bookID join user u on t.userID = u.userID where status = 'Returned'";
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
@@ -716,6 +902,7 @@ public class Transactions extends javax.swing.JFrame {
             Object[] row = {
                 
                 rs.getString("title"),
+                rs.getInt("userID"),
                 rs.getString("fullName"),
                 rs.getString("isbn"),
                 rs.getDate("dueDate"),
@@ -789,6 +976,7 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JTextField borrowerIdTXT;
     private javax.swing.JTextField borrowerIdTXT2;
     private javax.swing.JTextField btitletxt;
+    private de.wannawork.jcalendar.JCalendarComboBox calCBX;
     private de.wannawork.jcalendar.JCalendarComboBox dueDateCalendar;
     private javax.swing.JTextField isbnTXT;
     private javax.swing.JTextField isbnTXT2;
@@ -796,7 +984,6 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -819,12 +1006,13 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton renewBTN;
+    private javax.swing.JTextField renewSTXT;
+    private javax.swing.JButton reportsBTN;
     private javax.swing.JButton reservationsBTN;
+    private javax.swing.JTextField returnSTXT;
     private javax.swing.JButton returnedBTN;
     private javax.swing.JButton searchBTN;
     private javax.swing.JTextField searchTXT;

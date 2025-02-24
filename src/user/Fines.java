@@ -156,6 +156,12 @@ public class Fines extends javax.swing.JFrame {
 
         jTabbedPane1.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
 
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -167,6 +173,11 @@ public class Fines extends javax.swing.JFrame {
                 "Fine ID", "Amount Due", "Status"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setBackground(new java.awt.Color(0, 109, 119));
@@ -370,6 +381,19 @@ public class Fines extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         filterByStatus();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+         if (selectedRow != -1) {
+        // Set text fields
+        fineIDTXT.setText(jTable1.getValueAt(selectedRow, 0).toString());  // Book Title
+    }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     private void loadFines() {
 

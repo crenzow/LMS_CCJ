@@ -7,6 +7,7 @@ package user;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import dbConnection.DatabaseConnection;
+import javax.swing.JOptionPane;
 
 
 import main.Login;
@@ -57,6 +58,9 @@ public class Library extends javax.swing.JFrame {
         stayeaseLBL5 = new javax.swing.JLabel();
         stayeaseLBL6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        bookIDTXT = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        reserveBTN = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -145,9 +149,14 @@ public class Library extends javax.swing.JFrame {
                 "Book No.", "Title", "Author", "Genre", "ISBN", "Publication Year", "Available Copies"
             }
         ));
+        booksTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                booksTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(booksTable);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 900, 493));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 900, 350));
 
         searchTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,6 +212,21 @@ public class Library extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         jLabel5.setText("Filter:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 60, 40));
+        jPanel1.add(bookIDTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 650, 240, 40));
+
+        jLabel1.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel1.setText("Book No:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, -1, -1));
+
+        reserveBTN.setBackground(new java.awt.Color(131, 197, 190));
+        reserveBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        reserveBTN.setText("Reserve");
+        reserveBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reserveBTNActionPerformed(evt);
+            }
+        });
+        jPanel1.add(reserveBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 650, 150, 60));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -253,6 +277,47 @@ public class Library extends javax.swing.JFrame {
         // TODO add your handling code here:
         filterBooksByGenre();
     }//GEN-LAST:event_genreCBXActionPerformed
+
+    private void booksTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksTableMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = booksTable.getSelectedRow();
+         if (selectedRow != -1) {
+        // Set text fields
+        bookIDTXT.setText(booksTable.getValueAt(selectedRow, 0).toString());    
+    }
+    }//GEN-LAST:event_booksTableMouseClicked
+
+    private void reserveBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveBTNActionPerformed
+        // TODO add your handling code here:
+        reserveBook();
+        
+    }//GEN-LAST:event_reserveBTNActionPerformed
+
+    
+    public void reserveBook() {
+    String bookID = bookIDTXT.getText(); // Getting bookID from the input field
+    String sql = "INSERT INTO reservation (reservationDate, status, userID, bookID) "
+               + "VALUES (CURRENT_DATE(), 'Pending', ?, ?)";
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+        // Set userID (already stored locally) and bookID
+        ps.setInt(1, userID);  // Setting userID
+        ps.setString(2, bookID);  // Setting bookID value directly from the input field
+        
+        int result = ps.executeUpdate(); // Execute the insert query
+        if (result > 0) {
+            // Successfully reserved the book
+            JOptionPane.showMessageDialog(this, "Book reserved successfully.");
+        } else {
+            // Book reservation failed
+            JOptionPane.showMessageDialog(this, "Failed to reserve the book. Please try again.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "An error occurred while reserving the book.");
+    }
+}
+
 
     public void loadBooksData() {
     String sql = "SELECT bookID, title, author, genre, isbn, publicationYear, quantityAvailable FROM book";
@@ -423,10 +488,12 @@ public class Library extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField bookIDTXT;
     private javax.swing.JTable booksTable;
     private javax.swing.JButton borrowingsBTN;
     private javax.swing.JButton finesBTN;
     private javax.swing.JComboBox<String> genreCBX;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -436,6 +503,7 @@ public class Library extends javax.swing.JFrame {
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton reservationBTN;
+    private javax.swing.JButton reserveBTN;
     private javax.swing.JButton searchBTN;
     private javax.swing.JTextField searchTXT;
     private javax.swing.JLabel stayeaseLBL1;

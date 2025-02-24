@@ -52,9 +52,10 @@ public class Reservations extends javax.swing.JFrame {
         userBTN = new javax.swing.JButton();
         settlementsBTN = new javax.swing.JButton();
         logoutBTN = new javax.swing.JButton();
+        reportsBTN = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         searchTXT = new javax.swing.JTextField();
-        Reserve = new javax.swing.JButton();
+        declineBTN = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -66,7 +67,7 @@ public class Reservations extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         statusCB = new javax.swing.JComboBox<>();
         searchBTN = new javax.swing.JButton();
-        Reserve1 = new javax.swing.JButton();
+        approveBTN = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         stayeaseLBL5 = new javax.swing.JLabel();
@@ -155,22 +156,32 @@ public class Reservations extends javax.swing.JFrame {
                 logoutBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 170, 40));
+        jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 670, 170, 40));
+
+        reportsBTN.setBackground(new java.awt.Color(131, 197, 190));
+        reportsBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        reportsBTN.setText("REPORTS");
+        reportsBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportsBTNActionPerformed(evt);
+            }
+        });
+        jPanel2.add(reportsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 170, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 350, 60));
 
-        Reserve.setBackground(new java.awt.Color(131, 197, 190));
-        Reserve.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        Reserve.setText("Cancel");
-        Reserve.addActionListener(new java.awt.event.ActionListener() {
+        declineBTN.setBackground(new java.awt.Color(131, 197, 190));
+        declineBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        declineBTN.setText("Decline");
+        declineBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReserveActionPerformed(evt);
+                declineBTNActionPerformed(evt);
             }
         });
-        jPanel1.add(Reserve, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 320, 150, 60));
+        jPanel1.add(declineBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 320, 150, 60));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -230,15 +241,15 @@ public class Reservations extends javax.swing.JFrame {
         });
         jPanel1.add(searchBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, -1, 60));
 
-        Reserve1.setBackground(new java.awt.Color(131, 197, 190));
-        Reserve1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        Reserve1.setText("Reserve");
-        Reserve1.addActionListener(new java.awt.event.ActionListener() {
+        approveBTN.setBackground(new java.awt.Color(131, 197, 190));
+        approveBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        approveBTN.setText("Approve");
+        approveBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Reserve1ActionPerformed(evt);
+                approveBTNActionPerformed(evt);
             }
         });
-        jPanel1.add(Reserve1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 150, 60));
+        jPanel1.add(approveBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 150, 60));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Status", "Pending", "Approved", "Cancelled" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -316,13 +327,6 @@ public class Reservations extends javax.swing.JFrame {
         this.setVisible(false);
         setFrame.setVisible(true);
     }//GEN-LAST:event_settlementsBTNActionPerformed
-
-    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
-        // TODO add your handling code here:
-        Login loginFrame = new Login();
-        this.setVisible(false);
-        loginFrame.setVisible(true);
-    }//GEN-LAST:event_logoutBTNActionPerformed
 
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
     // Get the value entered in the searchTXT text field
@@ -423,17 +427,14 @@ if (!searchValue.isEmpty()) {
         // TODO add your handling code here:
     }//GEN-LAST:event_titleTXTActionPerformed
 
-    private void ReserveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReserveActionPerformed
+    private void declineBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineBTNActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ReserveActionPerformed
+        declineReservation();
+    }//GEN-LAST:event_declineBTNActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
-
-    private void Reserve1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reserve1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Reserve1ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
      int selectedRow = jTable1.getSelectedRow();
@@ -457,6 +458,169 @@ if (!searchValue.isEmpty()) {
         statusCB.setSelectedItem(jTable1.getValueAt(selectedRow, 4).toString()); // Status
     }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void approveBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBTNActionPerformed
+        // TODO add your handling code here:
+        approveReservation();
+    }//GEN-LAST:event_approveBTNActionPerformed
+
+    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
+        // TODO add your handling code here:
+        Login loginFrame = new Login();
+        this.setVisible(false);
+        loginFrame.setVisible(true);
+    }//GEN-LAST:event_logoutBTNActionPerformed
+
+    private void reportsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsBTNActionPerformed
+        // TODO add your handling code here:
+        Reports reportFrame = new Reports();
+        this.setVisible(false);
+        reportFrame.setVisible(true);
+    }//GEN-LAST:event_reportsBTNActionPerformed
+
+    public void approveReservation() {
+    String title = titleTXT.getText();  // Get book title from the input field
+    String fullName = nameTXT.getText();  // Get user's full name from the input field
+    java.util.Date reservationDate = jCalendarCB.getDate();  // Get reservation date from the calendar component
+    String status = statusCB.getSelectedItem().toString();  // Get status from the combo box (assuming it's a String)
+
+    // SQL query to find bookID using the title
+    String getBookIDSql = "SELECT bookID FROM book WHERE title = ?";
+    
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(getBookIDSql)) {
+        ps.setString(1, title);  // Set the title parameter for the query
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            String bookID = rs.getString("bookID");  // Get bookID from the result set
+
+            // SQL query to find userID using the fullName
+            String getUserIDSql = "SELECT userID FROM user WHERE fullName = ?";
+            
+            try (PreparedStatement ps2 = DatabaseConnection.getInstance().getConnection().prepareStatement(getUserIDSql)) {
+                ps2.setString(1, fullName);  // Set the full name parameter for the query
+                ResultSet rs2 = ps2.executeQuery();
+                
+                if (rs2.next()) {
+                    String userID = rs2.getString("userID");  // Get userID from the result set
+
+                    // SQL query to find the reservationID using bookID, userID, reservationDate, and status
+                    String getReservationIDSql = "SELECT reservationID FROM reservation "
+                            + "WHERE bookID = ? AND userID = ? AND reservationDate = ? AND status = ?";
+                    
+                    try (PreparedStatement ps3 = DatabaseConnection.getInstance().getConnection().prepareStatement(getReservationIDSql)) {
+                        ps3.setString(1, bookID);  // Set the bookID
+                        ps3.setString(2, userID);  // Set the userID
+                        ps3.setDate(3, new java.sql.Date(reservationDate.getTime()));  // Set the reservationDate
+                        ps3.setString(4, status);  // Set the status
+
+                        ResultSet rs3 = ps3.executeQuery();
+                        
+                        if (rs3.next()) {
+                            int reservationID = rs3.getInt("reservationID");  // Get reservationID from the result set
+
+                            // SQL query to update the status to "Approved"
+                            String updateStatusSql = "UPDATE reservation SET status = 'Approved' WHERE reservationID = ?";
+                            
+                            try (PreparedStatement ps4 = DatabaseConnection.getInstance().getConnection().prepareStatement(updateStatusSql)) {
+                                ps4.setInt(1, reservationID);  // Set the reservationID to update
+                                
+                                int result = ps4.executeUpdate();  // Execute the update query
+                                if (result > 0) {
+                                    JOptionPane.showMessageDialog(this, "Reservation approved successfully.");
+                                    loadReservationsData();
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "Failed to approve reservation.");
+                                }
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No matching reservation found.");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "User not found.");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Book not found.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "An error occurred while approving the reservation.");
+    }
+}
+    
+    public void declineReservation() {
+    String title = titleTXT.getText();  // Get book title from the input field
+    String fullName = nameTXT.getText();  // Get user's full name from the input field
+    java.util.Date reservationDate = jCalendarCB.getDate();  // Get reservation date from the calendar component
+    String status = statusCB.getSelectedItem().toString();  // Get status from the combo box (assuming it's a String)
+
+    // SQL query to find bookID using the title
+    String getBookIDSql = "SELECT bookID FROM book WHERE title = ?";
+    
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(getBookIDSql)) {
+        ps.setString(1, title);  // Set the title parameter for the query
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            String bookID = rs.getString("bookID");  // Get bookID from the result set
+
+            // SQL query to find userID using the fullName
+            String getUserIDSql = "SELECT userID FROM user WHERE fullName = ?";
+            
+            try (PreparedStatement ps2 = DatabaseConnection.getInstance().getConnection().prepareStatement(getUserIDSql)) {
+                ps2.setString(1, fullName);  // Set the full name parameter for the query
+                ResultSet rs2 = ps2.executeQuery();
+                
+                if (rs2.next()) {
+                    String userID = rs2.getString("userID");  // Get userID from the result set
+
+                    // SQL query to find the reservationID using bookID, userID, reservationDate, and status
+                    String getReservationIDSql = "SELECT reservationID FROM reservation "
+                            + "WHERE bookID = ? AND userID = ? AND reservationDate = ? AND status = ?";
+                    
+                    try (PreparedStatement ps3 = DatabaseConnection.getInstance().getConnection().prepareStatement(getReservationIDSql)) {
+                        ps3.setString(1, bookID);  // Set the bookID
+                        ps3.setString(2, userID);  // Set the userID
+                        ps3.setDate(3, new java.sql.Date(reservationDate.getTime()));  // Set the reservationDate
+                        ps3.setString(4, status);  // Set the status
+
+                        ResultSet rs3 = ps3.executeQuery();
+                        
+                        if (rs3.next()) {
+                            int reservationID = rs3.getInt("reservationID");  // Get reservationID from the result set
+
+                            // SQL query to update the status to "Approved"
+                            String updateStatusSql = "UPDATE reservation SET status = 'Cancelled' WHERE reservationID = ?";
+                            
+                            try (PreparedStatement ps4 = DatabaseConnection.getInstance().getConnection().prepareStatement(updateStatusSql)) {
+                                ps4.setInt(1, reservationID);  // Set the reservationID to update
+                                
+                                int result = ps4.executeUpdate();  // Execute the update query
+                                if (result > 0) {
+                                    JOptionPane.showMessageDialog(this, "Reservation approved successfully.");
+                                    loadReservationsData();
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "Failed to approve reservation.");
+                                }
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No matching reservation found.");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "User not found.");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Book not found.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "An error occurred while approving the reservation.");
+    }
+}
 
     public void loadReservationsData() {
     String sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
@@ -628,9 +792,9 @@ if (!searchValue.isEmpty()) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Reserve;
-    private javax.swing.JButton Reserve1;
+    private javax.swing.JButton approveBTN;
     private javax.swing.JButton booksBTN;
+    private javax.swing.JButton declineBTN;
     private de.wannawork.jcalendar.JCalendarComboBox jCalendarCB;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -647,6 +811,7 @@ if (!searchValue.isEmpty()) {
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JTextField nameTXT;
+    private javax.swing.JButton reportsBTN;
     private javax.swing.JButton reservationsBTN;
     private javax.swing.JButton searchBTN;
     private javax.swing.JTextField searchTXT;
