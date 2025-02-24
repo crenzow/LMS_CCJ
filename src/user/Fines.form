@@ -188,7 +188,7 @@
         <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="1"/>
+              <Font name="Serif" size="18" style="1"/>
             </Property>
           </Properties>
           <Constraints>
@@ -296,7 +296,7 @@
                                   <Component id="jScrollPane1" min="-2" pref="507" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="24" max="32767" attributes="0"/>
+                          <EmptySpace pref="25" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -445,7 +445,7 @@
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="428" max="-2" attributes="0"/>
-                          <EmptySpace pref="89" max="32767" attributes="0"/>
+                          <EmptySpace pref="90" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

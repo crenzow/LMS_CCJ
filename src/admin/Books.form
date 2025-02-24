@@ -321,6 +321,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="addBTN">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="be" green="c5" red="83" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>
           <Events>
@@ -334,6 +337,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="deleteBTN">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="be" green="c5" red="83" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Delete"/>
           </Properties>
           <Events>
@@ -347,6 +353,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="updateBTN">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="be" green="c5" red="83" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Update"/>
           </Properties>
           <Events>
@@ -464,6 +473,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="clearBTN">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="be" green="c5" red="83" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Clear"/>
           </Properties>
           <Events>

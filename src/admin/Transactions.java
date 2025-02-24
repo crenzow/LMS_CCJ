@@ -24,6 +24,8 @@ public class Transactions extends javax.swing.JFrame {
     public Transactions() {
         initComponents();
         issueBook();
+        borrowedBook();
+        returnedBook();
         
     }
 
@@ -494,6 +496,59 @@ public class Transactions extends javax.swing.JFrame {
                 rs.getString("isbn"),
                 rs.getInt("quantityAvailable"),
                 rs.getString("location"),
+                    
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+      
+      public void borrowedBook() {
+    String sql = "select b.title, u.fullName, b.isbn, t.dueDate, t.status from transaction t join book b on t.bookID = b.bookID join user u on t.userID = u.userID where status = 'Borrowed'";
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        while (rs.next()) {
+            Object[] row = {
+                
+                rs.getString("title"),
+                rs.getString("fullName"),
+                rs.getString("isbn"),
+                rs.getDate("dueDate"),
+                rs.getString("status")
+                    
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+    public void returnedBook() {
+    String sql = "select b.title, u.fullName, b.isbn, t.dueDate, t.status from transaction t join book b on t.bookID = b.bookID join user u on t.userID = u.userID where status = 'Returned'";
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        while (rs.next()) {
+            Object[] row = {
+                
+                rs.getString("title"),
+                rs.getString("fullName"),
+                rs.getString("isbn"),
+                rs.getDate("dueDate"),
+                rs.getString("status")
                     
             };
             model.addRow(row);

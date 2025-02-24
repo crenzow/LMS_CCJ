@@ -64,7 +64,7 @@ public class Settlements extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         addPaymentBTN = new javax.swing.JButton();
-        methodTXT = new javax.swing.JComboBox<>();
+        methodCBX = new javax.swing.JComboBox<>();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -237,14 +237,14 @@ public class Settlements extends javax.swing.JFrame {
         });
         jPanel1.add(addPaymentBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 640, -1, 60));
 
-        methodTXT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "Online" }));
-        methodTXT.setSelectedIndex(-1);
-        methodTXT.addActionListener(new java.awt.event.ActionListener() {
+        methodCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "Online" }));
+        methodCBX.setSelectedIndex(-1);
+        methodCBX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                methodTXTActionPerformed(evt);
+                methodCBXActionPerformed(evt);
             }
         });
-        jPanel1.add(methodTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 550, 240, 40));
+        jPanel1.add(methodCBX, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 550, 240, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -345,12 +345,15 @@ public class Settlements extends javax.swing.JFrame {
 
     private void addPaymentBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPaymentBTNActionPerformed
         // TODO add your handling code here:
+        payFine();
+        
     }//GEN-LAST:event_addPaymentBTNActionPerformed
 
-    private void methodTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_methodTXTActionPerformed
+    private void methodCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_methodCBXActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_methodTXTActionPerformed
+    }//GEN-LAST:event_methodCBXActionPerformed
 
+    
     public void loadFinesData() {
     // SQL query to fetch data from the fines table
     String sql = "SELECT f.fineID, u.userID, u.fullName, f.amount, f.status " +
@@ -384,6 +387,74 @@ public class Settlements extends javax.swing.JFrame {
         e.printStackTrace();
     }
 }
+    
+    private void payFine() {
+    try {
+        // Retrieve inputs from UI components
+        int fineID = Integer.parseInt(fineIDTXT.getText().trim());
+        double amountPaid = Double.parseDouble(amountPaidTXT.getText().trim());
+        java.util.Date selectedDate = (java.util.Date) dateTXT.getDate();
+        java.sql.Date paymentDate = new java.sql.Date(selectedDate.getTime());
+        String paymentMethod = methodCBX.getSelectedItem().toString();
+
+        // Step 1: Check if fineID exists and verify the exact amount and userID
+        String checkFineSQL = "SELECT amount, status, userID FROM Fine WHERE fineID = ?";
+        
+        int userID;
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(checkFineSQL)) {
+            ps.setInt(1, fineID);
+            ResultSet rs = ps.executeQuery();
+
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(this, "Fine ID not found!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            double fineAmount = rs.getDouble("amount");
+            String fineStatus = rs.getString("status");
+            userID = rs.getInt("userID");
+
+            if (!fineStatus.equals("Unpaid")) {
+                JOptionPane.showMessageDialog(this, "This fine is already paid or waived.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (fineAmount != amountPaid) {
+                JOptionPane.showMessageDialog(this, "Payment must be the exact fine amount!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        // Step 2: Insert the payment into the Payment table
+        String insertPaymentSQL = "INSERT INTO Payment (amountPaid, paymentDate, paymentMethod, userID, fineID) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(insertPaymentSQL)) {
+            ps.setDouble(1, amountPaid);
+            ps.setDate(2, paymentDate);
+            ps.setString(3, paymentMethod);
+            ps.setInt(4, userID);
+            ps.setInt(5, fineID);
+            ps.executeUpdate();
+        }
+
+        // Step 3: Update Fine status to "Paid"
+        String updateFineSQL = "UPDATE Fine SET status = 'Paid' WHERE fineID = ?";
+
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(updateFineSQL)) {
+            ps.setInt(1, fineID);
+            ps.executeUpdate();
+        }
+
+        JOptionPane.showMessageDialog(this, "Payment successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        loadFinesData();
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid input! Please enter valid numbers.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Database error occurred!", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
 
     
     
@@ -472,7 +543,7 @@ public class Settlements extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel logoLBL1;
     private javax.swing.JButton logoutBTN;
-    private javax.swing.JComboBox<String> methodTXT;
+    private javax.swing.JComboBox<String> methodCBX;
     private javax.swing.JButton reservationsBTN;
     private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;

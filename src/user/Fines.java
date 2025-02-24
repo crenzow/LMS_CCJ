@@ -154,7 +154,7 @@ public class Fines extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jTabbedPane1.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -271,7 +271,7 @@ public class Fines extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("FINES", jPanel3);
@@ -315,7 +315,7 @@ public class Fines extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(77, 77, 77)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("PAYMENTS", jPanel4);

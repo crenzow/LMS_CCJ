@@ -7,9 +7,11 @@ package admin;
 
 
 import dbConnection.DatabaseConnection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import user.*;
 import main.Login;
@@ -23,6 +25,7 @@ public class Users extends javax.swing.JFrame {
     public Users() {
         initComponents();
         userInfo();
+        loadUserBorrowingHistory();
         
     }
 
@@ -66,6 +69,13 @@ public class Users extends javax.swing.JFrame {
         stayeaseLBL6 = new javax.swing.JLabel();
         stayeaseLBL1 = new javax.swing.JLabel();
         stayeaseLBL7 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        borrowingsTBL = new javax.swing.JTable();
+        stayeaseLBL8 = new javax.swing.JLabel();
+        stayeaseLBL9 = new javax.swing.JLabel();
+        stayeaseLBL2 = new javax.swing.JLabel();
+        stayeaseLBL10 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -150,6 +160,8 @@ public class Users extends javax.swing.JFrame {
         jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 170, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
+
+        jTabbedPane1.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel3.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 350, 60));
@@ -239,6 +251,85 @@ public class Users extends javax.swing.JFrame {
         jPanel3.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 60, 60));
 
         jTabbedPane1.addTab("User Information", jPanel3);
+
+        borrowingsTBL.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Name", "Book Title", "Borrow Date", "Due Date", "Return Date", "Status"
+            }
+        ));
+        jScrollPane2.setViewportView(borrowingsTBL);
+
+        stayeaseLBL8.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL8.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL8.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL8.setText("P");
+
+        stayeaseLBL9.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL9.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL9.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL9.setText("AGE");
+
+        stayeaseLBL2.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL2.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
+        stayeaseLBL2.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL2.setText("H");
+
+        stayeaseLBL10.setBackground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL10.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
+        stayeaseLBL10.setForeground(new java.awt.Color(0, 109, 119));
+        stayeaseLBL10.setText("UB");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 821, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(120, 120, 120)
+                                .addComponent(stayeaseLBL10, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(stayeaseLBL2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(stayeaseLBL9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(stayeaseLBL8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(59, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(stayeaseLBL10, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(stayeaseLBL2))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(stayeaseLBL9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(stayeaseLBL8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
+        );
+
+        jTabbedPane1.addTab("Borrowing History", jPanel4);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -359,6 +450,34 @@ public class Users extends javax.swing.JFrame {
     }
 }
 
+    private void loadUserBorrowingHistory() {
+    String sql = "SELECT u.fullName, b.title, t.borrowDate, t.dueDate, t.returnDate, t.status " +
+                 "FROM Transaction t " +
+                 "JOIN Book b ON t.bookID = b.bookID join user u on t.userID = u.userID";
+    
+    DefaultTableModel model = (DefaultTableModel) borrowingsTBL.getModel();
+    model.setRowCount(0); // Clear previous data
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+        
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                String fullName = rs.getString("fullName");
+                String title = rs.getString("title");
+                Date borrowDate = rs.getDate("borrowDate");
+                Date dueDate = rs.getDate("dueDate");
+                Date returnDate = rs.getDate("returnDate");
+                String status = rs.getString("status");
+
+                model.addRow(new Object[]{fullName, title, borrowDate, dueDate, returnDate, status});
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error loading borrowing history!", "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
 
 
 
@@ -432,6 +551,7 @@ public class Users extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton booksBTN;
+    private javax.swing.JTable borrowingsTBL;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -442,8 +562,10 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
@@ -457,9 +579,13 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;
     private javax.swing.JLabel stayeaseLBL1;
+    private javax.swing.JLabel stayeaseLBL10;
+    private javax.swing.JLabel stayeaseLBL2;
     private javax.swing.JLabel stayeaseLBL5;
     private javax.swing.JLabel stayeaseLBL6;
     private javax.swing.JLabel stayeaseLBL7;
+    private javax.swing.JLabel stayeaseLBL8;
+    private javax.swing.JLabel stayeaseLBL9;
     private javax.swing.JButton transactionsBTN;
     private javax.swing.JButton userBTN;
     // End of variables declaration//GEN-END:variables

@@ -203,6 +203,7 @@ public class Books extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 90, 40));
 
+        addBTN.setBackground(new java.awt.Color(131, 197, 190));
         addBTN.setText("Add");
         addBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,6 +212,7 @@ public class Books extends javax.swing.JFrame {
         });
         jPanel1.add(addBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 120, 40));
 
+        deleteBTN.setBackground(new java.awt.Color(131, 197, 190));
         deleteBTN.setText("Delete");
         deleteBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,6 +221,7 @@ public class Books extends javax.swing.JFrame {
         });
         jPanel1.add(deleteBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 320, 120, 40));
 
+        updateBTN.setBackground(new java.awt.Color(131, 197, 190));
         updateBTN.setText("Update");
         updateBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,6 +262,7 @@ public class Books extends javax.swing.JFrame {
         jLabel8.setText("Quantity Available:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 210, 180, 40));
 
+        clearBTN.setBackground(new java.awt.Color(131, 197, 190));
         clearBTN.setText("Clear");
         clearBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
