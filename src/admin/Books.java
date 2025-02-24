@@ -174,6 +174,11 @@ public class Books extends javax.swing.JFrame {
                 "Book No.", "Title", "Author", "ISBN", "Genre", "Publisher", "Publication Year", "Quantity", "Location"
             }
         ));
+        booksTBL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                booksTBLMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(booksTBL);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 372, 900, 360));
@@ -204,6 +209,7 @@ public class Books extends javax.swing.JFrame {
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 90, 40));
 
         addBTN.setBackground(new java.awt.Color(131, 197, 190));
+        addBTN.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         addBTN.setText("Add");
         addBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,6 +219,7 @@ public class Books extends javax.swing.JFrame {
         jPanel1.add(addBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 120, 40));
 
         deleteBTN.setBackground(new java.awt.Color(131, 197, 190));
+        deleteBTN.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         deleteBTN.setText("Delete");
         deleteBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,6 +229,7 @@ public class Books extends javax.swing.JFrame {
         jPanel1.add(deleteBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 320, 120, 40));
 
         updateBTN.setBackground(new java.awt.Color(131, 197, 190));
+        updateBTN.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         updateBTN.setText("Update");
         updateBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,6 +271,7 @@ public class Books extends javax.swing.JFrame {
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 210, 180, 40));
 
         clearBTN.setBackground(new java.awt.Color(131, 197, 190));
+        clearBTN.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         clearBTN.setText("Clear");
         clearBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -671,6 +680,22 @@ public class Books extends javax.swing.JFrame {
     }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void booksTBLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksTBLMouseClicked
+        int selectedRow = booksTBL.getSelectedRow(); // Get selected row index
+
+        if (selectedRow != -1) { // Ensure a row is selected
+            // Populate the text fields with data from the selected row
+            titleTXT.setText(booksTBL.getValueAt(selectedRow, 1).toString());   // Title
+            authorTXT.setText(booksTBL.getValueAt(selectedRow, 2).toString());  // Author
+            isbnTXT.setText(booksTBL.getValueAt(selectedRow, 3).toString());    // ISBN
+            genreTXT.setText(booksTBL.getValueAt(selectedRow, 4).toString());   // Genre
+            publisherTXT.setText(booksTBL.getValueAt(selectedRow, 5).toString()); // Publisher
+            pyearTXT.setText(booksTBL.getValueAt(selectedRow, 6).toString());   // Publication Year
+            quantityTXT.setText(booksTBL.getValueAt(selectedRow, 7).toString()); // Quantity
+            locationTXT.setText(booksTBL.getValueAt(selectedRow, 8).toString()); // Location
+        }
+    }//GEN-LAST:event_booksTBLMouseClicked
 
     public void loadBooksData() {
     String sql = "SELECT bookID, title, author, isbn, genre, publisher, publicationYear, quantityAvailable, location FROM book";

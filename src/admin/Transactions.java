@@ -10,6 +10,10 @@ import dbConnection.DatabaseConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Date;  // ✅ Correct Date import for SQL
+import java.time.LocalDate;  // ✅ For LocalDate operations
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import user.*;
@@ -54,13 +58,13 @@ public class Transactions extends javax.swing.JFrame {
         searchBTN = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField3 = new javax.swing.JTextField();
-        jCalendarComboBox1 = new de.wannawork.jcalendar.JCalendarComboBox();
+        borrowerIdTXT = new javax.swing.JTextField();
+        dueDateCalendar = new de.wannawork.jcalendar.JCalendarComboBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        isbnTXT = new javax.swing.JTextField();
         stayeaseLBL11 = new javax.swing.JLabel();
         stayeaseLBL12 = new javax.swing.JLabel();
         stayeaseLBL3 = new javax.swing.JLabel();
@@ -70,15 +74,17 @@ public class Transactions extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jTextField4 = new javax.swing.JTextField();
+        isbnTXT2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        borrowerIdTXT2 = new javax.swing.JTextField();
+        returnedBTN = new javax.swing.JButton();
         stayeaseLBL8 = new javax.swing.JLabel();
         stayeaseLBL9 = new javax.swing.JLabel();
         stayeaseLBL2 = new javax.swing.JLabel();
         stayeaseLBL10 = new javax.swing.JLabel();
+        btitletxt = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jTextField6 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
@@ -87,10 +93,10 @@ public class Transactions extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jCalendarComboBox2 = new de.wannawork.jcalendar.JCalendarComboBox();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        borrowerID3 = new javax.swing.JTextField();
+        isbntxt = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        renewBTN = new javax.swing.JButton();
         stayeaseLBL5 = new javax.swing.JLabel();
         stayeaseLBL6 = new javax.swing.JLabel();
         stayeaseLBL1 = new javax.swing.JLabel();
@@ -208,15 +214,20 @@ public class Transactions extends javax.swing.JFrame {
                 "Title", "ISBN", "Availability", "Location"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 880, 300));
-        jPanel3.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 240, 40));
-        jPanel3.add(jCalendarComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 240, 40));
+        jPanel3.add(borrowerIdTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 240, 40));
+        jPanel3.add(dueDateCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 540, 240, 40));
 
         jLabel1.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         jLabel1.setText("Due Date:");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 540, -1, 30));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 540, -1, 30));
 
         jLabel2.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         jLabel2.setText("Borrower Id:");
@@ -225,12 +236,17 @@ public class Transactions extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(131, 197, 190));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton2.setText("Confirm");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 610, 240, 60));
 
         jLabel5.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         jLabel5.setText("ISBN:");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 90, 40));
-        jPanel3.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 240, 40));
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 540, 90, 40));
+        jPanel3.add(isbnTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 240, 40));
 
         stayeaseLBL11.setBackground(new java.awt.Color(0, 109, 119));
         stayeaseLBL11.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
@@ -268,33 +284,43 @@ public class Transactions extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title ", "Borrower", "ISBN", "Due Date", "Status"
+                "Title ", "BorrowerID", "Borrower", "ISBN", "Due Date", "Status"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
-        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 880, 300));
-        jPanel4.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 240, 40));
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 880, 380));
+        jPanel4.add(isbnTXT2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 550, 240, 40));
 
         jLabel3.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         jLabel3.setText("ISBN:");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 90, 40));
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 550, 90, 40));
 
         jLabel4.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         jLabel4.setText("Borrower Id:");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 480, 130, 40));
-        jPanel4.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 240, 40));
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 550, 130, 40));
+        jPanel4.add(borrowerIdTXT2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 550, 240, 40));
 
-        jButton4.setBackground(new java.awt.Color(131, 197, 190));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton4.setText("Returned");
-        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 610, 230, 60));
+        returnedBTN.setBackground(new java.awt.Color(131, 197, 190));
+        returnedBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        returnedBTN.setText("Returned");
+        returnedBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnedBTNActionPerformed(evt);
+            }
+        });
+        jPanel4.add(returnedBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 610, 230, 60));
 
         stayeaseLBL8.setBackground(new java.awt.Color(0, 109, 119));
         stayeaseLBL8.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
@@ -319,6 +345,11 @@ public class Transactions extends javax.swing.JFrame {
         stayeaseLBL10.setForeground(new java.awt.Color(0, 109, 119));
         stayeaseLBL10.setText("UB");
         jPanel4.add(stayeaseLBL10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 60, 60));
+        jPanel4.add(btitletxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 610, 240, 40));
+
+        jLabel9.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel9.setText("Title:");
+        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 610, 130, 40));
 
         jTabbedPane1.addTab("Return Book", jPanel4);
 
@@ -341,6 +372,11 @@ public class Transactions extends javax.swing.JFrame {
                 "Title ", "Borrower", "ISBN", "Due Date", "Status"
             }
         ));
+        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable3MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTable3);
 
         jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 880, 300));
@@ -353,17 +389,22 @@ public class Transactions extends javax.swing.JFrame {
         jLabel7.setText("New Due Date:");
         jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 540, 130, 40));
         jPanel5.add(jCalendarComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 240, 40));
-        jPanel5.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 240, 40));
-        jPanel5.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 240, 40));
+        jPanel5.add(borrowerID3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 240, 40));
+        jPanel5.add(isbntxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 240, 40));
 
         jLabel8.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         jLabel8.setText("ISBN:");
         jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 90, 40));
 
-        jButton6.setBackground(new java.awt.Color(131, 197, 190));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton6.setText("Renew");
-        jPanel5.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 610, 230, 60));
+        renewBTN.setBackground(new java.awt.Color(131, 197, 190));
+        renewBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        renewBTN.setText("Renew");
+        renewBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renewBTNActionPerformed(evt);
+            }
+        });
+        jPanel5.add(renewBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 610, 230, 60));
 
         stayeaseLBL5.setBackground(new java.awt.Color(0, 109, 119));
         stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
@@ -480,7 +521,134 @@ public class Transactions extends javax.swing.JFrame {
 
     }//GEN-LAST:event_searchBTNActionPerformed
 
-      public void issueBook() {
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    String userID = borrowerIdTXT.getText().trim();
+    String isbn = isbnTXT.getText().trim();
+    LocalDate borrowDate = LocalDate.now();
+    String status = "Borrowed";
+
+    // Get due date from JCalendar and convert it
+    java.util.Date utilDate = dueDateCalendar.getDate();
+    java.sql.Date sqlDueDate = new java.sql.Date(utilDate.getTime());
+
+    if (userID.isEmpty() || isbn.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill all fields.");
+        return;
+    }
+
+    try {
+        Connection con = DatabaseConnection.getInstance().getConnection();
+
+        // Get bookID based on ISBN
+        String getBookIDQuery = "SELECT bookID FROM book WHERE ISBN = ?";
+        PreparedStatement bookStmt = con.prepareStatement(getBookIDQuery);
+        bookStmt.setString(1, isbn);
+        ResultSet rs = bookStmt.executeQuery();
+
+        if (rs.next()) {
+            int bookID = rs.getInt("bookID");
+
+            // Insert into transaction table
+            String insertQuery = "INSERT INTO transaction (borrowDate, dueDate, status, userID, bookID) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pst = con.prepareStatement(insertQuery);
+            pst.setDate(1, java.sql.Date.valueOf(borrowDate)); // borrowDate as java.sql.Date
+            pst.setDate(2, sqlDueDate); // dueDate from JCalendar
+            pst.setString(3, status);
+            pst.setInt(4, Integer.parseInt(userID));
+            pst.setInt(5, bookID);
+
+            int result = pst.executeUpdate();
+
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this, "Book Borrowed Successfully!");
+                borrowerIdTXT.setText("");
+                isbnTXT.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Borrowing Failed.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Book ISBN not found.");
+        }
+
+        con.close();
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int selectedRow = jTable1.getSelectedRow();
+         if (selectedRow != -1) {
+        // Set text fields
+        isbnTXT.setText(jTable1.getValueAt(selectedRow, 1).toString());  // Book Title
+    }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        int selectedRow = jTable2.getSelectedRow();
+         if (selectedRow != -1) {
+        // Set text fields
+        isbnTXT2.setText(jTable2.getValueAt(selectedRow, 3).toString());  
+        btitletxt.setText(jTable2.getValueAt(selectedRow, 0).toString());  
+    }
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void returnedBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnedBTNActionPerformed
+        // Fetch data from text fields
+    String borrowerID = borrowerIdTXT2.getText().trim();
+    String isbn = isbnTXT2.getText().trim();
+    String title = btitletxt.getText().trim();
+
+    // Validate input fields
+    if (borrowerID.isEmpty() || isbn.isEmpty() || title.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please fill in Borrower ID, ISBN, and Title.");
+        return;
+    }
+
+    String sql = "UPDATE transaction " +
+                 "SET status = 'Returned', returnDate = CURRENT_DATE() " +
+                 "WHERE userID = ? AND bookID = (SELECT bookID FROM book WHERE isbn = ?) AND status = 'Borrowed'";
+
+    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+        ps.setInt(1, Integer.parseInt(borrowerID)); // borrower ID
+        ps.setString(2, isbn); // ISBN
+
+        int updated = ps.executeUpdate();
+
+        if (updated > 0) {
+            JOptionPane.showMessageDialog(null, "Book marked as Returned");
+            borrowedBook(); // Refresh the table
+            clearFields();  // Clear input fields after returning
+        } else {
+            JOptionPane.showMessageDialog(null, "No matching borrowed book found or it is already returned.");
+        }
+    } catch (SQLException | NumberFormatException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_returnedBTNActionPerformed
+
+    private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
+        int selectedRow = jTable3.getSelectedRow();
+         if (selectedRow != -1) {
+        // Set text fields
+        isbntxt.setText(jTable3.getValueAt(selectedRow, 3).toString());  
+        btitletxt.setText(jTable3.getValueAt(selectedRow, 0).toString());  
+    }
+    }//GEN-LAST:event_jTable3MouseClicked
+
+    private void renewBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renewBTNActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_renewBTNActionPerformed
+    
+    private void clearFields() {
+    borrowerIdTXT2.setText("");
+    isbnTXT2.setText("");
+    btitletxt.setText("");
+}
+
+    public void issueBook() {
     String sql = "SELECT bookID, title, author, genre, isbn, publicationYear, quantityAvailable, location FROM book";
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
@@ -506,8 +674,12 @@ public class Transactions extends javax.swing.JFrame {
     }
 }
       
-      public void borrowedBook() {
-    String sql = "select b.title, u.fullName, b.isbn, t.dueDate, t.status from transaction t join book b on t.bookID = b.bookID join user u on t.userID = u.userID where status = 'Borrowed'";
+    public void borrowedBook() {
+    String sql = "SELECT u.userID, b.title, u.fullName, b.isbn, t.dueDate, t.status " +
+                 "FROM transaction t " +
+                 "JOIN book b ON t.bookID = b.bookID " +
+                 "JOIN user u ON t.userID = u.userID " +
+                 "WHERE t.status = 'Borrowed'";
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
@@ -517,13 +689,12 @@ public class Transactions extends javax.swing.JFrame {
 
         while (rs.next()) {
             Object[] row = {
-                
                 rs.getString("title"),
+                rs.getInt("userID"), 
                 rs.getString("fullName"),
                 rs.getString("isbn"),
                 rs.getDate("dueDate"),
                 rs.getString("status")
-                    
             };
             model.addRow(row);
         }
@@ -614,12 +785,17 @@ public class Transactions extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton booksBTN;
+    private javax.swing.JTextField borrowerID3;
+    private javax.swing.JTextField borrowerIdTXT;
+    private javax.swing.JTextField borrowerIdTXT2;
+    private javax.swing.JTextField btitletxt;
+    private de.wannawork.jcalendar.JCalendarComboBox dueDateCalendar;
+    private javax.swing.JTextField isbnTXT;
+    private javax.swing.JTextField isbnTXT2;
+    private javax.swing.JTextField isbntxt;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox1;
     private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -629,6 +805,7 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -643,16 +820,12 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
+    private javax.swing.JButton renewBTN;
     private javax.swing.JButton reservationsBTN;
+    private javax.swing.JButton returnedBTN;
     private javax.swing.JButton searchBTN;
     private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;

@@ -13,10 +13,13 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import user.*;
 import main.Login;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Reservations extends javax.swing.JFrame {
@@ -55,13 +58,13 @@ public class Reservations extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        titleTXT = new javax.swing.JTextField();
+        nameTXT = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jCalendarComboBox1 = new de.wannawork.jcalendar.JCalendarComboBox();
+        jCalendarCB = new de.wannawork.jcalendar.JCalendarComboBox();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        statusCB = new javax.swing.JComboBox<>();
         searchBTN = new javax.swing.JButton();
         Reserve1 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -70,6 +73,7 @@ public class Reservations extends javax.swing.JFrame {
         stayeaseLBL6 = new javax.swing.JLabel();
         stayeaseLBL1 = new javax.swing.JLabel();
         stayeaseLBL7 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -156,7 +160,7 @@ public class Reservations extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 350, 60));
+        jPanel1.add(searchTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 350, 60));
 
         Reserve.setBackground(new java.awt.Color(131, 197, 190));
         Reserve.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -179,37 +183,42 @@ public class Reservations extends javax.swing.JFrame {
                 "Reservation ID", "Book Title", "Name", "Reservation Date", "Status"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 880, 340));
 
         jLabel2.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         jLabel2.setText("Title:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 70, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 70, 40));
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        titleTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                titleTXTActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 210, 40));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 210, 40));
+        jPanel1.add(titleTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 210, 40));
+        jPanel1.add(nameTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 200, 210, 40));
 
         jLabel3.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         jLabel3.setText("Name:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 70, 40));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 70, 40));
 
         jLabel4.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         jLabel4.setText("Status:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 60, 40));
-        jPanel1.add(jCalendarComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 210, 40));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 60, 40));
+        jPanel1.add(jCalendarCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 210, 40));
 
         jLabel5.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         jLabel5.setText("Filter:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 60, 40));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Cancelled", " " }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 220, 210, 40));
+        statusCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Cancelled", " " }));
+        jPanel1.add(statusCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, 210, 40));
 
         searchBTN.setBackground(new java.awt.Color(131, 197, 190));
         searchBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -219,7 +228,7 @@ public class Reservations extends javax.swing.JFrame {
                 searchBTNActionPerformed(evt);
             }
         });
-        jPanel1.add(searchBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, -1, 60));
+        jPanel1.add(searchBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, -1, 60));
 
         Reserve1.setBackground(new java.awt.Color(131, 197, 190));
         Reserve1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -241,7 +250,7 @@ public class Reservations extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         jLabel6.setText("Date:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 60, 40));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, 60, 40));
 
         stayeaseLBL5.setBackground(new java.awt.Color(0, 109, 119));
         stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
@@ -266,6 +275,12 @@ public class Reservations extends javax.swing.JFrame {
         stayeaseLBL7.setForeground(new java.awt.Color(0, 109, 119));
         stayeaseLBL7.setText("UB");
         jPanel1.add(stayeaseLBL7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 60, 60));
+
+        jLabel1.setBackground(new java.awt.Color(0, 109, 119));
+        jLabel1.setFont(new java.awt.Font("Serif", 3, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 109, 119));
+        jLabel1.setText("RESERVATION");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 940, 750));
 
@@ -311,91 +326,102 @@ public class Reservations extends javax.swing.JFrame {
 
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
     // Get the value entered in the searchTXT text field
-    String searchValue = searchTXT.getText().trim();
+String searchValue = searchTXT.getText().trim();
 
-    // Check if the search value is not empty
-    if (!searchValue.isEmpty()) {
-        try {
-            // SQL query to search for a reservation based on reservationID
-            String sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
-             "FROM Reservation r " +
-             "JOIN Book b ON r.bookID = b.bookID " +
-             "JOIN User u ON r.userID = u.userID " + 
-             "WHERE reservationID = ?";
+// Check if the search value is not empty
+if (!searchValue.isEmpty()) {
+    try {
+        // SQL query to search for a reservation based on reservationID
+        String sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
+                     "FROM Reservation r " +
+                     "JOIN Book b ON r.bookID = b.bookID " +
+                     "JOIN User u ON r.userID = u.userID " + 
+                     "WHERE reservationID = ?";
 
-            // Prepare and execute the query
-            try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-                ps.setInt(1, Integer.parseInt(searchValue));  // Search by reservationID, assuming it's an integer
+        // Prepare and execute the query
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+            ps.setInt(1, Integer.parseInt(searchValue));  // Search by reservationID
 
-                try (ResultSet rs = ps.executeQuery()) {
-                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get table model
-                    model.setRowCount(0); // Clear existing data
-
-                    // Check if a record was found
-                    if (rs.next()) {
-                        // Add the retrieved data to the table model
-                        Object[] row = {
-                            rs.getInt("reservationID"),
-                            rs.getString("title"),
-                            rs.getString("fullName"),
-                            rs.getDate("reservationDate"),  // Assuming it's a DATE type field
-                            rs.getString("status")
-            };
-                        model.addRow(row);
-                    } else {
-                        // No records found, inform the user
-                        JOptionPane.showMessageDialog(null, "No reservation found with that ID.");
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error searching for reservation: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid number for reservation ID.");
-        }
-    } else {
-        // If the search field is empty, show all reservations from the table
-        try {
-            String sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
-             "FROM Reservation r " +
-             "JOIN Book b ON r.bookID = b.bookID " +
-             "JOIN User u ON r.userID = u.userID"; 
-
-            // Prepare and execute the query
-            try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
-                 ResultSet rs = ps.executeQuery()) {
-
+            try (ResultSet rs = ps.executeQuery()) {
                 DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get table model
                 model.setRowCount(0); // Clear existing data
 
-                // Iterate over the results and add them to the table model
-                while (rs.next()) {
+                // Check if a record was found
+                if (rs.next()) {
+                    // Add the retrieved data to the table model
                     Object[] row = {
                         rs.getInt("reservationID"),
                         rs.getString("title"),
                         rs.getString("fullName"),
-                        rs.getDate("reservationDate"),  // Assuming it's a DATE type field
+                        rs.getDate("reservationDate"),
                         rs.getString("status")
-            };
-                    model.addRow(row); // Add each row to the table
-                }
+                    };
+                    model.addRow(row);
 
-                // If no records found, inform the user
-                if (model.getRowCount() == 0) {
-                    JOptionPane.showMessageDialog(null, "No reservations found.");
+                    // ✅ Populate the text fields with the fetched data
+                    titleTXT.setText(rs.getString("title")); // Book Title
+                    nameTXT.setText(rs.getString("fullName")); // Name
+
+                    // Set JCalendarComboBox (Reservation Date)
+                    java.util.Date date = rs.getDate("reservationDate");
+                    jCalendarCB.setDate(date); // For JCalendarComboBox
+
+                    // Set Status ComboBox
+                    statusCB.setSelectedItem(rs.getString("status"));
+                } else {
+                    JOptionPane.showMessageDialog(null, "No reservation found with that ID.");
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error fetching reservations: " + e.getMessage());
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error searching for reservation: " + e.getMessage());
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Please enter a valid number for reservation ID.");
     }
+} else {
+    // If the search field is empty, show all reservations from the table
+    try {
+        String sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
+                     "FROM Reservation r " +
+                     "JOIN Book b ON r.bookID = b.bookID " +
+                     "JOIN User u ON r.userID = u.userID"; 
+
+        // Prepare and execute the query
+        try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // Get table model
+            model.setRowCount(0); // Clear existing data
+
+            // Iterate over the results and add them to the table model
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("reservationID"),
+                    rs.getString("title"),
+                    rs.getString("fullName"),
+                    rs.getDate("reservationDate"),
+                    rs.getString("status")
+                };
+                model.addRow(row);
+            }
+
+            // If no records found, inform the user
+            if (model.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No reservations found.");
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error fetching reservations: " + e.getMessage());
+    }
+}
+
     }//GEN-LAST:event_searchBTNActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void titleTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleTXTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_titleTXTActionPerformed
 
     private void ReserveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReserveActionPerformed
         // TODO add your handling code here:
@@ -408,6 +434,29 @@ public class Reservations extends javax.swing.JFrame {
     private void Reserve1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reserve1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Reserve1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+     int selectedRow = jTable1.getSelectedRow();
+
+    if (selectedRow != -1) {
+        // Set text fields
+        titleTXT.setText(jTable1.getValueAt(selectedRow, 1).toString());  // Book Title
+        nameTXT.setText(jTable1.getValueAt(selectedRow, 2).toString());   // Name
+
+        // Set JCalendarComboBox (Reservation Date)
+        String dateStr = jTable1.getValueAt(selectedRow, 3).toString();   // Reservation Date
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");   // Adjust if needed
+            Date date = sdf.parse(dateStr);
+            jCalendarCB.setDate(date);  // For JCalendarComboBox
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Set Status ComboBox
+        statusCB.setSelectedItem(jTable1.getValueAt(selectedRow, 4).toString()); // Status
+    }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     public void loadReservationsData() {
     String sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
@@ -582,9 +631,9 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JButton Reserve;
     private javax.swing.JButton Reserve1;
     private javax.swing.JButton booksBTN;
-    private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private de.wannawork.jcalendar.JCalendarComboBox jCalendarCB;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -595,18 +644,19 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel logoLBL;
     private javax.swing.JButton logoutBTN;
+    private javax.swing.JTextField nameTXT;
     private javax.swing.JButton reservationsBTN;
     private javax.swing.JButton searchBTN;
     private javax.swing.JTextField searchTXT;
     private javax.swing.JButton settlementsBTN;
+    private javax.swing.JComboBox<String> statusCB;
     private javax.swing.JLabel stayeaseLBL1;
     private javax.swing.JLabel stayeaseLBL5;
     private javax.swing.JLabel stayeaseLBL6;
     private javax.swing.JLabel stayeaseLBL7;
+    private javax.swing.JTextField titleTXT;
     private javax.swing.JButton transactionsBTN;
     private javax.swing.JButton userBTN;
     // End of variables declaration//GEN-END:variables
