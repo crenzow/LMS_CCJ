@@ -168,7 +168,7 @@ public class Library extends javax.swing.JFrame {
 
         genreCBX.setBackground(new java.awt.Color(131, 197, 190));
         genreCBX.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        genreCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Genres", "Fiction", "Mystery", "Fantasy", "Science Fiction", "Romance", "Non-Fiction" }));
+        genreCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Genres", "Art", "Business", "Cooking", "Engineering", "Fantasy", "Fiction", "History", "Mathematics", "Mystery", "Mythology", "Non-Fiction", "Philosophy", "Politics", "Psychology", "Romance", "Science", "Science Fiction", "Sports", "Technology", "Travel" }));
         genreCBX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 genreCBXActionPerformed(evt);

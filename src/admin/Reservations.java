@@ -413,7 +413,7 @@ public class Reservations extends javax.swing.JFrame {
     String sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
              "FROM Reservation r " +
              "JOIN Book b ON r.bookID = b.bookID " +
-             "JOIN User u ON r.userID = u.userID"; 
+             "JOIN User u ON r.userID = u.userID order by reservationID ASC"; 
 
     try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
@@ -451,7 +451,7 @@ public class Reservations extends javax.swing.JFrame {
                 sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +
              "FROM Reservation r " +
              "JOIN Book b ON r.bookID = b.bookID " +
-             "JOIN User u ON r.userID = u.userID";
+             "JOIN User u ON r.userID = u.userID order by reservationID ASC";
             } else {
                 // Otherwise, filter by the selected status
                 sql = "SELECT r.reservationID, b.title, u.fullName, r.reservationDate, r.status " +

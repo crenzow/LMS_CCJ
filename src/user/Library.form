@@ -249,14 +249,28 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="7">
+              <StringArray count="21">
                 <StringItem index="0" value="All Genres"/>
-                <StringItem index="1" value="Fiction"/>
-                <StringItem index="2" value="Mystery"/>
-                <StringItem index="3" value="Fantasy"/>
-                <StringItem index="4" value="Science Fiction"/>
-                <StringItem index="5" value="Romance"/>
-                <StringItem index="6" value="Non-Fiction"/>
+                <StringItem index="1" value="Art"/>
+                <StringItem index="2" value="Business"/>
+                <StringItem index="3" value="Cooking"/>
+                <StringItem index="4" value="Engineering"/>
+                <StringItem index="5" value="Fantasy"/>
+                <StringItem index="6" value="Fiction"/>
+                <StringItem index="7" value="History"/>
+                <StringItem index="8" value="Mathematics"/>
+                <StringItem index="9" value="Mystery"/>
+                <StringItem index="10" value="Mythology"/>
+                <StringItem index="11" value="Non-Fiction"/>
+                <StringItem index="12" value="Philosophy"/>
+                <StringItem index="13" value="Politics"/>
+                <StringItem index="14" value="Psychology"/>
+                <StringItem index="15" value="Romance"/>
+                <StringItem index="16" value="Science"/>
+                <StringItem index="17" value="Science Fiction"/>
+                <StringItem index="18" value="Sports"/>
+                <StringItem index="19" value="Technology"/>
+                <StringItem index="20" value="Travel"/>
               </StringArray>
             </Property>
           </Properties>

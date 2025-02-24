@@ -193,6 +193,7 @@ public class Books extends javax.swing.JFrame {
         jPanel1.add(quantityTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 210, 210, 40));
         jPanel1.add(locationTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, 210, 40));
 
+        jButton1.setBackground(new java.awt.Color(131, 197, 190));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("SEARCH");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -266,7 +267,9 @@ public class Books extends javax.swing.JFrame {
         });
         jPanel1.add(clearBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 320, 120, 40));
 
-        genreCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Genres", "Fiction", "Mystery", "Fantasy", "Science Fiction", "Romance", "Non-Fiction" }));
+        genreCBX.setBackground(new java.awt.Color(131, 197, 190));
+        genreCBX.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        genreCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Genres", "Art", "Business", "Cooking", "Engineering", "Fantasy", "Fiction", "History", "Mathematics", "Mystery", "Mythology", "Non-Fiction", "Philosophy", "Politics", "Psychology", "Romance", "Science", "Science Fiction", "Sports", "Technology", "Travel" }));
         genreCBX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 genreCBXActionPerformed(evt);

@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
 import main.Login;
 
@@ -152,6 +154,8 @@ public class Fines extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -205,10 +209,9 @@ public class Fines extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -230,15 +233,18 @@ public class Fines extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(fineIDTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(fineIDTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(340, 340, 340)
+                        .addComponent(jLabel1)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -265,7 +271,7 @@ public class Fines extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("FINES", jPanel3);
@@ -309,7 +315,7 @@ public class Fines extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(77, 77, 77)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("PAYMENTS", jPanel4);
@@ -378,11 +384,17 @@ public class Fines extends javax.swing.JFrame {
 
         try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                String title = rs.getString("fineID");
+                
+                
+                int fineID = rs.getInt("fineID");
                 Double amount = rs.getDouble("amount");
+                
+                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "PH"));
+                String formattedAmount = currencyFormat.format(amount);
+                
                 String status = rs.getString("status");
 
-                model.addRow(new Object[]{title, amount, status});
+                model.addRow(new Object[]{fineID, formattedAmount, status});
             }
         }
     } catch (SQLException e) {
@@ -413,9 +425,14 @@ public class Fines extends javax.swing.JFrame {
             model.setRowCount(0); // Clear existing data
 
             while (rs.next()) {
+                
+                double amount = rs.getDouble("amount");
+                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "PH"));
+                String formattedAmount = currencyFormat.format(amount);
+                
                 Object[] row = {
-                    rs.getString("fineID"),
-                    rs.getDouble("amount"),
+                    rs.getInt("fineID"),
+                    formattedAmount,
                     rs.getString("status"),
                 };
                 model.addRow(row);
@@ -442,12 +459,16 @@ public class Fines extends javax.swing.JFrame {
 
         try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                String paymentID = rs.getString("paymentID");
+                int paymentID = rs.getInt("paymentID");
                 Double amount = rs.getDouble("amountPaid");
+                
+                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "PH"));
+                String formattedAmount = currencyFormat.format(amount);
+                
                 Date paymentDate = rs.getDate("paymentDate");
                 String paymentMethod = rs.getString("paymentMethod");
 
-                model.addRow(new Object[]{paymentID, amount,paymentDate, paymentMethod});
+                model.addRow(new Object[]{paymentID, formattedAmount,paymentDate, paymentMethod});
             }
         }
     } catch (SQLException e) {
