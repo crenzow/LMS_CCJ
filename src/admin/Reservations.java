@@ -46,13 +46,13 @@ public class Reservations extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         reservationsBTN = new javax.swing.JButton();
-        logoLBL = new javax.swing.JLabel();
         booksBTN = new javax.swing.JButton();
         transactionsBTN = new javax.swing.JButton();
         userBTN = new javax.swing.JButton();
         settlementsBTN = new javax.swing.JButton();
         logoutBTN = new javax.swing.JButton();
         reportsBTN = new javax.swing.JButton();
+        logoLBL1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         searchTXT = new javax.swing.JTextField();
         declineBTN = new javax.swing.JButton();
@@ -104,9 +104,6 @@ public class Reservations extends javax.swing.JFrame {
             }
         });
         jPanel2.add(reservationsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 170, 40));
-
-        logoLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200blackLOGO.png"))); // NOI18N
-        jPanel2.add(logoLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
 
         booksBTN.setBackground(new java.awt.Color(131, 197, 190));
         booksBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -167,6 +164,9 @@ public class Reservations extends javax.swing.JFrame {
             }
         });
         jPanel2.add(reportsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 170, 40));
+
+        logoLBL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200whiteLOGO.png"))); // NOI18N
+        jPanel2.add(logoLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
@@ -808,7 +808,7 @@ if (!searchValue.isEmpty()) {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel logoLBL;
+    private javax.swing.JLabel logoLBL1;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JTextField nameTXT;
     private javax.swing.JButton reportsBTN;

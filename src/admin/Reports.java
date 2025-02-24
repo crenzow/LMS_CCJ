@@ -155,7 +155,7 @@ public class Reports extends javax.swing.JFrame {
         });
         jPanel2.add(logoutBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 670, 170, 40));
 
-        logoLBL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200blackLOGO.png"))); // NOI18N
+        logoLBL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200whiteLOGO.png"))); // NOI18N
         jPanel2.add(logoLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
 
         reportsBTN.setBackground(new java.awt.Color(131, 197, 190));

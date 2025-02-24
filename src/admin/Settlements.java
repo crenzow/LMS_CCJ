@@ -44,9 +44,9 @@ public class Settlements extends javax.swing.JFrame {
         transactionsBTN = new javax.swing.JButton();
         userBTN = new javax.swing.JButton();
         settlementsBTN = new javax.swing.JButton();
-        logoLBL1 = new javax.swing.JLabel();
         logoutBTN = new javax.swing.JButton();
         reportsBTN = new javax.swing.JButton();
+        logoLBL1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -136,9 +136,6 @@ public class Settlements extends javax.swing.JFrame {
         });
         jPanel2.add(settlementsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 170, 40));
 
-        logoLBL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200blackLOGO.png"))); // NOI18N
-        jPanel2.add(logoLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
-
         logoutBTN.setBackground(new java.awt.Color(131, 197, 190));
         logoutBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         logoutBTN.setText("LOGOUT");
@@ -158,6 +155,9 @@ public class Settlements extends javax.swing.JFrame {
             }
         });
         jPanel2.add(reportsBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 170, 40));
+
+        logoLBL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200whiteLOGO.png"))); // NOI18N
+        jPanel2.add(logoLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 

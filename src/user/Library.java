@@ -42,11 +42,11 @@ public class Library extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         finesBTN = new javax.swing.JButton();
-        logoLBL = new javax.swing.JLabel();
         borrowingsBTN = new javax.swing.JButton();
         reservationBTN = new javax.swing.JButton();
         logoutBTN = new javax.swing.JButton();
         libraryBTN = new javax.swing.JButton();
+        logoLBL1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         booksTable = new javax.swing.JTable();
@@ -91,9 +91,6 @@ public class Library extends javax.swing.JFrame {
         });
         jPanel2.add(finesBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 170, 40));
 
-        logoLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200blackLOGO.png"))); // NOI18N
-        jPanel2.add(logoLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
-
         borrowingsBTN.setBackground(new java.awt.Color(131, 197, 190));
         borrowingsBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         borrowingsBTN.setText("BORROWINGS");
@@ -133,6 +130,9 @@ public class Library extends javax.swing.JFrame {
             }
         });
         jPanel2.add(libraryBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 170, 40));
+
+        logoLBL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/200whiteLOGO.png"))); // NOI18N
+        jPanel2.add(logoLBL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 750));
 
@@ -500,7 +500,7 @@ public class Library extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton libraryBTN;
-    private javax.swing.JLabel logoLBL;
+    private javax.swing.JLabel logoLBL1;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JButton reservationBTN;
     private javax.swing.JButton reserveBTN;
