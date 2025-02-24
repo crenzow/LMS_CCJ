@@ -245,7 +245,7 @@ public class Users extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 620, 170, 60));
+        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 620, 170, 60));
 
         stayeaseLBL5.setBackground(new java.awt.Color(0, 109, 119));
         stayeaseLBL5.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
@@ -294,31 +294,31 @@ public class Users extends javax.swing.JFrame {
         stayeaseLBL8.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
         stayeaseLBL8.setForeground(new java.awt.Color(0, 109, 119));
         stayeaseLBL8.setText("P");
-        jPanel4.add(stayeaseLBL8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 60, 70));
+        jPanel4.add(stayeaseLBL8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 70));
 
         stayeaseLBL9.setBackground(new java.awt.Color(0, 109, 119));
         stayeaseLBL9.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
         stayeaseLBL9.setForeground(new java.awt.Color(0, 109, 119));
         stayeaseLBL9.setText("AGE");
-        jPanel4.add(stayeaseLBL9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 26, 90, 40));
+        jPanel4.add(stayeaseLBL9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, 40));
 
         stayeaseLBL2.setBackground(new java.awt.Color(0, 109, 119));
         stayeaseLBL2.setFont(new java.awt.Font("Serif", 1, 70)); // NOI18N
         stayeaseLBL2.setForeground(new java.awt.Color(0, 109, 119));
         stayeaseLBL2.setText("H");
-        jPanel4.add(stayeaseLBL2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 56, 60, -1));
+        jPanel4.add(stayeaseLBL2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 60, -1));
 
         stayeaseLBL10.setBackground(new java.awt.Color(0, 109, 119));
         stayeaseLBL10.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
         stayeaseLBL10.setForeground(new java.awt.Color(0, 109, 119));
         stayeaseLBL10.setText("UB");
-        jPanel4.add(stayeaseLBL10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 76, 60, 60));
+        jPanel4.add(stayeaseLBL10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 60, 60));
 
         jLabel1.setBackground(new java.awt.Color(0, 109, 119));
         jLabel1.setFont(new java.awt.Font("Serif", 3, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 109, 119));
         jLabel1.setText("BORROWING HISTORY");
-        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
 
         jTabbedPane1.addTab("Borrowing History", jPanel4);
 

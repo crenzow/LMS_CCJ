@@ -70,6 +70,8 @@ public class Transactions extends javax.swing.JFrame {
         stayeaseLBL12 = new javax.swing.JLabel();
         stayeaseLBL3 = new javax.swing.JLabel();
         stayeaseLBL13 = new javax.swing.JLabel();
+        bookIDTXT = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         returnSTXT = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
@@ -216,13 +218,13 @@ public class Transactions extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title", "ISBN", "Availability", "Location"
+                "Book No.", "Title", "ISBN", "Availability", "Location"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -282,6 +284,11 @@ public class Transactions extends javax.swing.JFrame {
         stayeaseLBL13.setForeground(new java.awt.Color(0, 109, 119));
         stayeaseLBL13.setText("UB");
         jPanel3.add(stayeaseLBL13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 60, 60));
+        jPanel3.add(bookIDTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 610, 240, 40));
+
+        jLabel10.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel10.setText("Book No:");
+        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 610, 90, 40));
 
         jTabbedPane1.addTab("Issue Book", jPanel3);
 
@@ -511,6 +518,7 @@ public class Transactions extends javax.swing.JFrame {
                     // Check if any records are found
                     while (rs.next()) {
                         Object[] row = {
+                            rs.getInt("bookID"),
                             rs.getString("title"),
                             rs.getString("isbn"),
                             rs.getInt("quantityAvailable"),
@@ -536,57 +544,61 @@ public class Transactions extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBTNActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    String bookID = bookIDTXT.getText().trim();
     String userID = borrowerIdTXT.getText().trim();
     String isbn = isbnTXT.getText().trim();
     LocalDate borrowDate = LocalDate.now();
     String status = "Borrowed";
 
-    // Get due date from JCalendar and convert it
-    java.util.Date utilDate = dueDateCalendar.getDate();
-    java.sql.Date sqlDueDate = new java.sql.Date(utilDate.getTime());
-
-    if (userID.isEmpty() || isbn.isEmpty()) {
+    // Validate inputs
+    if (userID.isEmpty() || isbn.isEmpty() || bookID.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill all fields.");
         return;
     }
 
-    String getBookIDQuery = "SELECT bookID FROM book WHERE ISBN = ?";
+    // Get due date from JCalendar and convert it
+    java.util.Date utilDate = dueDateCalendar.getDate();
+    if (utilDate == null) {
+        JOptionPane.showMessageDialog(this, "Please select a due date.");
+        return;
+    }
+    java.sql.Date sqlDueDate = new java.sql.Date(utilDate.getTime());
+
     String insertQuery = "INSERT INTO transaction (borrowDate, dueDate, status, userID, bookID) VALUES (?, ?, ?, ?, ?)";
+    String updateQuantityQuery = "UPDATE book SET quantityAvailable = quantityAvailable - 1 WHERE bookID = ? AND quantityAvailable > 0";
 
     try (
-        // Access the connection and prepare the statement for the first query
-        PreparedStatement bookStmt = DatabaseConnection.getInstance().getConnection().prepareStatement(getBookIDQuery)
+        // Insert into transaction table
+        PreparedStatement pst = DatabaseConnection.getInstance().getConnection().prepareStatement(insertQuery);
+        // Update book quantity
+        PreparedStatement updatePst = DatabaseConnection.getInstance().getConnection().prepareStatement(updateQuantityQuery)
     ) {
-        // Get bookID based on ISBN
-        bookStmt.setString(1, isbn);
-        try (ResultSet rs = bookStmt.executeQuery()) {
-            if (rs.next()) {
-                int bookID = rs.getInt("bookID");
+        // Insert transaction record
+        pst.setDate(1, java.sql.Date.valueOf(borrowDate)); // borrowDate as java.sql.Date
+        pst.setDate(2, sqlDueDate); // dueDate from JCalendar
+        pst.setString(3, status);
+        pst.setInt(4, Integer.parseInt(userID)); // Convert userID to int
+        pst.setInt(5, Integer.parseInt(bookID)); // Convert bookID to int
 
-                // Insert into transaction table
-                try (
-                    // Access the connection and prepare the statement for the insert query
-                    PreparedStatement pst = DatabaseConnection.getInstance().getConnection().prepareStatement(insertQuery)
-                ) {
-                    pst.setDate(1, java.sql.Date.valueOf(borrowDate)); // borrowDate as java.sql.Date
-                    pst.setDate(2, sqlDueDate); // dueDate from JCalendar
-                    pst.setString(3, status);
-                    pst.setInt(4, Integer.parseInt(userID));
-                    pst.setInt(5, bookID);
+        int result = pst.executeUpdate();
 
-                    int result = pst.executeUpdate();
+        if (result > 0) {
+            // Update book quantity
+            updatePst.setInt(1, Integer.parseInt(bookID));
+            int updateResult = updatePst.executeUpdate();
 
-                    if (result > 0) {
-                        JOptionPane.showMessageDialog(this, "Book Borrowed Successfully!");
-                        borrowerIdTXT.setText("");
-                        isbnTXT.setText("");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Borrowing Failed.");
-                    }
-                }
+            if (updateResult > 0) {
+                JOptionPane.showMessageDialog(this, "Book Borrowed Successfully! Quantity Updated.");
+                issueBook();
+                borrowedBook();
+                borrowerIdTXT.setText("");
+                isbnTXT.setText("");
+                bookIDTXT.setText("");
             } else {
-                JOptionPane.showMessageDialog(this, "Book ISBN not found.");
+                JOptionPane.showMessageDialog(this, "Borrowing failed. Book is out of stock.");
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Borrowing Failed.");
         }
 
     } catch (Exception ex) {
@@ -598,7 +610,8 @@ public class Transactions extends javax.swing.JFrame {
         int selectedRow = jTable1.getSelectedRow();
          if (selectedRow != -1) {
         // Set text fields
-        isbnTXT.setText(jTable1.getValueAt(selectedRow, 1).toString());  // Book Title
+        isbnTXT.setText(jTable1.getValueAt(selectedRow, 2).toString());  // Book Title
+        bookIDTXT.setText(jTable1.getValueAt(selectedRow, 0).toString());
     }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -614,37 +627,59 @@ public class Transactions extends javax.swing.JFrame {
 
     private void returnedBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnedBTNActionPerformed
         // Fetch data from text fields
-    String borrowerID = borrowerIdTXT2.getText().trim();
-    String isbn = isbnTXT2.getText().trim();
-    String title = btitletxt.getText().trim();
+        String borrowerID = borrowerIdTXT2.getText().trim();
+        String isbn = isbnTXT2.getText().trim();
+        String title = btitletxt.getText().trim();
 
-    // Validate input fields
-    if (borrowerID.isEmpty() || isbn.isEmpty() || title.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Please fill in Borrower ID, ISBN, and Title.");
-        return;
-    }
-
-    String sql = "UPDATE transaction " +
-                 "SET status = 'Returned', returnDate = CURRENT_DATE() " +
-                 "WHERE userID = ? AND bookID = (SELECT bookID FROM book WHERE isbn = ?) AND status = 'Borrowed'";
-
-    try (PreparedStatement ps = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-        ps.setInt(1, Integer.parseInt(borrowerID)); // borrower ID
-        ps.setString(2, isbn); // ISBN
-
-        int updated = ps.executeUpdate();
-
-        if (updated > 0) {
-            JOptionPane.showMessageDialog(null, "Book marked as Returned");
-            borrowedBook(); // Refresh the table
-            clearFields();  // Clear input fields after returning
-        } else {
-            JOptionPane.showMessageDialog(null, "No matching borrowed book found or it is already returned.");
+        // Validate input fields
+        if (borrowerID.isEmpty() || isbn.isEmpty() || title.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please fill in Borrower ID, ISBN, and Title.");
+            return;
         }
-    } catch (SQLException | NumberFormatException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
-    }
+
+        // Query to update transaction status
+        String updateTransactionQuery = "UPDATE transaction " +
+                                        "SET status = 'Returned', returnDate = CURRENT_DATE() " +
+                                        "WHERE userID = ? AND bookID = (SELECT bookID FROM book WHERE isbn = ?) AND status = 'Borrowed'";
+
+        // Query to update book quantity (increase by 1)
+        String updateQuantityQuery = "UPDATE book SET quantityAvailable = quantityAvailable + 1 " +
+                                     "WHERE bookID = (SELECT bookID FROM book WHERE isbn = ?)";
+
+        try (
+            // Update transaction status
+            PreparedStatement transactionStmt = DatabaseConnection.getInstance().getConnection().prepareStatement(updateTransactionQuery)
+        ) {
+            transactionStmt.setInt(1, Integer.parseInt(borrowerID)); // borrower ID
+            transactionStmt.setString(2, isbn); // ISBN
+
+            int updated = transactionStmt.executeUpdate();
+
+            if (updated > 0) {
+                try (
+                    // Update book quantity
+                    PreparedStatement quantityStmt = DatabaseConnection.getInstance().getConnection().prepareStatement(updateQuantityQuery)
+                ) {
+                    quantityStmt.setString(1, isbn);
+                    int quantityUpdated = quantityStmt.executeUpdate();
+
+                    if (quantityUpdated > 0) {
+                        JOptionPane.showMessageDialog(null, "Book marked as Returned. Quantity Updated.");
+                        issueBook();
+                        borrowedBook(); // Refresh the table
+                        returnedBook();
+                        clearFields();  // Clear input fields after returning
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Book return recorded, but quantity update failed.");
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No matching borrowed book found or it is already returned.");
+            }
+        } catch (SQLException | NumberFormatException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        }
     }//GEN-LAST:event_returnedBTNActionPerformed
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
@@ -701,6 +736,7 @@ public class Transactions extends javax.swing.JFrame {
 
                     if (result > 0) {
                         JOptionPane.showMessageDialog(this, "Book Borrowed Successfully!");
+                        issueBook();
                         returnedBook();
                         borrowerIdTXT.setText("");
                         isbnTXT.setText("");
@@ -845,7 +881,7 @@ public class Transactions extends javax.swing.JFrame {
 
         while (rs.next()) {
             Object[] row = {
-                
+                rs.getInt("bookID"),
                 rs.getString("title"),
                 rs.getString("isbn"),
                 rs.getInt("quantityAvailable"),
@@ -971,6 +1007,7 @@ public class Transactions extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField bookIDTXT;
     private javax.swing.JButton booksBTN;
     private javax.swing.JTextField borrowerID3;
     private javax.swing.JTextField borrowerIdTXT;
@@ -985,6 +1022,7 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
